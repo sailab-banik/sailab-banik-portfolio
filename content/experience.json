@@ -8,7 +8,7 @@
       {
         "title": "Software Engineer II",
         "period": "Oct 2024 — Present",
-        "summary": "Lead the frontend of PrimeAI and own product flows end to end across interface, API, and database. Built role- and group-based access control from the ground up, and drove the CI/CD work that cut release cycle time by 40% and production hotfixes by 35%."
+        "summary": "Lead the frontend of PrimeAI and own product flows end to end across interface, API, and database. Built role- and group-based access control from the ground up, and drove the CI/CD work that cut release cycle time by 40% and production hotfixes by 35%. On the AI side I run extraction against locally served models on Ollama where documents cannot leave our infrastructure, reach for frontier models on the problems that need them, and use retrieval to close the accuracy gap between the two."
       },
       {
         "title": "Graduate Engineer Trainee",

@@ -1,16 +1,22 @@
-import { getProfile } from "@/lib/content";
+import { getProfile, getSection } from "@/lib/content";
 import { SocialLinks } from "@/components/social-links";
 
 export function Footer() {
   const { name, email, location, links, resume } = getProfile();
+  const { title, lead } = getSection("contact");
 
   return (
     <footer id="contact" className="mt-auto border-t border-edge">
       <div className="mx-auto w-full max-w-page px-6 py-section md:px-10">
-        <h2 className="type-h2 text-h2 text-ink">Get in touch</h2>
+        {/* The invitation is the heading. A small "Get in touch" label sitting
+            above the email would be an eyebrow, so the sentence does both jobs
+            and the landmark keeps the plain name for screen readers. */}
+        <h2 className="sr-only">{title}</h2>
+        <p className="max-w-[42ch] font-serif text-lead text-ink">{lead}</p>
+
         <a
           href={`mailto:${email}`}
-          className="type-h2 mt-6 block text-h3 break-words sm:text-h2 text-signal underline decoration-edge decoration-1 underline-offset-[0.15em] transition-colors hover:decoration-signal"
+          className="type-h2 mt-6 block text-[clamp(1.5rem,4.2vw,3rem)] leading-tight break-words text-signal decoration-edge decoration-1 underline-offset-[0.14em] hover:underline"
         >
           {email}
         </a>

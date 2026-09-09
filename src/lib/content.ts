@@ -3,6 +3,8 @@ import projects from "../../content/projects.json";
 import experience from "../../content/experience.json";
 import articles from "../../content/articles.json";
 import certificates from "../../content/certificates.json";
+import sections from "../../content/sections.json";
+import stack from "../../content/stack.json";
 
 export type Profile = {
   name: string;
@@ -22,13 +24,18 @@ export type Profile = {
   portrait: string;
 };
 
+export type Outcome = {
+  label: string;
+  value: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
   context: string;
   summary: string;
   stack: string[];
-  outcomes: string[];
+  outcomes: Outcome[];
   repo?: string;
   live?: string;
 };
@@ -63,6 +70,18 @@ export type Certificate = {
   image: string;
 };
 
+export type StackGroup = {
+  group: string;
+  items: string[];
+};
+
+export type SectionCopy = {
+  title: string;
+  lead: string;
+};
+
+export type SectionName = keyof typeof sections;
+
 export function getProfile(): Profile {
   return profile;
 }
@@ -81,4 +100,12 @@ export function getArticles(): Article[] {
 
 export function getCertificates(): Certificate[] {
   return certificates;
+}
+
+export function getStack(): StackGroup[] {
+  return stack;
+}
+
+export function getSection(name: SectionName): SectionCopy {
+  return sections[name];
 }
