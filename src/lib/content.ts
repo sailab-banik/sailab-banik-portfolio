@@ -1,6 +1,7 @@
 import profile from "../../content/profile.json";
 import projects from "../../content/projects.json";
 import experience from "../../content/experience.json";
+import articles from "../../content/articles.json";
 
 export type Profile = {
   name: string;
@@ -45,6 +46,14 @@ export type Experience = {
   roles: Role[];
 };
 
+export type Article = {
+  title: string;
+  publication: string;
+  date: string;
+  url: string;
+  summary: string;
+};
+
 export function getProfile(): Profile {
   return profile;
 }
@@ -55,4 +64,8 @@ export function getProjects(): Project[] {
 
 export function getExperience(): Experience[] {
   return experience;
+}
+
+export function getArticles(): Article[] {
+  return articles;
 }

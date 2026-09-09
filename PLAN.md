@@ -26,6 +26,7 @@ src/app/icon.png                     favicon, Next.js file convention
 content/profile.json                 name, role, one-line statement, all external links
 content/projects.json                project entries
 content/experience.json              roles grouped by company
+content/articles.json                selected Medium articles
 ```
 
 External links (LinkedIn, GitHub, LeetCode, Medium, email) live in
@@ -97,17 +98,24 @@ Vertical rhythm in multiples of 8px, section spacing `clamp(6rem, 12vh, 10rem)`.
 │                            └──────────────┘  │
 │                                              │
 ├──────────────────────────────────────────────┤
-│  Work                                        │
-│  ┌────────────────────────────────────────┐  │
-│  │ image 16:9                             │  │
-│  │ Title            stack · stack · stack │  │
-│  │ Two lines of prose.        repo  live  │  │
-│  └────────────────────────────────────────┘  │
-│  (three entries, full-width, stacked)        │
-├──────────────────────────────────────────────┤
 │  Experience                                  │
 │  [logo] Company    Role         dates        │
 │         Location   One paragraph per role    │
+├──────────────────────────────────────────────┤
+│  Work                                        │
+│  ┌────────────────────────────────────────┐  │
+│  │ Title            stack   stack   stack │  │
+│  │ Two lines of prose.  outcomes   links  │  │
+│  └────────────────────────────────────────┘  │
+│  (three entries, full-width, stacked)        │
+├──────────────────────────────────────────────┤
+│  Writing                                     │
+│  ┌───────────────────┐ ┌───────────────────┐ │
+│  │ Article title     │ │ Article title     │ │
+│  │ One line          │ │ One line          │ │
+│  │ Publication, date │ │ Publication, date │ │
+│  └───────────────────┘ └───────────────────┘ │
+│  (four cards, two columns, whole card links) │
 ├──────────────────────────────────────────────┤
 │  About — one short paragraph, 68ch           │
 ├──────────────────────────────────────────────┤
@@ -187,7 +195,20 @@ type Experience = {
 }
 ```
 
+```ts
+type Article = {
+  title: string
+  publication: string
+  date: string
+  url: string
+  summary: string        // one line
+}
+```
+
 Three projects. Four is already too many for this page.
+
+Four articles, chosen for distinct subjects rather than recency. `surface` is
+the card background — the only place in the design a raised panel is used.
 
 Project screenshots do not exist yet, so `image` is optional and work entries
 currently lead with `outcomes` — the measured result of each project — instead.
@@ -225,7 +246,7 @@ existing approach. Delete the `body { font-family: Arial }` rule that
    it renders correctly.
 5. `Work` — three entries from `projects.json`, `next/image` with explicit
    dimensions and `priority` on the first.
-6. `Experience` grouped by company, then `About` and `Footer`.
+6. `Experience` grouped by company, `Writing` cards, then `About` and `Footer`.
 7. Accessibility and responsive pass at 320, 768, 1280, 1920. Then Lighthouse.
 8. CI workflow: lint, typecheck, build on pull requests.
 

@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Build Your First CI/CD Pipeline in Azure DevOps",
+    "publication": "DevOps.dev",
+    "date": "Feb 2026",
+    "url": "https://blog.devops.dev/build-your-first-ci-cd-pipeline-in-azure-devops-509f8a7d26d9",
+    "summary": "Taking an empty project through to a working pipeline, written for the first time someone hands you the job of setting one up."
+  },
+  {
+    "title": "DNS Explained: Architecture, Resolution Flow, and Record Types",
+    "publication": "JavaScript in Plain English",
+    "date": "Jan 2026",
+    "url": "https://javascript.plainenglish.io/dns-explained-architecture-resolution-flow-and-record-types-9a9e1d709745",
+    "summary": "What happens between typing a URL and the request leaving your machine: the resolver chain, the record types, and who answers each step."
+  },
+  {
+    "title": "How a Browser Works: A Beginner-Friendly Guide to Browser Internals",
+    "publication": "JavaScript in Plain English",
+    "date": "Jan 2026",
+    "url": "https://javascript.plainenglish.io/how-a-browser-works-a-beginner-friendly-guide-to-browser-internals-fd6efb07f9c9",
+    "summary": "How a browser turns HTML, CSS, and JavaScript into pixels, traced from parsing through to the rendered page."
+  },
+  {
+    "title": "Git for Beginners: Basics and Essential Commands",
+    "publication": "JavaScript in Plain English",
+    "date": "Jan 2026",
+    "url": "https://javascript.plainenglish.io/git-for-beginners-basics-and-essential-commands-b055b9c1d288",
+    "summary": "The commands you will actually reach for, the model underneath them, and the mistakes worth learning from early."
+  }
+]
