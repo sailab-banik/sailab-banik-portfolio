@@ -1,0 +1,20 @@
+[
+  {
+    "company": "ZF Group",
+    "logo": "zf",
+    "url": "https://www.zf.com",
+    "location": "Chennai, India",
+    "roles": [
+      {
+        "title": "Software Engineer II",
+        "period": "Oct 2024 — Present",
+        "summary": "Lead the frontend of PrimeAI and own product flows end to end across interface, API, and database. Built role- and group-based access control from the ground up, and drove the CI/CD work that cut release cycle time by 40% and production hotfixes by 35%."
+      },
+      {
+        "title": "Graduate Engineer Trainee",
+        "period": "Aug 2023 — Sep 2024",
+        "summary": "Stabilised a business-critical legacy platform, clearing high-priority production bugs and remediating 1,000+ SQL injection findings across internal applications. Earned the Budding Star Award for measurable business impact in the first year."
+      }
+    ]
+  }
+]

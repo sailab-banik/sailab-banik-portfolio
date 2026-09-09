@@ -75,3 +75,17 @@ body {
   font-variation-settings: "wght" 700, "wdth" 95, "opsz" 24;
   letter-spacing: -0.02em;
 }
+
+/* A short feather on all four edges keeps the photograph from cutting hard
+   against the page while leaving the rounded square shape intact. */
+.portrait {
+  --feather: 14px;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent),
+    linear-gradient(to bottom, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent),
+    linear-gradient(to bottom, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent);
+  mask-composite: intersect;
+}

@@ -1,11 +1,12 @@
 import Image from "next/image";
 import { getProfile } from "@/lib/content";
 
-const PORTRAIT_SIZE = 1254;
+const PORTRAIT_SIZE = 1000;
 
 export function Hero() {
-  const { name, role, statement, location, portrait } = getProfile();
+  const { name, role, statement, emphasis, location, portrait } = getProfile();
   const [given, family] = name.split(" ");
+  const [before, after] = statement.split(emphasis);
 
   return (
     <section id="top" className="mx-auto w-full max-w-page px-6 pt-16 pb-section md:px-10 md:pt-24">
@@ -16,7 +17,11 @@ export function Hero() {
             <br />
             {family}
           </h1>
-          <p className="mt-8 max-w-[38ch] font-serif text-body text-ink">{statement}</p>
+          <p className="mt-8 max-w-[38ch] font-serif text-body text-ink">
+            {before}
+            <strong className="font-semibold text-signal">{emphasis}</strong>
+            {after}
+          </p>
           <p className="mt-6 text-ui text-slate">
             {role}, {location}
           </p>
@@ -30,7 +35,7 @@ export function Hero() {
             height={PORTRAIT_SIZE}
             sizes="(min-width: 768px) 40vw, 100vw"
             priority
-            className="block w-full rounded-2xl border border-edge"
+            className="portrait block w-full rounded-2xl"
           />
         </div>
       </div>

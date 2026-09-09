@@ -18,12 +18,14 @@ here. Primary job: make them download the resume or open LinkedIn.
 ```
 public/
   resume/sailab-banik-resume.pdf     linked from header and footer
-  images/profile_picture.png                hero portrait, 1200x1600 min, WebP export alongside
+  images/profile_picture.png         original headshot, kept as the source crop
+  images/portrait.png                hero portrait, cropped tight to the subject
   images/projects/<slug>.webp        16:9, 1600px wide
   og.png                             1200x630, generated once
 src/app/icon.png                     favicon, Next.js file convention
 content/profile.json                 name, role, one-line statement, all external links
 content/projects.json                project entries
+content/experience.json              roles grouped by company
 ```
 
 External links (LinkedIn, GitHub, LeetCode, Medium, email) live in
@@ -103,6 +105,10 @@ Vertical rhythm in multiples of 8px, section spacing `clamp(6rem, 12vh, 10rem)`.
 │  └────────────────────────────────────────┘  │
 │  (three entries, full-width, stacked)        │
 ├──────────────────────────────────────────────┤
+│  Experience                                  │
+│  [logo] Company    Role         dates        │
+│         Location   One paragraph per role    │
+├──────────────────────────────────────────────┤
 │  About — one short paragraph, 68ch           │
 ├──────────────────────────────────────────────┤
 │  Email address, large. Social row. Resume.   │
@@ -130,8 +136,9 @@ no interactive client JavaScript.
 
 ### Principles
 
-1. The resume is a destination, not the layout. Never render experience as
-   dated rows.
+1. The resume is the destination for detail. Experience on the page is grouped
+   by company — one logo, one location, a short paragraph per role — never a
+   dated bullet dump duplicating the PDF.
 2. One accent, one screen of copy, nothing in motion. Cut anything else.
 3. Structure earns its keep: a border or divider must separate genuinely
    different kinds of content, never decorate.
@@ -146,6 +153,7 @@ type Profile = {
   name: string
   role: string
   statement: string        // one sentence, under 140 chars
+  emphasis: string         // the substring of statement to set in signal
   email: string
   location: string
   links: {
@@ -166,6 +174,16 @@ type Project = {
   image: string
   repo?: string
   live?: string
+}
+```
+
+```ts
+type Experience = {
+  company: string
+  logo: string             // key into the marks in src/components/logos.tsx
+  url: string
+  location: string
+  roles: { title: string; period: string; summary: string }[]
 }
 ```
 
@@ -207,7 +225,7 @@ existing approach. Delete the `body { font-family: Arial }` rule that
    it renders correctly.
 5. `Work` — three entries from `projects.json`, `next/image` with explicit
    dimensions and `priority` on the first.
-6. `About` and `Footer`.
+6. `Experience` grouped by company, then `About` and `Footer`.
 7. Accessibility and responsive pass at 320, 768, 1280, 1920. Then Lighthouse.
 8. CI workflow: lint, typecheck, build on pull requests.
 
