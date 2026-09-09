@@ -20,8 +20,8 @@ public/
   resume/sailab-banik-resume.pdf     linked from header and footer
   images/profile_picture.png         original headshot, kept as the source crop
   images/portrait.png                hero portrait, cropped tight to the subject
-  images/projects/<slug>.webp        16:9, 1600px wide
-  og.png                             1200x630, generated once
+  images/projects/<slug>.webp        16:9, 1600px wide — not created yet
+  og.png                             1200x630, generated once — not created yet
 src/app/icon.png                     favicon, Next.js file convention
 content/profile.json                 name, role, one-line statement, all external links
 content/projects.json                project entries
@@ -166,6 +166,7 @@ type Profile = {
   emphasis: string         // the substring of statement to set in the sans face
   email: string
   location: string
+  about: string            // one paragraph, the About section
   links: {
     linkedin: string
     github: string
@@ -179,9 +180,11 @@ type Profile = {
 type Project = {
   slug: string
   title: string
+  context: string          // "ZF Group, internal platform" / "Personal project"
   summary: string          // two sentences max
   stack: string[]
-  image: string
+  outcomes: string[]       // the measured result, one per line
+  image?: string
   repo?: string
   live?: string
 }
@@ -217,40 +220,72 @@ currently lead with `outcomes` — the measured result of each project — inste
 
 ## Tokens in Tailwind v4
 
-No JS config. Tokens go in `src/app/globals.css`:
+No JS config. Tokens go in `src/app/globals.css`, and the indirection matters:
+the palette is declared as raw custom properties on `:root`, and `@theme inline`
+references those properties rather than restating the hex.
 
 ```css
 @import "tailwindcss";
 
+:root {
+  --paper: #f2f3f5;
+  --ink: #101418;
+  /* slate, signal, surface, edge */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0e1116;
+    --ink: #edeff2;
+  }
+}
+
 @theme inline {
-  --color-paper: #F2F3F5;
-  --color-ink: #101418;
-  --color-slate: #6E7680;
-  --color-signal: #2233F0;
-  --color-surface: #FFFFFF;
-  --color-edge: #DDDFE3;
-  --font-display: var(--font-bricolage);
-  --font-prose: var(--font-newsreader);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --font-sans: var(--font-bricolage);
+  --font-serif: var(--font-newsreader);
 }
 ```
 
-Dark values under `@media (prefers-color-scheme: dark)`, matching the scaffold's
-existing approach. Delete the `body { font-family: Arial }` rule that
-`create-next-app` leaves behind.
+Writing the hex straight into `@theme inline` looks equivalent and is not: the
+media query would override a raw property nothing reads, and dark mode would
+never switch. The same block also carries the type scale (`--text-display` and
+friends), `--spacing-section`, and `--container-page`.
+
+Two hand-written classes live below the tokens because they do not express as
+utilities: `.type-display` and `.type-h2` set `font-variation-settings` for the
+width and optical-size axes, and `.portrait` feathers the hero photograph.
 
 ## Build order
 
-1. Tokens and fonts in `globals.css` and `layout.tsx`; remove template metadata
-   and the Arial override. Add real `title`, `description`, and OpenGraph.
+Built in this order; kept as a record of why the pieces depend on each other.
+
+1. Tokens and fonts in `globals.css` and `layout.tsx`; real `title`,
+   `description`, and OpenGraph metadata.
 2. `content/*.json` and `src/lib/content.ts` with the types above.
 3. `Header` — monogram, social row, resume link. Sticky, backdrop blur.
-4. `Hero` — name, statement, portrait. Duotone static first, cursor window after
-   it renders correctly.
-5. `Work` — three entries from `projects.json`, `next/image` with explicit
-   dimensions and `priority` on the first.
+4. `Hero` — name, statement, portrait.
+5. `Work` — three entries from `projects.json`.
 6. `Experience` grouped by company, `Writing` cards, then `About` and `Footer`.
-7. Accessibility and responsive pass at 320, 768, 1280, 1920. Then Lighthouse.
-8. CI workflow: lint, typecheck, build on pull requests.
+7. Accessibility and responsive pass at 320, 768, 1280, 1920.
+8. CI workflow: lint, build, typecheck on pull requests and pushes to main.
+
+## Still open
+
+Four things are known-incomplete. None of them are structural.
+
+- **LeetCode URL is a guess.** `profile.json` carries
+  `leetcode.com/u/sailab-banik/`, which was never confirmed — it is not in the
+  resume. Verify or remove the link.
+- **No repo or live links on the projects.** `Project.repo` and `Project.live`
+  are typed and rendered; the URLs were never supplied, so nothing renders.
+- **No `og.png`.** Metadata is wired for OpenGraph but has no image.
+- **`metadataBase` has no real domain.** It falls back to
+  `VERCEL_PROJECT_PRODUCTION_URL`, correct on Vercel, wrong once there is a
+  custom domain.
+
+Also unverified: Lighthouse has not been run.
 
 ## Done when
 
