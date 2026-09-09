@@ -3,7 +3,6 @@ import projects from "../../content/projects.json";
 import experience from "../../content/experience.json";
 import articles from "../../content/articles.json";
 import certificates from "../../content/certificates.json";
-import type { LogoName } from "@/components/logos";
 
 export type Profile = {
   name: string;
@@ -56,15 +55,12 @@ export type Article = {
   summary: string;
 };
 
-/* A certificate shows its scan where one can be published, and the issuer's
-   mark where it cannot. Exactly one of the two is set. */
 export type Certificate = {
   title: string;
   detail: string;
   issuer: string;
   date: string;
-  image?: string;
-  logo?: LogoName;
+  image: string;
 };
 
 export function getProfile(): Profile {
@@ -84,6 +80,5 @@ export function getArticles(): Article[] {
 }
 
 export function getCertificates(): Certificate[] {
-  // JSON widens `logo` to string; LogoName is the constraint worth keeping.
-  return certificates as Certificate[];
+  return certificates;
 }

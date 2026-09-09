@@ -62,7 +62,7 @@ That extends to styling hooks: `profile.emphasis` names the substring of `statem
 
 `public/images/profile_picture.png` is the untouched original headshot and the source for every derived crop — `public/images/portrait.png` (hero) and `src/app/icon.png` (circular favicon). Regenerate crops from it rather than editing it.
 
-Everything under `public/` is served verbatim at its own URL, so a file there is public the moment it is committed, whether or not anything links to it. `public/certificates/Budding_star.jpeg` is stamped "ZF Confidential" and is gitignored for that reason; the Credentials card falls back to the issuer's mark when a certificate has no publishable scan.
+Everything under `public/` is served verbatim at its own URL, so a file there is public the moment it is committed, whether or not anything links to it. Check what a scan or document carries before adding it — the certificates under `public/certificates/` were confirmed with Sailab as already public.
 
 `sharp` is available as a Next.js dependency. From a script in the repo root:
 

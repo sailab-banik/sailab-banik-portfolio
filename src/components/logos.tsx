@@ -8,17 +8,9 @@ const marks = {
 
 export type LogoName = keyof typeof marks;
 
-export function Logo({
-  name,
-  title,
-  className = "h-10 w-10",
-}: {
-  name: LogoName;
-  title: string;
-  className?: string;
-}) {
+export function Logo({ name, title }: { name: LogoName; title: string }) {
   return (
-    <svg viewBox="1.5 1.5 564 564" fill="currentColor" role="img" aria-label={title} className={className}>
+    <svg viewBox="1.5 1.5 564 564" fill="currentColor" role="img" aria-label={title} className="h-10 w-10">
       <path d={marks[name]} />
     </svg>
   );

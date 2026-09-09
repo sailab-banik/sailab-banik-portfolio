@@ -28,7 +28,7 @@ content/projects.json                project entries
 content/experience.json              roles grouped by company
 content/articles.json                selected Medium articles
 content/certificates.json            certificates and awards
-  certificates/*.jpeg                certificate scans, publishable ones only
+  certificates/*.jpeg                certificate scans, linked full size
 ```
 
 External links (LinkedIn, GitHub, LeetCode, Medium, email) live in
@@ -123,7 +123,7 @@ Vertical rhythm in multiples of 8px, section spacing `clamp(6rem, 12vh, 10rem)`.
 ├──────────────────────────────────────────────┤
 │  Credentials                                 │
 │  ┌─────────┐ ┌─────────┐ ┌─────────┐         │
-│  │  scan   │ │  scan   │ │  mark   │         │
+│  │  scan   │ │  scan   │ │  scan   │         │
 │  │ Title   │ │ Title   │ │ Title   │         │
 │  │ Issuer  │ │ Issuer  │ │ Issuer  │         │
 │  └─────────┘ └─────────┘ └─────────┘         │
@@ -215,8 +215,7 @@ type Certificate = {
   detail: string           // one line on what it covered
   issuer: string
   date: string
-  image?: string           // the scan, when it can be published
-  logo?: LogoName          // the issuer's mark, when it cannot
+  image: string            // the scan, shown whole and linked full size
 }
 ```
 
@@ -236,9 +235,9 @@ Four articles, chosen for distinct subjects rather than recency. `surface` is
 the card background, shared by the article and credential cards — the only
 place in the design a raised panel is used.
 
-A certificate that cannot be published keeps its card and shows the issuer's
-mark instead of the scan. The ZF award scan is stamped "ZF Confidential" and is
-gitignored; anything committed under `public/` is publicly reachable.
+Certificate scans come in mixed portrait and landscape, so each is fitted whole
+into a shared 4:3 frame rather than cropped. Anything committed under `public/`
+is publicly reachable, so confirm a document is shareable before adding it.
 
 Project screenshots do not exist yet, so `image` is optional and work entries
 currently lead with `outcomes` — the measured result of each project — instead.
