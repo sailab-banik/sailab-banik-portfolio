@@ -36,7 +36,7 @@ export function Hero() {
         </div>
 
         <div className="order-2 md:order-1 md:col-span-6">
-          <p className="max-w-[34ch] font-serif text-lead text-ink md:-mt-[0.285em]">
+          <p className="font-serif text-lead text-ink md:-mt-[0.285em] md:max-w-[34ch]">
             {before}
             <strong className="font-sans font-semibold tracking-tight">{emphasis}</strong>
             {after}

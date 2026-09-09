@@ -83,7 +83,7 @@ No monospace anywhere. Data labels and figures use Bricolage with
 to be borrowed for.
 
 ```
-display   clamp(2.5rem, calc(26vw - 1.3rem), 18.8rem)  wght 800, wdth 78
+display   var(--display-size)                          wght 800, wdth 78
 h2        clamp(1.5rem, 3vw, 2rem)                     wght 650, wdth 92
 figure    clamp(1.5rem, 3vw, 2.125rem)                 wght 700, tabular
 h3        1.375rem                                     wght 600
@@ -95,9 +95,17 @@ meta      0.8125rem                                    Bricolage, slate
 
 The display size is not a taste call: `Sailab Banik` advances 3.758em at
 wdth 78, and the content column is `100vw - 80px` until it caps at 1160px, so
-`26vw - 1.3rem` is the size at which the name spans the column. Below `md` the
-gutter drops to 24px, so a media query re-solves it as `26.4vw - 0.8rem` —
-without that the name stops visibly short of the rule beneath it. Changing the
+`26.3vw - 1.32rem` is the size at which the name spans the column. Below `md`
+the gutter drops to 24px and a media query re-solves it as `26.35vw - 0.79rem`.
+Both carry ~1% slack against font-rendering variance, and both live on the raw
+`--display-size` property rather than on `--text-display` — see the Tailwind
+note below, because writing the clamp into `@theme inline` makes the mobile
+override dead code and the name silently keeps the desktop size, stopping 39px
+short of the gutter at 390px.
+
+Verify by measuring the *text*, not the block. The line is a block element that
+fills the column whether or not the type does, so its bounding rect always
+reports a perfect fit; use a `Range` over its contents instead. Changing the
 name, the width axis, or the tracking invalidates both coefficients.
 
 No all-caps labels, no eyebrow text above headings, no arrow glyphs appended to
@@ -229,6 +237,10 @@ the buttons to the bottom with `mt-auto`, which closed that but opened 90px
 between the statement and the buttons. Centring puts roughly 75px above and
 below instead, where it reads as air rather than as a gap.
 
+The statement is capped at 34ch from `md` up and uncapped below it, where the
+column is already narrower than the cap and the measure would otherwise stop
+short of the gutter.
+
 The centring is optical, not box-to-box. The cut-out carries about 6%
 transparent headroom above the hair and the first line of Newsreader carries
 0.285em of leading above its cap; both are trimmed, so what gets centred is the
@@ -242,7 +254,10 @@ up, which at 1280 and above puts it at 455px.
 
 The one dark-mode adjustment: a black polo against `paper` at `#0f100b` loses
 the shoulders, so `.portrait` carries a soft `drop-shadow` rim, reading as a rim
-light rather than an effect. Light mode needs nothing and gets nothing.
+light rather than an effect. The rim is white, not `ink` — `ink` is a warm
+off-white and mixing it into a glow casts the whole thing yellow. It is the one
+place on the page a raw colour beats a token, because this is light, not
+palette. Light mode needs nothing and gets nothing.
 
 ### Motion
 
@@ -407,9 +422,12 @@ references those properties rather than restating the hex.
 }
 ```
 
-Writing the hex straight into `@theme inline` looks equivalent and is not: the
-media query would override a raw property nothing reads, and dark mode would
-never switch. The same block also carries the type scale (`--text-display` and
+Writing a literal into `@theme inline` looks equivalent and is not: `inline`
+means the value is inlined into every utility it generates, so a later media
+query overrides a property nothing reads and the override silently does nothing.
+This applies to every token, not just colour — `--text-display` is
+`var(--display-size)` for exactly this reason, and the mobile display size was
+dead code until it was. The same block also carries the type scale (`--text-display` and
 friends), `--spacing-section`, and `--container-page`.
 
 Four hand-written rules live below the tokens because they do not express as
