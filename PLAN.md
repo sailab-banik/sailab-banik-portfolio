@@ -20,15 +20,17 @@ public/
   resume/sailab-banik-resume.pdf     linked from header and footer
   images/profile_picture.png         original headshot, kept as the source crop
   images/portrait-cutout.png         hero portrait, background removed, alpha fade
-  images/projects/<slug>.webp        16:9, 1600px wide — not created yet
-  og.png                             1200x630, generated once — not created yet
+  certificates/*.jpeg                certificate scans, cropped to ~4:3
 src/app/icon.png                     favicon, Next.js file convention
+src/app/opengraph-image.tsx          1200x630 share card, generated at build
+assets/fonts/*.ttf                   static Bricolage cuts, for next/og only
 content/profile.json                 name, role, one-line statement, all external links
 content/projects.json                project entries
 content/experience.json              roles grouped by company
 content/articles.json                selected Medium articles
 content/certificates.json            certificates and awards
-  certificates/*.jpeg                certificate scans, cropped to ~4:3
+content/sections.json                section titles and their one-line leads
+content/stack.json                   the toolkit, grouped
 ```
 
 External links (LinkedIn, GitHub, LeetCode, Medium, email) live in
@@ -41,132 +43,230 @@ downloads folder.
 
 ## Design direction
 
+The page is a document about someone who builds document systems, so the ground
+is a paper stock rather than a neutral grey. Beyond that the design is
+near-monochrome and lets scale, not colour, carry hierarchy.
+
 ### Colour
 
-Cool paper, ink, and one saturated blue. Six values, no gradients as decoration.
+Six tokens, one accent, no gradients as decoration.
 
-| Token       | Light     | Dark      | Role                             |
-|-------------|-----------|-----------|----------------------------------|
-| `paper`     | `#F2F3F5` | `#0E1116` | page background                  |
-| `ink`       | `#101418` | `#EDEFF2` | primary text                     |
-| `slate`     | `#6E7680` | `#8B939D` | secondary text, hairlines        |
-| `signal`    | `#2233F0` | `#5A68FF` | links, focus rings, the one accent |
-| `surface`   | `#FFFFFF` | `#161B22` | raised panels                    |
-| `edge`      | `#DDDFE3` | `#232A33` | 1px borders                      |
+| Token     | Light     | Dark      | Role                                  |
+|-----------|-----------|-----------|---------------------------------------|
+| `paper`   | `#eeefe8` | `#0f100b` | page ground, a paper stock            |
+| `surface` | `#f7f8f2` | `#191a13` | the only raised panel                 |
+| `ink`     | `#15160f` | `#eceee1` | primary text                          |
+| `slate`   | `#6a6c60` | `#8d8f81` | secondary text                        |
+| `edge`    | `#dadbd0` | `#272920` | 1px borders and hairlines             |
+| `signal`  | `#3b2fe0` | `#9a90ff` | anything interactive, and focus rings |
 
-`signal` appears sparingly: interactive text and focus rings. It is never used
-as a background wash, and never as a filter over the photography.
+`signal` means one thing: this is interactive. Links, the primary button, focus
+rings. Never a background wash, never over the photography.
+
+There is no second accent. An earlier pass carried an amber highlighter under
+every measured figure; it read as decoration rather than emphasis and made the
+page look less considered, not more. Project outcomes now separate themselves by
+scale alone, which is enough. Do not reintroduce a colour whose only job is to
+draw the eye.
 
 ### Type
 
 Two families, used for clearly separate jobs.
 
 - **Bricolage Grotesque** (variable, `next/font/google`) for the name, headings,
-  labels, and all UI. Its width and optical-size axes let one family cover
-  120px display down to 13px UI without a second sans.
-- **Newsreader** (`next/font/google`) for running prose — the About paragraph and
-  project descriptions only.
+  labels, figures, and all UI. Width and optical-size axes let one family cover
+  a 300px lockup down to 13px UI without a second sans.
+- **Newsreader** for running prose — the statement, summaries, and About.
 
-Scale, modular at 1.333 from a 16px base:
+No monospace anywhere. Data labels and figures use Bricolage with
+`font-variant-numeric: tabular-nums`, which is what a monospace face was going
+to be borrowed for.
 
 ```
-display   clamp(3.5rem, 11vw, 8.5rem)   wght 800, wdth 85, tracking -0.04em
-h2        clamp(1.75rem, 4vw, 2.6rem)   wght 700, tracking -0.02em
-h3        1.3rem                        wght 600
-body      1.0625rem / 1.65              Newsreader, max 68ch
-ui        0.875rem / 1.4                Bricolage, wght 500
-meta      0.8125rem                     Bricolage, slate
+display   clamp(2.5rem, calc(26vw - 1.3rem), 18.8rem)  wght 800, wdth 78
+h2        clamp(1.5rem, 3vw, 2rem)                     wght 650, wdth 92
+figure    clamp(1.5rem, 3vw, 2.125rem)                 wght 700, tabular
+h3        1.375rem                                     wght 600
+lead      clamp(1.125rem, 1.9vw, 1.5rem)               Newsreader
+body      1.0625rem / 1.7                              Newsreader, max 68ch
+ui        0.875rem / 1.45                              Bricolage
+meta      0.8125rem                                    Bricolage, slate
 ```
 
-No all-caps labels, no eyebrow text above headings, no single accented word
-inside a headline. The one emphasis on the page — the years of experience in
-the statement - is made by switching to Bricolage inside the Newsreader prose,
-never by colouring a word.
+The display size is not a taste call: `Sailab Banik` advances 3.758em at
+wdth 78, and the content column is `100vw - 80px` until it caps at 1160px, so
+`26vw - 1.3rem` is the size at which the name spans the column. Below `md` the
+gutter drops to 24px, so a media query re-solves it as `26.4vw - 0.8rem` —
+without that the name stops visibly short of the rule beneath it. Changing the
+name, the width axis, or the tracking invalidates both coefficients.
+
+No all-caps labels, no eyebrow text above headings, no arrow glyphs appended to
+link text, no `01 / 02 / 03` markers on things that are not sequences.
 
 ### Layout
 
-Single column, left-aligned, on a 12-column grid with generous outer margin.
-Content max-width 1180px; prose max-width 68ch regardless of container.
-Vertical rhythm in multiples of 8px, section spacing `clamp(6rem, 12vh, 10rem)`.
+Content max-width 1240px; prose max-width 68ch regardless of container.
+Section spacing `clamp(5.5rem, 11vh, 9rem)`.
+
+Every section between the hero and the footer is a `Section`: a 12-column grid
+whose left three columns hold a **sticky rail** with the section title and a
+one-line lead, and whose right nine columns hold the content. The title stays in
+the margin while its content scrolls, so it is still there to read against at
+the bottom of a long section. Below `md` the rail stacks above the content.
+
+The footer is deliberately not a `Section`. Contact is not another topic to be
+indexed in a margin; it is the end of the page and the one thing it should do is
+invite a reply. It runs full width with no rail.
 
 ```
-┌──────────────────────────────────────────────┐
-│ SB                    in  gh  lc  md  Resume │  sticky, 64px, blurred paper
-├──────────────────────────────────────────────┤
-│                                              │
-│  SAILAB                    ┌──────────────┐  │
-│  BANIK                     │              │  │
-│                            │   portrait   │  │
-│  One line on what you      │              │  │
-│  build and why.            │              │  │
-│                            └──────────────┘  │
-│                                              │
-├──────────────────────────────────────────────┤
-│  Experience                                  │
-│  [logo] Company    Role         dates        │
-│         Location   One paragraph per role    │
-├──────────────────────────────────────────────┤
-│  Work                                        │
-│  ┌────────────────────────────────────────┐  │
-│  │ Title            stack   stack   stack │  │
-│  │ Two lines of prose.  outcomes   links  │  │
-│  └────────────────────────────────────────┘  │
-│  (three entries, full-width, stacked)        │
-├──────────────────────────────────────────────┤
-│  Writing                                     │
-│  ┌───────────────────┐ ┌───────────────────┐ │
-│  │ Article title     │ │ Article title     │ │
-│  │ One line          │ │ One line          │ │
-│  │ Publication, date │ │ Publication, date │ │
-│  └───────────────────┘ └───────────────────┘ │
-│  (four cards, two columns, whole card links) │
-├──────────────────────────────────────────────┤
-│  Credentials                                 │
-│  ┌─────────┐ ┌─────────┐ ┌─────────┐         │
-│  │  scan   │ │  scan   │ │  scan   │         │
-│  │ Title   │ │ Title   │ │ Title   │         │
-│  │ Issuer  │ │ Issuer  │ │ Issuer  │         │
-│  └─────────┘ └─────────┘ └─────────┘         │
-├──────────────────────────────────────────────┤
-│  About — one short paragraph, 68ch           │
-├──────────────────────────────────────────────┤
-│  Email address, large. Social row. Resume.   │
-└──────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────┐
+│ SB                     in gh lc md   [ Resume ]  │  sticky, 64px, blurred
+├──────────────────────────────────────────────────┤
+│                                                  │
+│  SAILAB BANIK ═══════════════════════════        │  fills the column
+│  ─────────────────────────────────────────────   │  shared top edge
+│  Statement, Newsreader, 34ch       ╭──────────╮  │
+│                                    │ portrait │  │
+│  [ Download resume ] [ LinkedIn ]  │          │  │
+│  Software Engineer in Chennai, India ╰────────╯  │
+│  (below md the portrait spans the gutters, so it │
+│   shares both edges with the name and the rule)  │
+├──────────────────────────────────────────────────┤
+│ Experience │ [logo] ZF Group                     │
+│  (sticky)  │        Chennai, India               │
+│            │  ├── Software Engineer II  2024 —   │
+│            │  │   one paragraph                  │
+│            │  └── Graduate Engineer Trainee      │
+├──────────────────────────────────────────────────┤
+│ Work       │ PrimeAI       ZF Group, internal    │
+│  (sticky)  │ two sentences of prose              │
+│            │ React  Redux  FastAPI  Postgres     │
+│            │ Teams onboarded ············ 5+     │
+│            │ Less manual review ········· 60%    │
+├──────────────────────────────────────────────────┤
+│ Writing    │ Article title ↗         Publication │
+│  (sticky)  │ one line                      date  │
+│            │ (four rows, whole row links)        │
+├──────────────────────────────────────────────────┤
+│ Credentials│ ┌───────┐ ┌───────┐ ┌───────┐       │
+│  (sticky)  │ │ scan  │ │ scan  │ │ scan  │       │
+├──────────────────────────────────────────────────┤
+│ About      │ one paragraph, 58ch                 │
+│  (sticky)  │ ───────────────────────────────     │
+│            │ Languages   Interface   Services    │
+├──────────────────────────────────────────────────┤
+├──────────────────────────────────────────────────┤
+│  Happy to talk about engineering work, AI        │
+│  systems, or anything else on this page.         │
+│                                                  │
+│  sailabbanik24@gmail.com                         │
+│  ──────────────────────────────────────────────  │
+│  in gh lc md  Resume        Sailab Banik, Chennai│
+└──────────────────────────────────────────────────┘
 ```
 
-Mobile: header collapses to monogram plus LinkedIn, GitHub, and Resume; the
-other two move to the footer. Portrait sits above the name block, capped at 62vh.
-Work entries stay full-width — no horizontal scroll, no carousel.
+**Extraction rows** carry the project outcomes: label left, a leader, and the
+measured value right in tabular figures. This is the vernacular of the product
+itself, and it replaces the stat-card treatment that every portfolio reaches
+for.
+
+A flow strip once sat between the stack list and the outcomes, naming the stages
+each system runs. It was removed: unlabelled, it did not communicate what it
+was, and the prose summary above it already says how the system works. Do not
+add it back without a reason it can be read without a caption.
+
+Article titles carry an **outbound mark**: a solid disc with the arrow knocked
+out of it, in `src/components/outbound-mark.tsx`. It is there because these rows
+are whole-row links to another site, and nothing else in the row says so. The
+arrow points out rather than along — a `→` would say "continue", which is both
+the wrong claim and the commonest tell of a generated page. Nothing internal
+gets one.
+
+At rest the disc is `edge` with an `ink` arrow. On hover it takes `signal` with
+the arrow in `paper`, and the arrow swaps: the one in place leaves through the
+top-right corner as its replacement arrives from the bottom-left, both clipped
+by the disc so neither is ever seen outside it. That swap is the whole reason
+the mark is a disc and not a glyph — it gives the hover somewhere to happen.
+Under reduced motion the replacement is not rendered and the arrow in place
+stays put; the colour change still answers the hover.
+
+Three things about it are load-bearing:
+
+- It is sized in `em` and dropped 0.28em below the baseline, so it centres on
+  the cap height (0.66em in Bricolage) rather than sitting on the line.
+- The last word of the title and the mark are held in a `whitespace-nowrap`
+  span. Chrome breaks between text and an atomic inline even across a
+  non-breaking space, which strands the mark alone on a line — the NBSP was
+  tried first and does not hold.
+- It sits outside the underlined spans, so the hover rule stops at the word
+  instead of striking through the disc.
+
+Cards survive in exactly one place — Credentials — because there the card holds
+a scan. Writing is rows, not cards, and `surface` is now used only by those
+cards and the company mark in Experience.
+
+Mobile: the header keeps the name plus LinkedIn, GitHub, and Resume; the other
+two move to the footer. The name still spans the column, the portrait sits
+right under the rule, and everything else is single column.
 
 ### The one bold element
 
-The display lockup. The name is set at up to 8.5rem in Bricolage at wght 800,
-wdth 85, stacked on two lines and tracked to -0.04em. Nothing else on the page
-is allowed to compete with it.
+The hero lockup. `Sailab Banik` set on one line at up to 300px, wght 800,
+wdth 78, spanning the full content column. Nothing else on the page is allowed
+to compete with it.
 
-The portrait is a cut-out: the studio background is removed so the subject
-stands directly on the page with no frame, no radius and no hairline, and the
-shoulder fade is baked into the file's alpha rather than masked in CSS.
+A hairline rule runs the full width beneath the name, and both the statement and
+the portrait hang from it. The photograph is set *with* the type, on the same
+line, rather than layered over it. An earlier pass had the cut-out rising into
+the name so the letters passed behind the silhouette — it was the more clever
+composition and the worse one, because nothing in it aligned to anything.
 
-The one adjustment is for dark mode. A black polo against `paper` at `#0E1116`
-loses the shoulders entirely, so the cut-out carries a soft `drop-shadow` rim
-in `ink` at 20% — enough to separate the silhouette, reading as a rim light
-rather than as an effect. Light mode needs nothing and gets nothing.
+Both columns hang from the rule, and the text block is **centred** against the
+portrait. The text is always the shorter of the two, so matching one edge only
+moves the mismatch to the other: an earlier pass aligned their tops, which left
+the photograph hanging 150px below the meta line, and the pass after that pinned
+the buttons to the bottom with `mt-auto`, which closed that but opened 90px
+between the statement and the buttons. Centring puts roughly 75px above and
+below instead, where it reads as air rather than as a gap.
 
-Everything stays still. No scroll-triggered fades on sections, no hover lift on
-work entries — only a border colour change on focus and hover. The page ships
-no interactive client JavaScript.
+The centring is optical, not box-to-box. The cut-out carries about 6%
+transparent headroom above the hair and the first line of Newsreader carries
+0.285em of leading above its cap; both are trimmed, so what gets centred is the
+block you can see rather than the boxes. Those numbers are tied to this asset
+and this face — re-crop the cut-out or change the statement's family or
+line-height and both trims need re-measuring.
+
+The spacing between the statement and the buttons stays at 36px at every width.
+The portrait is sized around the text, not the reverse: five columns from `md`
+up, which at 1280 and above puts it at 455px.
+
+The one dark-mode adjustment: a black polo against `paper` at `#0f100b` loses
+the shoulders, so `.portrait` carries a soft `drop-shadow` rim, reading as a rim
+light rather than an effect. Light mode needs nothing and gets nothing.
+
+### Motion
+
+One orchestrated moment: on load the name rises out of a clipped line box and
+the portrait, statement, buttons, and meta line fade up behind it on a stagger.
+Nothing else moves on its own — no scroll-triggered section fades, no hover
+lift on cards. Interaction gets a border or underline change and nothing more.
+The whole sequence sits inside `prefers-reduced-motion: no-preference`, and the
+page still ships no client JavaScript.
 
 ### Principles
 
 1. The resume is the destination for detail. Experience on the page is grouped
    by company — one logo, one location, a short paragraph per role — never a
    dated bullet dump duplicating the PDF.
-2. One accent, one screen of copy, nothing in motion. Cut anything else.
-3. Structure earns its keep: a border or divider must separate genuinely
-   different kinds of content, never decorate.
-4. Quality floor, unannounced: visible focus rings, keyboard-reachable links,
-   4.5:1 contrast minimum, respects reduced motion, works at 320px.
+2. One accent, and it means "interactive". Hierarchy comes from scale and
+   space, not from a second colour.
+3. Structure earns its keep: a border, a rail, or a timeline must separate
+   genuinely different content, never decorate. The Experience timeline exists
+   because roles at one employer are a real sequence; projects are not, so they
+   get no numbering.
+4. Quality floor, unannounced: visible focus rings that follow the element's
+   own radius, keyboard-reachable links, 4.5:1 contrast minimum, respects
+   reduced motion, works at 320px.
 
 ## Content model
 
@@ -196,8 +296,7 @@ type Project = {
   context: string          // "ZF Group, internal platform" / "Personal project"
   summary: string          // two sentences max
   stack: string[]
-  outcomes: string[]       // the measured result, one per line
-  image?: string
+  outcomes: { label: string; value: string }[]   // label left, value right
   repo?: string
   live?: string
 }
@@ -231,13 +330,42 @@ type Article = {
   url: string
   summary: string        // one line
 }
+
+type StackGroup = {
+  group: string          // "Languages", "AI systems", ...
+  items: string[]
+}
+
+type SectionCopy = {
+  title: string          // the rail heading
+  lead: string           // one or two lines under it, first person
+}
 ```
+
+Section headings and their leads live in `content/sections.json`, keyed by the
+section id, so a rail title is content like everything else. `Section` reads it
+by name; components never hold the copy.
+
+The leads are written in first person and say something about the work or the
+person. They are not captions describing the page — "Explainers on the parts of
+the stack people skip" is meta-commentary; "I write things down to understand
+them properly" is the same section doing branding. Keep them in the second
+register.
+
+`contact` is the exception in how it is used, not how it is written. The footer
+renders `contact.lead` as its visible heading, in the serif, because a small
+"Get in touch" label sitting above the email address would be an eyebrow. The
+`title` survives as an `sr-only` heading so the landmark still has a plain name.
+
+`content/stack.json` is deliberately short and holds only tools that appear
+somewhere else on the page or in the resume. It is a scan aid for engineers,
+not a keyword list — anything added to it should be true of real work.
 
 Three projects. Four is already too many for this page.
 
-Four articles, chosen for distinct subjects rather than recency. `surface` is
-the card background, shared by the article and credential cards — the only
-place in the design a raised panel is used.
+Four articles, chosen for distinct subjects rather than recency. They render as
+rows, not cards: `surface` is used for exactly two things, the credential cards
+and the company mark in Experience.
 
 Certificate scans are cropped to a common landscape ratio near 4:3 before they
 go in, so all three fill the card frame at the same size instead of one
@@ -245,8 +373,9 @@ letterboxing against the others. The cards are not links — the scan on the car
 is the whole of what there is to see. Anything committed under `public/` is
 publicly reachable, so confirm a document is shareable before adding it.
 
-Project screenshots do not exist yet, so `image` is optional and work entries
-currently lead with `outcomes` — the measured result of each project — instead.
+There are no project screenshots and none are planned. A project shows what it
+is (prose), what it is built from (`stack`), and what it moved (`outcomes`); a
+screenshot of an internal tool would add none of those.
 
 ## Tokens in Tailwind v4
 
@@ -258,15 +387,15 @@ references those properties rather than restating the hex.
 @import "tailwindcss";
 
 :root {
-  --paper: #f2f3f5;
-  --ink: #101418;
-  /* slate, signal, surface, edge */
+  --paper: #eeefe8;
+  --ink: #15160f;
+  /* surface, slate, edge, signal */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper: #0e1116;
-    --ink: #edeff2;
+    --paper: #0f100b;
+    --ink: #eceee1;
   }
 }
 
@@ -283,9 +412,11 @@ media query would override a raw property nothing reads, and dark mode would
 never switch. The same block also carries the type scale (`--text-display` and
 friends), `--spacing-section`, and `--container-page`.
 
-Two hand-written classes live below the tokens because they do not express as
-utilities: `.type-display` and `.type-h2` set `font-variation-settings` for the
-width and optical-size axes, and `.portrait` feathers the hero photograph.
+Four hand-written rules live below the tokens because they do not express as
+utilities: `.type-display`, `.type-h2`, and `.type-figure` set
+`font-variation-settings` for the width and optical-size axes (and tabular
+figures), and `.portrait` carries the dark-mode rim. The hero reveal keyframes
+and the mobile `--text-display` override sit with them.
 
 ## Build order
 
@@ -302,19 +433,38 @@ Built in this order; kept as a record of why the pieces depend on each other.
 7. Accessibility and responsive pass at 320, 768, 1280, 1920.
 8. CI workflow: lint, build, typecheck on pull requests and pushes to main.
 
+## The share card
+
+`src/app/opengraph-image.tsx` generates the 1200x630 card at build time with
+`next/og`, so there is no `og.png` to keep in sync with the page. It is the
+hero lockup again: paper ground, the name at the width of the card, the
+statement with the years set in the heavier weight, and a rule over the role and
+location.
+
+`next/og` rasterises with satori, which needs static font instances, so two
+Bricolage cuts live in `assets/fonts/` and are read with `node:fs` at module
+scope. The variable font `next/font/google` loads for the page cannot be used
+here. Two satori quirks are worth knowing before editing the file: children of
+a flex container each become their own text run, so a trailing space is
+trimmed — the statement carries an explicit spacer element rather than relying
+on whitespace — and every `div` with more than one child needs an explicit
+`display: flex`.
+
 ## Still open
 
-Four things are known-incomplete. None of them are structural.
+Three things are known-incomplete. None of them are structural.
 
 - **LeetCode URL is a guess.** `profile.json` carries
   `leetcode.com/u/sailab-banik/`, which was never confirmed — it is not in the
   resume. Verify or remove the link.
 - **No repo or live links on the projects.** `Project.repo` and `Project.live`
   are typed and rendered; the URLs were never supplied, so nothing renders.
-- **No `og.png`.** Metadata is wired for OpenGraph but has no image.
 - **`metadataBase` has no real domain.** It falls back to
   `VERCEL_PROJECT_PRODUCTION_URL`, correct on Vercel, wrong once there is a
   custom domain.
+
+`content/stack.json` lists only tools evidenced elsewhere on the page, so it is
+narrower than the real toolkit. Extend it with what is actually true.
 
 Also unverified: Lighthouse has not been run.
 

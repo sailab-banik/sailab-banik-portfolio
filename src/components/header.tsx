@@ -9,7 +9,7 @@ export function Header() {
     .join("");
 
   return (
-    <header className="sticky top-0 z-50 border-b border-edge bg-paper/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-edge bg-paper/85 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-page items-center justify-between px-6 md:px-10">
         <a
           href="#top"
@@ -24,7 +24,7 @@ export function Header() {
           <a
             href={resume}
             download
-            className="text-ui font-medium text-ink underline decoration-edge decoration-1 underline-offset-4 transition-colors hover:decoration-signal"
+            className="flex h-9 items-center rounded-full border border-edge px-4 text-ui font-medium text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper"
           >
             Resume
           </a>

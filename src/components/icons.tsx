@@ -35,3 +35,23 @@ export function MediumIcon({ className }: IconProps) {
     </svg>
   );
 }
+
+/* Outbound mark. Sized in `em` by the caller rather than from `base`, because
+   it has to sit against the cap height of whatever it follows. */
+export function ArrowUpRightIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 10 10"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      className={className}
+    >
+      <path d="M1.6 8.4 8.4 1.6" />
+      <path d="M3.1 1.6h5.3v5.3" />
+    </svg>
+  );
+}

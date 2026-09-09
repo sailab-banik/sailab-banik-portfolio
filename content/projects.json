@@ -4,11 +4,26 @@
     "title": "PrimeAI",
     "context": "ZF Group, internal platform",
     "summary": "An AI document processing platform where business teams create their own extraction models, annotate the fields they need, and push the results straight into their workflows. I led the frontend and built role- and group-based access control from the ground up so teams with strict data rules could adopt it.",
-    "stack": ["React", "Redux Toolkit", "FastAPI", "PostgreSQL", "Azure DevOps"],
+    "stack": [
+      "React",
+      "Redux Toolkit",
+      "FastAPI",
+      "PostgreSQL",
+      "Azure DevOps"
+    ],
     "outcomes": [
-      "Adopted by 5+ business teams",
-      "60% less manual document review",
-      "2,000+ operational hours saved per quarter"
+      {
+        "label": "Business teams onboarded",
+        "value": "5+"
+      },
+      {
+        "label": "Less manual document review",
+        "value": "60%"
+      },
+      {
+        "label": "Operational hours saved each quarter",
+        "value": "2,000+"
+      }
     ]
   },
   {
@@ -16,10 +31,21 @@
     "title": "Vision-model extraction for complex documents",
     "context": "Personal project",
     "summary": "An extraction system for documents that defeat plain text parsing: forms, multi-column layouts, tables tangled with prose. It segments each page into semantic regions and sends every region to a locally served vision-language model with a prompt written for that region type.",
-    "stack": ["Python", "PP-Structure", "Ollama", "FastAPI"],
+    "stack": [
+      "Python",
+      "PP-Structure",
+      "Ollama",
+      "FastAPI"
+    ],
     "outcomes": [
-      "25% more accurate on structured fields than whole-page images",
-      "100% schema-valid output through guided generation"
+      {
+        "label": "More accurate on structured fields than whole-page images",
+        "value": "+25%"
+      },
+      {
+        "label": "Schema-valid output through guided generation",
+        "value": "100%"
+      }
     ]
   },
   {
@@ -27,10 +53,22 @@
     "title": "Retrieval pipeline for 100+ page documents",
     "context": "Personal project",
     "summary": "A pipeline that turns unstructured PDFs into JSON matching a schema the user defines, running entirely on local infrastructure so nothing sensitive leaves the environment. Text and tables live in separate vector stores, chunked along the document structure and reranked by a cross-encoder.",
-    "stack": ["Python", "LangChain", "Qwen3", "Chroma", "FastAPI"],
+    "stack": [
+      "Python",
+      "LangChain",
+      "Qwen3",
+      "Chroma",
+      "FastAPI"
+    ],
     "outcomes": [
-      "40% better retrieval precision than a single-store baseline",
-      "Valid JSON responses from 75% to 100%"
+      {
+        "label": "Better retrieval precision than a single-store baseline",
+        "value": "+40%"
+      },
+      {
+        "label": "Valid JSON responses, up from 75%",
+        "value": "100%"
+      }
     ]
   }
 ]

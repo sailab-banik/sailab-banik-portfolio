@@ -1,0 +1,26 @@
+{
+  "experience": {
+    "title": "Experience",
+    "lead": "Three years at ZF Group, from stabilising a legacy platform to leading the frontend of an AI product."
+  },
+  "work": {
+    "title": "Work",
+    "lead": "Three systems I owned end to end, and what they changed for the people using them."
+  },
+  "writing": {
+    "title": "Writing",
+    "lead": "I write things down to understand them properly. These are the ones worth passing on."
+  },
+  "credentials": {
+    "title": "Credentials",
+    "lead": "Where the work was recognised, and where I went to go deeper."
+  },
+  "about": {
+    "title": "About",
+    "lead": "The short version: what I build, and why I build it this way."
+  },
+  "contact": {
+    "title": "Get in touch",
+    "lead": "Happy to talk about engineering work, AI systems, or anything else on this page."
+  }
+}

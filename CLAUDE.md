@@ -31,7 +31,7 @@ The page ships **no client components** — nothing on it is interactive beyond 
 - **Dev artifacts go to `.next/dev/`**, production ones to `.next/`. Both are gitignored.
 - **Tailwind CSS v4** — there is no `tailwind.config.*`. Configuration is CSS-first: `@import "tailwindcss"` plus the `@theme inline` block in `src/app/globals.css`. Palette tokens are raw custom properties on `:root` that `@theme inline` then references (`--color-ink: var(--ink)`). Putting literal hex straight into `@theme inline` breaks dark mode, because the media query overrides the raw property, not the theme token.
 - **Fonts** are Bricolage Grotesque (`font-sans`, loaded with the `opsz` and `wdth` axes) and Newsreader (`font-serif`), via `next/font/google` in the root layout and mapped through `@theme inline`; `body` carries `font-sans`. Newsreader is loaded without an italic style, so the `italic` utility silently falls back to roman — add `style: ["normal", "italic"]` to the loader before using it.
-- **The favicon is `src/app/icon.png`**, via the Next.js file convention — there is no `public/favicon.ico`.
+- **The favicon is `src/app/icon.png`**, via the Next.js file convention — there is no `public/favicon.ico`. The share card is generated the same way, by `src/app/opengraph-image.tsx` with `next/og` — there is no `og.png`. `next/og` rasterises with satori, which needs *static* font files, so it reads two Bricolage cuts from `assets/fonts/` with `node:fs`; the variable font `next/font/google` loads for the page cannot be reused there.
 - **Dark mode** is `prefers-color-scheme` only: a media query in `globals.css` redefines the palette custom properties. There is no class toggle, no theme switcher, and no `dark:` utilities anywhere — components use the semantic tokens and both themes follow.
 
 ## Conventions
@@ -54,9 +54,11 @@ The page ships **no client components** — nothing on it is interactive beyond 
 
 ## Content
 
-All copy, project data, and links live in `content/*.json` — `profile.json`, `experience.json`, `projects.json`, `articles.json`, `certificates.json` — loaded through typed helpers in `src/lib/content.ts`. Components never hardcode text.
+All copy, project data, and links live in `content/*.json` — `profile.json`, `experience.json`, `projects.json`, `articles.json`, `certificates.json`, `sections.json`, `stack.json` — loaded through typed helpers in `src/lib/content.ts`. Components never hardcode text. That includes section headings and their one-line leads: `sections.json` is keyed by section id and read by `Section` in `src/components/section.tsx`.
 
-That extends to styling hooks: `profile.emphasis` names the substring of `statement` the hero sets in the sans face, so the highlight follows the copy instead of being markup in a component.
+That extends to styling hooks: `profile.emphasis` names the substring of `statement` the hero sets in the sans face, so the emphasis follows the copy instead of being markup in a component. `sections.json` holds each section's rail heading and its lead line; the leads are first-person and say something about the work, not captions describing the page.
+
+`--text-display` is derived, not chosen: `Sailab Banik` advances 3.758em in Bricolage at `wdth 78` with `-0.035em` tracking, and the content column is `100vw - 80px` until it caps at 1160px, so the clamp's `26vw - 1.3rem` is the size at which the name spans the column. A media query re-solves it as `26.4vw - 0.8rem` below `md`, where the gutter is 24px instead of 40px. Change the name, the width axis, or the tracking and both coefficients have to be re-measured or the hero stops fitting.
 
 ## Images
 
