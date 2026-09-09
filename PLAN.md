@@ -77,7 +77,9 @@ meta      0.8125rem                     Bricolage, slate
 ```
 
 No all-caps labels, no eyebrow text above headings, no single accented word
-inside a headline.
+inside a headline. The one emphasis on the page — the years of experience in
+the statement - is made by switching to Bricolage inside the Newsreader prose,
+never by colouring a word.
 
 ### Layout
 
@@ -161,7 +163,7 @@ type Profile = {
   name: string
   role: string
   statement: string        // one sentence, under 140 chars
-  emphasis: string         // the substring of statement to set in signal
+  emphasis: string         // the substring of statement to set in the sans face
   email: string
   location: string
   links: {

@@ -19,7 +19,7 @@ export function Hero() {
           </h1>
           <p className="mt-8 max-w-[38ch] font-serif text-body text-ink">
             {before}
-            <strong className="font-semibold text-signal">{emphasis}</strong>
+            <strong className="font-sans font-semibold tracking-tight text-ink">{emphasis}</strong>
             {after}
           </p>
           <p className="mt-6 text-ui text-slate">
