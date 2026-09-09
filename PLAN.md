@@ -27,6 +27,8 @@ content/profile.json                 name, role, one-line statement, all externa
 content/projects.json                project entries
 content/experience.json              roles grouped by company
 content/articles.json                selected Medium articles
+content/certificates.json            certificates and awards
+  certificates/*.jpeg                certificate scans, publishable ones only
 ```
 
 External links (LinkedIn, GitHub, LeetCode, Medium, email) live in
@@ -119,6 +121,13 @@ Vertical rhythm in multiples of 8px, section spacing `clamp(6rem, 12vh, 10rem)`.
 │  └───────────────────┘ └───────────────────┘ │
 │  (four cards, two columns, whole card links) │
 ├──────────────────────────────────────────────┤
+│  Credentials                                 │
+│  ┌─────────┐ ┌─────────┐ ┌─────────┐         │
+│  │  scan   │ │  scan   │ │  mark   │         │
+│  │ Title   │ │ Title   │ │ Title   │         │
+│  │ Issuer  │ │ Issuer  │ │ Issuer  │         │
+│  └─────────┘ └─────────┘ └─────────┘         │
+├──────────────────────────────────────────────┤
 │  About — one short paragraph, 68ch           │
 ├──────────────────────────────────────────────┤
 │  Email address, large. Social row. Resume.   │
@@ -201,6 +210,17 @@ type Experience = {
 ```
 
 ```ts
+type Certificate = {
+  title: string
+  detail: string           // one line on what it covered
+  issuer: string
+  date: string
+  image?: string           // the scan, when it can be published
+  logo?: LogoName          // the issuer's mark, when it cannot
+}
+```
+
+```ts
 type Article = {
   title: string
   publication: string
@@ -213,7 +233,12 @@ type Article = {
 Three projects. Four is already too many for this page.
 
 Four articles, chosen for distinct subjects rather than recency. `surface` is
-the card background — the only place in the design a raised panel is used.
+the card background, shared by the article and credential cards — the only
+place in the design a raised panel is used.
+
+A certificate that cannot be published keeps its card and shows the issuer's
+mark instead of the scan. The ZF award scan is stamped "ZF Confidential" and is
+gitignored; anything committed under `public/` is publicly reachable.
 
 Project screenshots do not exist yet, so `image` is optional and work entries
 currently lead with `outcomes` — the measured result of each project — instead.
@@ -267,7 +292,8 @@ Built in this order; kept as a record of why the pieces depend on each other.
 3. `Header` — monogram, social row, resume link. Sticky, backdrop blur.
 4. `Hero` — name, statement, portrait.
 5. `Work` — three entries from `projects.json`.
-6. `Experience` grouped by company, `Writing` cards, then `About` and `Footer`.
+6. `Experience` grouped by company, `Writing` and `Credentials` cards, then
+   `About` and `Footer`.
 7. Accessibility and responsive pass at 320, 768, 1280, 1920.
 8. CI workflow: lint, build, typecheck on pull requests and pushes to main.
 

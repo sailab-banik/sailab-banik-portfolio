@@ -18,7 +18,7 @@ No test framework is configured — there is no test runner, no test files, and 
 
 ## Project state
 
-Single-page portfolio for Sailab Banik, built and live. `src/app/page.tsx` composes `Header`, `Hero`, `Experience`, `Work`, `Writing`, `About`, and `Footer` from `src/components/`.
+Single-page portfolio for Sailab Banik, built and live. `src/app/page.tsx` composes `Header`, `Hero`, `Experience`, `Work`, `Writing`, `Credentials`, `About`, and `Footer` from `src/components/`.
 
 The page ships **no client components** — nothing on it is interactive beyond links. Keep it that way unless a feature genuinely needs state.
 
@@ -54,13 +54,15 @@ The page ships **no client components** — nothing on it is interactive beyond 
 
 ## Content
 
-All copy, project data, and links live in `content/*.json` — `profile.json`, `experience.json`, `projects.json`, `articles.json` — loaded through typed helpers in `src/lib/content.ts`. Components never hardcode text.
+All copy, project data, and links live in `content/*.json` — `profile.json`, `experience.json`, `projects.json`, `articles.json`, `certificates.json` — loaded through typed helpers in `src/lib/content.ts`. Components never hardcode text.
 
 That extends to styling hooks: `profile.emphasis` names the substring of `statement` the hero sets in the sans face, so the highlight follows the copy instead of being markup in a component.
 
 ## Images
 
 `public/images/profile_picture.png` is the untouched original headshot and the source for every derived crop — `public/images/portrait.png` (hero) and `src/app/icon.png` (circular favicon). Regenerate crops from it rather than editing it.
+
+Everything under `public/` is served verbatim at its own URL, so a file there is public the moment it is committed, whether or not anything links to it. `public/certificates/Budding_star.jpeg` is stamped "ZF Confidential" and is gitignored for that reason; the Credentials card falls back to the issuer's mark when a certificate has no publishable scan.
 
 `sharp` is available as a Next.js dependency. From a script in the repo root:
 
