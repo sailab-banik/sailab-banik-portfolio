@@ -49,8 +49,8 @@ Cool paper, ink, and one saturated blue. Six values, no gradients as decoration.
 | `surface`   | `#FFFFFF` | `#161B22` | raised panels                    |
 | `edge`      | `#DDDFE3` | `#232A33` | 1px borders                      |
 
-`signal` appears sparingly: interactive text, focus rings, the portrait duotone.
-It is never used as a background wash.
+`signal` appears sparingly: interactive text and focus rings. It is never used
+as a background wash, and never as a filter over the photography.
 
 ### Type
 
@@ -90,7 +90,7 @@ Vertical rhythm in multiples of 8px, section spacing `clamp(6rem, 12vh, 10rem)`.
 │  SAILAB                    ┌──────────────┐  │
 │  BANIK                     │              │  │
 │                            │   portrait   │  │
-│  One line on what you      │   duotone    │  │
+│  One line on what you      │  edges fade  │  │
 │  build and why.            │              │  │
 │                            └──────────────┘  │
 │                                              │
@@ -115,20 +115,25 @@ Work entries stay full-width — no horizontal scroll, no carousel.
 
 ### The one bold element
 
-The portrait is rendered as a duotone in `paper` and `signal`, and returns to
-full colour inside a soft radius that follows the cursor. On touch and on
-`prefers-reduced-motion`, it settles to a static duotone with the colour window
-parked over the face. Implemented with an SVG `feColorMatrix` filter and a
-masked second copy of the image, not a canvas loop.
+The display lockup. The name is set at up to 8.5rem in Bricolage at wght 800,
+wdth 85, stacked on two lines and tracked to -0.04em. Nothing else on the page
+is allowed to compete with it.
 
-Everything else stays still. No scroll-triggered fades on sections, no hover
-lift on work entries — only a border colour change on focus and hover.
+The portrait carries no frame and no colour treatment. A radial mask dissolves
+its edges to nothing before they reach the image boundary, so the photograph
+reads as part of the paper rather than pasted onto it. Dark mode drops the
+exposure so the bright studio backdrop does not glare against the dark ground.
+The photograph itself is left alone.
+
+Everything stays still. No scroll-triggered fades on sections, no hover lift on
+work entries — only a border colour change on focus and hover. The page ships
+no interactive client JavaScript.
 
 ### Principles
 
 1. The resume is a destination, not the layout. Never render experience as
    dated rows.
-2. One accent, one moving thing, one screen of copy. Cut anything else.
+2. One accent, one screen of copy, nothing in motion. Cut anything else.
 3. Structure earns its keep: a border or divider must separate genuinely
    different kinds of content, never decorate.
 4. Quality floor, unannounced: visible focus rings, keyboard-reachable links,
@@ -166,6 +171,9 @@ type Project = {
 ```
 
 Three projects. Four is already too many for this page.
+
+Project screenshots do not exist yet, so `image` is optional and work entries
+currently lead with `outcomes` — the measured result of each project — instead.
 
 ## Tokens in Tailwind v4
 

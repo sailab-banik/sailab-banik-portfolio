@@ -7,7 +7,6 @@
   --signal: #2233f0;
   --surface: #ffffff;
   --edge: #dddfe3;
-  --duotone: url(#duotone-light);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,7 +17,6 @@
     --signal: #5a68ff;
     --surface: #161b22;
     --edge: #232a33;
-    --duotone: url(#duotone-dark);
   }
 }
 
@@ -78,29 +76,25 @@ body {
   letter-spacing: -0.02em;
 }
 
-/* The portrait: duotone by default, full colour inside a window that follows
-   the cursor. Parked over the face when there is no cursor to follow. */
+/* The portrait carries no frame. A soft radial mask dissolves its edges into
+   the page so the photograph reads as part of the paper, not pasted onto it.
+   Dark mode pulls the exposure down so the bright studio background does not
+   glare against the dark ground. */
 .portrait {
-  --px: 50%;
-  --py: 32%;
-  --window: 8rem;
-}
-
-@media (min-width: 768px) {
-  .portrait {
-    --window: 10rem;
-  }
-}
-
-.portrait-duotone {
-  filter: var(--duotone);
-}
-
-.portrait-window {
-  mask-image: radial-gradient(
-    circle var(--window) at var(--px) var(--py),
-    #000 0%,
-    #000 52%,
+  -webkit-mask-image: radial-gradient(
+    ellipse 50% 44% at 50% 44%,
+    #000 72%,
     transparent 100%
   );
+  mask-image: radial-gradient(
+    ellipse 50% 44% at 50% 44%,
+    #000 72%,
+    transparent 100%
+  );
+}
+
+@media (prefers-color-scheme: dark) {
+  .portrait {
+    filter: brightness(0.72) contrast(1.06);
+  }
 }
