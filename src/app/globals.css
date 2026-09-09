@@ -1,25 +1,106 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --paper: #f2f3f5;
+  --ink: #101418;
+  --slate: #6e7680;
+  --signal: #2233f0;
+  --surface: #ffffff;
+  --edge: #dddfe3;
+  --duotone: url(#duotone-light);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --paper: #0e1116;
+    --ink: #edeff2;
+    --slate: #8b939d;
+    --signal: #5a68ff;
+    --surface: #161b22;
+    --edge: #232a33;
+    --duotone: url(#duotone-dark);
   }
 }
 
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-slate: var(--slate);
+  --color-signal: var(--signal);
+  --color-surface: var(--surface);
+  --color-edge: var(--edge);
+
+  --font-sans: var(--font-bricolage);
+  --font-serif: var(--font-newsreader);
+
+  --text-display: clamp(3.5rem, 11vw, 8.5rem);
+  --text-display--line-height: 0.88;
+  --text-h2: clamp(1.75rem, 4vw, 2.6rem);
+  --text-h2--line-height: 1.1;
+  --text-h3: 1.3rem;
+  --text-h3--line-height: 1.3;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.65;
+  --text-ui: 0.875rem;
+  --text-ui--line-height: 1.4;
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.4;
+
+  --spacing-section: clamp(6rem, 12vh, 10rem);
+  --container-page: 1180px;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Bricolage Grotesque carries width and optical-size axes; one family covers
+   display down to UI without a second sans. */
+.type-display {
+  font-variation-settings: "wght" 800, "wdth" 85, "opsz" 48;
+  letter-spacing: -0.04em;
+}
+
+.type-h2 {
+  font-variation-settings: "wght" 700, "wdth" 95, "opsz" 24;
+  letter-spacing: -0.02em;
+}
+
+/* The portrait: duotone by default, full colour inside a window that follows
+   the cursor. Parked over the face when there is no cursor to follow. */
+.portrait {
+  --px: 50%;
+  --py: 32%;
+  --window: 8rem;
+}
+
+@media (min-width: 768px) {
+  .portrait {
+    --window: 10rem;
+  }
+}
+
+.portrait-duotone {
+  filter: var(--duotone);
+}
+
+.portrait-window {
+  mask-image: radial-gradient(
+    circle var(--window) at var(--px) var(--py),
+    #000 0%,
+    #000 52%,
+    transparent 100%
+  );
 }

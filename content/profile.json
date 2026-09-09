@@ -1,0 +1,16 @@
+{
+  "name": "Sailab Banik",
+  "role": "Software Engineer",
+  "statement": "I build document intelligence systems: retrieval pipelines and vision models that turn dense, messy documents into structured data.",
+  "email": "sailabbanik24@gmail.com",
+  "location": "Chennai, India",
+  "about": "I am a software engineer at ZF Group in Chennai, three years in. I lead the frontend of PrimeAI, an internal document processing platform used by five business teams, and own features end to end — interface, API, schema, and the pipeline that ships them. Away from work I build local-first AI systems: retrieval and vision-language extraction that run entirely on infrastructure you control, so sensitive documents never leave the building.",
+  "links": {
+    "linkedin": "https://www.linkedin.com/in/sailabbanik-24/",
+    "github": "https://github.com/sailab-banik",
+    "leetcode": "https://leetcode.com/u/sailab-banik/",
+    "medium": "https://medium.com/@sailabbanik24"
+  },
+  "resume": "/resume/sailab-banik-resume.pdf",
+  "portrait": "/images/profile_picture.png"
+}
