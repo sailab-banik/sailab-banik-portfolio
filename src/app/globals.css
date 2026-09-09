@@ -76,16 +76,12 @@ body {
   letter-spacing: -0.02em;
 }
 
-/* A short feather on all four edges keeps the photograph from cutting hard
-   against the page while leaving the rounded square shape intact. */
-.portrait {
-  --feather: 7px;
-  -webkit-mask-image:
-    linear-gradient(to right, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent),
-    linear-gradient(to bottom, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(to right, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent),
-    linear-gradient(to bottom, transparent, #000 var(--feather), #000 calc(100% - var(--feather)), transparent);
-  mask-composite: intersect;
+/* The portrait is a cut-out subject on transparency, so it carries no frame
+   and the shoulder fade is baked into the file's alpha. Against the dark
+   ground the black shirt would merge into the page, so a soft rim separates
+   the silhouette. Light mode needs nothing. */
+@media (prefers-color-scheme: dark) {
+  .portrait {
+    filter: drop-shadow(0 0 34px color-mix(in srgb, var(--ink) 20%, transparent));
+  }
 }

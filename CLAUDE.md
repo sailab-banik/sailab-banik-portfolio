@@ -60,7 +60,9 @@ That extends to styling hooks: `profile.emphasis` names the substring of `statem
 
 ## Images
 
-`public/images/profile_picture.png` is the untouched original headshot and the source for every derived crop — `public/images/portrait.png` (hero) and `src/app/icon.png` (circular favicon). Regenerate crops from it rather than editing it.
+`public/images/profile_picture.png` is the untouched original headshot and the source for every derived asset — `public/images/portrait-cutout.png` (hero) and `src/app/icon.png` (circular favicon). Regenerate from it rather than editing it.
+
+The hero portrait is a background-removed cut-out with the shoulder fade baked into its alpha, so it needs no frame and no CSS mask. The subject was segmented on-device with Vision's `VNGenerateForegroundInstanceMaskRequest` from a Swift script (`swift cutout.swift <in> <out>`, no Xcode project needed), then cropped and alpha-ramped with sharp. Against the dark ground the black polo would merge into the page, so `.portrait` carries a `drop-shadow` rim in dark mode only.
 
 Everything under `public/` is served verbatim at its own URL, so a file there is public the moment it is committed, whether or not anything links to it. Check what a scan or document carries before adding it — the certificates under `public/certificates/` were confirmed with Sailab as already public.
 

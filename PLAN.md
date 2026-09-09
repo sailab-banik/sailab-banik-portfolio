@@ -19,7 +19,7 @@ here. Primary job: make them download the resume or open LinkedIn.
 public/
   resume/sailab-banik-resume.pdf     linked from header and footer
   images/profile_picture.png         original headshot, kept as the source crop
-  images/portrait.png                hero portrait, cropped tight to the subject
+  images/portrait-cutout.png         hero portrait, background removed, alpha fade
   images/projects/<slug>.webp        16:9, 1600px wide — not created yet
   og.png                             1200x630, generated once — not created yet
 src/app/icon.png                     favicon, Next.js file convention
@@ -144,10 +144,14 @@ The display lockup. The name is set at up to 8.5rem in Bricolage at wght 800,
 wdth 85, stacked on two lines and tracked to -0.04em. Nothing else on the page
 is allowed to compete with it.
 
-The portrait is left alone: the photograph as shot, squared off with a 1rem
-radius and the same `edge` hairline that divides the sections, so the one
-picture on the page belongs to the same system as everything around it. No
-mask, no filter, no colour treatment.
+The portrait is a cut-out: the studio background is removed so the subject
+stands directly on the page with no frame, no radius and no hairline, and the
+shoulder fade is baked into the file's alpha rather than masked in CSS.
+
+The one adjustment is for dark mode. A black polo against `paper` at `#0E1116`
+loses the shoulders entirely, so the cut-out carries a soft `drop-shadow` rim
+in `ink` at 20% — enough to separate the silhouette, reading as a rim light
+rather than as an effect. Light mode needs nothing and gets nothing.
 
 Everything stays still. No scroll-triggered fades on sections, no hover lift on
 work entries — only a border colour change on focus and hover. The page ships
