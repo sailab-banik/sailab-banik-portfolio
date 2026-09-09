@@ -10,6 +10,24 @@
   --slate: #6a6c60;
   --edge: #dadbd0;
   --signal: #3b2fe0;
+
+  /* The name is set to span the content column, so its size is solved from
+     the column rather than chosen: "Sailab Banik" advances 3.758em at
+     wdth 78, and the column is 100vw - 80px until it caps at 1160px. Below
+     md the gutter drops from 40px to 24px, so it is re-solved there. Both
+     carry ~1% slack against font-rendering variance.
+
+     This has to be a raw property that `@theme inline` references. Writing
+     the clamp straight into `@theme inline` inlines it into the utility, and
+     the media query below then overrides a variable nothing reads — the same
+     trap the palette has. */
+  --display-size: clamp(2.5rem, calc(26.3vw - 1.32rem), 19.1rem);
+}
+
+@media (max-width: 47.9375rem) {
+  :root {
+    --display-size: clamp(2.5rem, calc(26.35vw - 0.79rem), 19.1rem);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -34,10 +52,7 @@
   --font-sans: var(--font-bricolage);
   --font-serif: var(--font-newsreader);
 
-  /* Sized so the single-line name spans the content column at every width:
-     "Sailab Banik" advances 3.758em at wdth 78, and the column is
-     100vw - 80px until it caps at 1160px. */
-  --text-display: clamp(2.5rem, calc(26vw - 1.3rem), 18.8rem);
+  --text-display: var(--display-size);
   --text-display--line-height: 0.88;
   --text-h2: clamp(1.5rem, 3vw, 2rem);
   --text-h2--line-height: 1.05;
@@ -56,14 +71,6 @@
 
   --spacing-section: clamp(5.5rem, 11vh, 9rem);
   --container-page: 1240px;
-}
-
-/* Below md the page gutter drops from 40px to 24px, so the name is re-solved
-   against the narrower column — otherwise it stops short of the rule. */
-@media (max-width: 47.9375rem) {
-  :root {
-    --text-display: clamp(2.5rem, calc(26.4vw - 0.8rem), 18.8rem);
-  }
 }
 
 body {
@@ -109,10 +116,11 @@ body {
 /* The portrait is a cut-out on transparency, so it needs no frame and the
    shoulder fade is baked into the file's alpha. Against the dark ground the
    black polo would merge into the page, so a soft rim separates the
-   silhouette. Light mode needs nothing. */
+   silhouette. The rim is white rather than `ink`, which is a warm off-white
+   and casts the glow yellow. Light mode needs nothing. */
 @media (prefers-color-scheme: dark) {
   .portrait {
-    filter: drop-shadow(0 0 40px color-mix(in srgb, var(--ink) 22%, transparent));
+    filter: drop-shadow(0 0 40px rgb(255 255 255 / 0.2));
   }
 }
 
