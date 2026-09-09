@@ -73,6 +73,8 @@ const sharp = createRequire(import.meta.url)("sharp");
 
 A bare `import sharp` fails: the package is CommonJS, and Node resolves bare specifiers from the importing file's own directory, so a script written outside the repo cannot find it.
 
+Replacing an image in place does not invalidate the Next.js image optimizer cache, which is keyed on the request URL — the old rendition keeps being served in dev. After overwriting a file under `public/`, `rm -rf .next/cache/images` and restart, or the page will show the previous version.
+
 ## Checking the UI
 
 - **Narrow widths.** Resizing the browser window will not go below roughly 1000px. Load the page in same-origin iframes at the target widths instead.

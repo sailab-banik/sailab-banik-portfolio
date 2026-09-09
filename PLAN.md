@@ -28,7 +28,7 @@ content/projects.json                project entries
 content/experience.json              roles grouped by company
 content/articles.json                selected Medium articles
 content/certificates.json            certificates and awards
-  certificates/*.jpeg                certificate scans, linked full size
+  certificates/*.jpeg                certificate scans, cropped to ~4:3
 ```
 
 External links (LinkedIn, GitHub, LeetCode, Medium, email) live in
@@ -235,9 +235,11 @@ Four articles, chosen for distinct subjects rather than recency. `surface` is
 the card background, shared by the article and credential cards — the only
 place in the design a raised panel is used.
 
-Certificate scans come in mixed portrait and landscape, so each is fitted whole
-into a shared 4:3 frame rather than cropped. Anything committed under `public/`
-is publicly reachable, so confirm a document is shareable before adding it.
+Certificate scans are cropped to a common landscape ratio near 4:3 before they
+go in, so all three fill the card frame at the same size instead of one
+letterboxing against the others. The cards are not links — the scan on the card
+is the whole of what there is to see. Anything committed under `public/` is
+publicly reachable, so confirm a document is shareable before adding it.
 
 Project screenshots do not exist yet, so `image` is optional and work entries
 currently lead with `outcomes` — the measured result of each project — instead.
