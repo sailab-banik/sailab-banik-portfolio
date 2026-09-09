@@ -30,7 +30,7 @@ export function Hero() {
             height={PORTRAIT_SIZE}
             sizes="(min-width: 768px) 40vw, 100vw"
             priority
-            className="portrait block w-full"
+            className="block w-full rounded-2xl border border-edge"
           />
         </div>
       </div>

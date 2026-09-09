@@ -75,26 +75,3 @@ body {
   font-variation-settings: "wght" 700, "wdth" 95, "opsz" 24;
   letter-spacing: -0.02em;
 }
-
-/* The portrait carries no frame. A soft radial mask dissolves its edges into
-   the page so the photograph reads as part of the paper, not pasted onto it.
-   Dark mode pulls the exposure down so the bright studio background does not
-   glare against the dark ground. */
-.portrait {
-  -webkit-mask-image: radial-gradient(
-    ellipse 50% 44% at 50% 44%,
-    #000 72%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 50% 44% at 50% 44%,
-    #000 72%,
-    transparent 100%
-  );
-}
-
-@media (prefers-color-scheme: dark) {
-  .portrait {
-    filter: brightness(0.72) contrast(1.06);
-  }
-}

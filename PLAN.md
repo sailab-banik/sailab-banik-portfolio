@@ -90,7 +90,7 @@ Vertical rhythm in multiples of 8px, section spacing `clamp(6rem, 12vh, 10rem)`.
 │  SAILAB                    ┌──────────────┐  │
 │  BANIK                     │              │  │
 │                            │   portrait   │  │
-│  One line on what you      │  edges fade  │  │
+│  One line on what you      │              │  │
 │  build and why.            │              │  │
 │                            └──────────────┘  │
 │                                              │
@@ -119,11 +119,10 @@ The display lockup. The name is set at up to 8.5rem in Bricolage at wght 800,
 wdth 85, stacked on two lines and tracked to -0.04em. Nothing else on the page
 is allowed to compete with it.
 
-The portrait carries no frame and no colour treatment. A radial mask dissolves
-its edges to nothing before they reach the image boundary, so the photograph
-reads as part of the paper rather than pasted onto it. Dark mode drops the
-exposure so the bright studio backdrop does not glare against the dark ground.
-The photograph itself is left alone.
+The portrait is left alone: the photograph as shot, squared off with a 1rem
+radius and the same `edge` hairline that divides the sections, so the one
+picture on the page belongs to the same system as everything around it. No
+mask, no filter, no colour treatment.
 
 Everything stays still. No scroll-triggered fades on sections, no hover lift on
 work entries — only a border colour change on focus and hover. The page ships
