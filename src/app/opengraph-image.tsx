@@ -10,13 +10,13 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const fonts = join(process.cwd(), "assets/fonts");
-const extraBold = await readFile(join(fonts, "BricolageGrotesque-ExtraBold.ttf"));
+const instrument = await readFile(join(fonts, "InstrumentSerif-Regular.ttf"));
 const medium = await readFile(join(fonts, "BricolageGrotesque-Medium.ttf"));
 
-/* The share card is the page's own lockup: paper ground, the name at the width
-   of the card, and the statement below it. The only weight available above 500
-   is the wdth-78 display cut the name uses, so the emphasis in the statement
-   shifts colour rather than weight. */
+/* The share card is the page's own lockup: paper ground, the name in
+   Instrument Serif at the width of the card, and the statement below it. Only
+   Bricolage Medium is loaded for the statement, so its emphasis shifts colour
+   rather than weight. */
 export default function Image() {
   const { name, role, statement, emphasis, location } = profile;
   const [before, after] = statement.split(emphasis);
@@ -37,7 +37,15 @@ export default function Image() {
         }}
       >
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 268, fontWeight: 800, letterSpacing: "-0.035em", lineHeight: 0.88 }}>
+          <div
+            style={{
+              fontFamily: "Instrument",
+              fontSize: 258,
+              fontWeight: 400,
+              letterSpacing: "-0.02em",
+              lineHeight: 0.88,
+            }}
+          >
             {name}
           </div>
           <div
@@ -79,7 +87,7 @@ export default function Image() {
     {
       ...size,
       fonts: [
-        { name: "Bricolage", data: extraBold, weight: 800, style: "normal" },
+        { name: "Instrument", data: instrument, weight: 400, style: "normal" },
         { name: "Bricolage", data: medium, weight: 500, style: "normal" },
       ],
     },

@@ -12,8 +12,9 @@
   --signal: #3b2fe0;
 
   /* The name is set to span the content column, so its size is solved from
-     the column rather than chosen: "Sailab Banik" advances 3.758em at
-     wdth 78, and the column is 100vw - 80px until it caps at 1160px. Below
+     the column rather than chosen: "Sailab Banik" advances 4.042em in
+     Instrument Serif at -0.02em tracking, and the column is 100vw - 80px
+     until it caps at 1160px. Below
      md the gutter drops from 40px to 24px, so it is re-solved there. Both
      carry ~1% slack against font-rendering variance.
 
@@ -21,12 +22,12 @@
      the clamp straight into `@theme inline` inlines it into the utility, and
      the media query below then overrides a variable nothing reads — the same
      trap the palette has. */
-  --display-size: clamp(2.5rem, calc(26.3vw - 1.32rem), 19.1rem);
+  --display-size: clamp(2.5rem, calc(24.49vw - 1.224rem), 17.76rem);
 }
 
 @media (max-width: 47.9375rem) {
   :root {
-    --display-size: clamp(2.5rem, calc(26.35vw - 0.79rem), 19.1rem);
+    --display-size: clamp(2.5rem, calc(24.49vw - 0.735rem), 17.76rem);
   }
 }
 
@@ -94,12 +95,13 @@ body {
   }
 }
 
-/* Bricolage carries width and optical-size axes; one family covers an 11rem
-   lockup down to 13px UI without a second sans. The display is set narrow
-   because the name is stacked and the extra height is what gives it weight. */
+/* The name is the one place a third face appears: Instrument Serif, a
+   high-contrast display cut with a single weight. Its hairlines only hold up
+   at display size, so it is never used below the lockup. Bricolage still
+   covers every heading and UI size. */
 .type-display {
-  font-variation-settings: "wght" 800, "wdth" 78, "opsz" 96;
-  letter-spacing: -0.035em;
+  font-family: var(--font-instrument);
+  letter-spacing: -0.02em;
 }
 
 .type-h2 {
