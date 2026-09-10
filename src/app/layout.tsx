@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Instrument_Serif, Newsreader } from "next/font/google";
+import { Archivo, Bricolage_Grotesque, Newsreader } from "next/font/google";
 import { getProfile } from "@/lib/content";
 import "./globals.css";
 
@@ -16,10 +16,10 @@ const newsreader = Newsreader({
   display: "swap",
 });
 
-const instrument = Instrument_Serif({
-  variable: "--font-instrument",
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
-  weight: "400",
+  axes: ["wdth"],
   display: "swap",
 });
 
@@ -45,7 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${bricolage.variable} ${newsreader.variable} ${instrument.variable} h-full antialiased`}
+      className={`${bricolage.variable} ${newsreader.variable} ${archivo.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>

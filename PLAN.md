@@ -73,9 +73,9 @@ draw the eye.
 
 Two families, used for clearly separate jobs.
 
-- **Instrument Serif** (`next/font/google`, single weight 400) for the hero
-  name only. A high-contrast display serif whose hairlines need display size to
-  hold up, so it appears nowhere else.
+- **Archivo** (variable, `next/font/google`) for the hero name only, at wght
+  600 and normal width. A grotesque with squared, engineered details, set like a
+  masthead on a technical document: scale carries the weight, not stroke.
 - **Bricolage Grotesque** (variable, `next/font/google`) for headings, labels,
   figures, and all UI. Width and optical-size axes let one family cover every
   size from h2 down to 13px UI.
@@ -86,7 +86,7 @@ No monospace anywhere. Data labels and figures use Bricolage with
 to be borrowed for.
 
 ```
-display   var(--display-size)                          Instrument Serif, -0.02em
+display   var(--display-size)                          Archivo wght 600, -0.045em
 h2        clamp(1.5rem, 3vw, 2rem)                     wght 650, wdth 92
 figure    clamp(1.5rem, 3vw, 2.125rem)                 wght 700, tabular
 h3        1.375rem                                     wght 600
@@ -96,11 +96,11 @@ ui        0.875rem / 1.45                              Bricolage
 meta      0.8125rem                                    Bricolage, slate
 ```
 
-The display size is not a taste call: `Sailab Banik` advances 4.042em in
-Instrument Serif, and the content column is `100vw - 80px` until it caps at
-1160px, so `24.49vw - 1.224rem` (capped at `17.76rem`) is the size at which the
-name spans the column. Below `md` the gutter drops to 24px and a media query
-re-solves it as `24.49vw - 0.735rem`.
+The display size is not a taste call: `Sailab Banik` advances 5.176em in
+Archivo, and the content column is `100vw - 80px` until it caps at 1160px, so
+`19.13vw - 0.956rem` (capped at `13.87rem`) is the size at which the name spans
+the column. Below `md` the gutter drops to 24px and a media query re-solves it
+as `19.13vw - 0.574rem`.
 Both carry ~1% slack against font-rendering variance, and both live on the raw
 `--display-size` property rather than on `--text-display` — see the Tailwind
 note below, because writing the clamp into `@theme inline` makes the mobile
@@ -223,8 +223,8 @@ right under the rule, and everything else is single column.
 
 ### The one bold element
 
-The hero lockup. `Sailab Banik` set on one line in Instrument Serif at up to
-284px, spanning the full content column. Nothing else on the page is allowed
+The hero lockup. `Sailab Banik` set on one line in Archivo SemiBold at up to
+222px, spanning the full content column. Nothing else on the page is allowed
 to compete with it.
 
 A hairline rule runs the full width beneath the name, and both the statement and
@@ -459,12 +459,12 @@ Built in this order; kept as a record of why the pieces depend on each other.
 
 `src/app/opengraph-image.tsx` generates the 1200x630 card at build time with
 `next/og`, so there is no `og.png` to keep in sync with the page. It is the
-hero lockup again: paper ground, the name in Instrument Serif at the width of
+hero lockup again: paper ground, the name in Archivo SemiBold at the width of
 the card, the statement with the years set in ink rather than slate, and a rule
 over the role and location.
 
 `next/og` rasterises with satori, which needs static font instances, so
-Instrument Serif and Bricolage Medium live in `assets/fonts/` and are read with
+Archivo SemiBold and Bricolage Medium live in `assets/fonts/` and are read with
 `node:fs` at module scope. The variable font `next/font/google` loads for the page cannot be used
 here. Two satori quirks are worth knowing before editing the file: children of
 a flex container each become their own text run, so a trailing space is

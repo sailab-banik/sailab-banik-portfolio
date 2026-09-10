@@ -12,8 +12,8 @@
   --signal: #3b2fe0;
 
   /* The name is set to span the content column, so its size is solved from
-     the column rather than chosen: "Sailab Banik" advances 4.042em in
-     Instrument Serif at -0.02em tracking, and the column is 100vw - 80px
+     the column rather than chosen: "Sailab Banik" advances 5.176em in
+     Archivo at wght 600, wdth 100, and -0.045em tracking, and the column is 100vw - 80px
      until it caps at 1160px. Below
      md the gutter drops from 40px to 24px, so it is re-solved there. Both
      carry ~1% slack against font-rendering variance.
@@ -22,12 +22,12 @@
      the clamp straight into `@theme inline` inlines it into the utility, and
      the media query below then overrides a variable nothing reads — the same
      trap the palette has. */
-  --display-size: clamp(2.5rem, calc(24.49vw - 1.224rem), 17.76rem);
+  --display-size: clamp(2.5rem, calc(19.13vw - 0.956rem), 13.87rem);
 }
 
 @media (max-width: 47.9375rem) {
   :root {
-    --display-size: clamp(2.5rem, calc(24.49vw - 0.735rem), 17.76rem);
+    --display-size: clamp(2.5rem, calc(19.13vw - 0.574rem), 13.87rem);
   }
 }
 
@@ -95,13 +95,14 @@ body {
   }
 }
 
-/* The name is the one place a third face appears: Instrument Serif, a
-   high-contrast display cut with a single weight. Its hairlines only hold up
-   at display size, so it is never used below the lockup. Bricolage still
-   covers every heading and UI size. */
+/* The name is set like a masthead on a technical document: Archivo, a
+   grotesque with squared, engineered details, at semibold rather than black so
+   scale carries the weight instead of stroke. Tracking is pulled in hard
+   because default spacing opens up at display size. */
 .type-display {
-  font-family: var(--font-instrument);
-  letter-spacing: -0.02em;
+  font-family: var(--font-archivo);
+  font-variation-settings: "wght" 600, "wdth" 100;
+  letter-spacing: -0.045em;
 }
 
 .type-h2 {

@@ -10,11 +10,11 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const fonts = join(process.cwd(), "assets/fonts");
-const instrument = await readFile(join(fonts, "InstrumentSerif-Regular.ttf"));
+const archivo = await readFile(join(fonts, "Archivo-SemiBold.ttf"));
 const medium = await readFile(join(fonts, "BricolageGrotesque-Medium.ttf"));
 
 /* The share card is the page's own lockup: paper ground, the name in
-   Instrument Serif at the width of the card, and the statement below it. Only
+   Archivo SemiBold at the width of the card, and the statement below it. Only
    Bricolage Medium is loaded for the statement, so its emphasis shifts colour
    rather than weight. */
 export default function Image() {
@@ -39,10 +39,10 @@ export default function Image() {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div
             style={{
-              fontFamily: "Instrument",
-              fontSize: 258,
-              fontWeight: 400,
-              letterSpacing: "-0.02em",
+              fontFamily: "Archivo",
+              fontSize: 202,
+              fontWeight: 600,
+              letterSpacing: "-0.045em",
               lineHeight: 0.88,
             }}
           >
@@ -87,7 +87,7 @@ export default function Image() {
     {
       ...size,
       fonts: [
-        { name: "Instrument", data: instrument, weight: 400, style: "normal" },
+        { name: "Archivo", data: archivo, weight: 600, style: "normal" },
         { name: "Bricolage", data: medium, weight: 500, style: "normal" },
       ],
     },
