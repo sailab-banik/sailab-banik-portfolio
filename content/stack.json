@@ -1,7 +1,7 @@
 [
   { "group": "Languages", "items": ["Python", "TypeScript", "JavaScript", "SQL"] },
   { "group": "Interface", "items": ["React", "Redux Toolkit", "Next.js", "Tailwind CSS"] },
-  { "group": "Services and data", "items": ["FastAPI", "PostgreSQL", "Chroma"] },
-  { "group": "AI systems", "items": ["LangChain", "Ollama", "Qwen3", "PP-Structure"] },
-  { "group": "Delivery", "items": ["Azure DevOps", "CI/CD", "Git"] }
+  { "group": "Services and data", "items": ["FastAPI", "PostgreSQL", "Redis", "Chroma"] },
+  { "group": "AI systems", "items": ["LangChain", "Ollama", "Qwen3"] },
+  { "group": "Delivery", "items": ["Docker", "Azure DevOps", "CI/CD", "Git"] }
 ]

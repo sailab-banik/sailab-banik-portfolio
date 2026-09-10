@@ -27,26 +27,33 @@
     ]
   },
   {
-    "slug": "vision-extraction",
-    "title": "Vision-model extraction for complex documents",
+    "slug": "queuelens",
+    "title": "QueueLens",
     "context": "Personal project",
-    "summary": "An extraction system for documents that defeat plain text parsing: forms, multi-column layouts, tables tangled with prose. It segments each page into semantic regions and sends every region to a locally served vision-language model with a prompt written for that region type.",
+    "summary": "A job queue where FastAPI accepts work, Redis hands it to a background worker, and PostgreSQL records every job's state so nothing is lost across restarts. A Next.js dashboard shows each job moving through the queue, including failed attempts that retry with exponential backoff.",
     "stack": [
       "Python",
-      "PP-Structure",
-      "Ollama",
-      "FastAPI"
+      "FastAPI",
+      "Redis",
+      "PostgreSQL",
+      "Next.js",
+      "Docker"
     ],
     "outcomes": [
       {
-        "label": "More accurate on structured fields than whole-page images",
-        "value": "+25%"
+        "label": "Attempts per job, backing off 2s then 4s",
+        "value": "3"
       },
       {
-        "label": "Schema-valid output through guided generation",
-        "value": "100%"
+        "label": "Jobs per client every 10 seconds before a 429",
+        "value": "10"
+      },
+      {
+        "label": "Waiting jobs before the API sheds load",
+        "value": "100"
       }
-    ]
+    ],
+    "repo": "https://github.com/sailab-banik/QueueLens"
   },
   {
     "slug": "rag-pipeline",

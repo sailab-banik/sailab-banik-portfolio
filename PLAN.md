@@ -23,7 +23,7 @@ public/
   certificates/*.jpeg                certificate scans, cropped to ~4:3
 src/app/icon.png                     favicon, Next.js file convention
 src/app/opengraph-image.tsx          1200x630 share card, generated at build
-assets/fonts/*.ttf                   static Bricolage cuts, for next/og only
+assets/fonts/*.ttf                   static font cuts, for next/og only
 content/profile.json                 name, role, one-line statement, all external links
 content/projects.json                project entries
 content/experience.json              roles grouped by company
@@ -73,9 +73,12 @@ draw the eye.
 
 Two families, used for clearly separate jobs.
 
-- **Bricolage Grotesque** (variable, `next/font/google`) for the name, headings,
-  labels, figures, and all UI. Width and optical-size axes let one family cover
-  a 300px lockup down to 13px UI without a second sans.
+- **Instrument Serif** (`next/font/google`, single weight 400) for the hero
+  name only. A high-contrast display serif whose hairlines need display size to
+  hold up, so it appears nowhere else.
+- **Bricolage Grotesque** (variable, `next/font/google`) for headings, labels,
+  figures, and all UI. Width and optical-size axes let one family cover every
+  size from h2 down to 13px UI.
 - **Newsreader** for running prose — the statement, summaries, and About.
 
 No monospace anywhere. Data labels and figures use Bricolage with
@@ -83,7 +86,7 @@ No monospace anywhere. Data labels and figures use Bricolage with
 to be borrowed for.
 
 ```
-display   var(--display-size)                          wght 800, wdth 78
+display   var(--display-size)                          Instrument Serif, -0.02em
 h2        clamp(1.5rem, 3vw, 2rem)                     wght 650, wdth 92
 figure    clamp(1.5rem, 3vw, 2.125rem)                 wght 700, tabular
 h3        1.375rem                                     wght 600
@@ -93,10 +96,11 @@ ui        0.875rem / 1.45                              Bricolage
 meta      0.8125rem                                    Bricolage, slate
 ```
 
-The display size is not a taste call: `Sailab Banik` advances 3.758em at
-wdth 78, and the content column is `100vw - 80px` until it caps at 1160px, so
-`26.3vw - 1.32rem` is the size at which the name spans the column. Below `md`
-the gutter drops to 24px and a media query re-solves it as `26.35vw - 0.79rem`.
+The display size is not a taste call: `Sailab Banik` advances 4.042em in
+Instrument Serif, and the content column is `100vw - 80px` until it caps at
+1160px, so `24.49vw - 1.224rem` (capped at `17.76rem`) is the size at which the
+name spans the column. Below `md` the gutter drops to 24px and a media query
+re-solves it as `24.49vw - 0.735rem`.
 Both carry ~1% slack against font-rendering variance, and both live on the raw
 `--display-size` property rather than on `--text-display` — see the Tailwind
 note below, because writing the clamp into `@theme inline` makes the mobile
@@ -219,8 +223,8 @@ right under the rule, and everything else is single column.
 
 ### The one bold element
 
-The hero lockup. `Sailab Banik` set on one line at up to 300px, wght 800,
-wdth 78, spanning the full content column. Nothing else on the page is allowed
+The hero lockup. `Sailab Banik` set on one line in Instrument Serif at up to
+284px, spanning the full content column. Nothing else on the page is allowed
 to compete with it.
 
 A hairline rule runs the full width beneath the name, and both the statement and
@@ -455,13 +459,13 @@ Built in this order; kept as a record of why the pieces depend on each other.
 
 `src/app/opengraph-image.tsx` generates the 1200x630 card at build time with
 `next/og`, so there is no `og.png` to keep in sync with the page. It is the
-hero lockup again: paper ground, the name at the width of the card, the
-statement with the years set in the heavier weight, and a rule over the role and
-location.
+hero lockup again: paper ground, the name in Instrument Serif at the width of
+the card, the statement with the years set in ink rather than slate, and a rule
+over the role and location.
 
-`next/og` rasterises with satori, which needs static font instances, so two
-Bricolage cuts live in `assets/fonts/` and are read with `node:fs` at module
-scope. The variable font `next/font/google` loads for the page cannot be used
+`next/og` rasterises with satori, which needs static font instances, so
+Instrument Serif and Bricolage Medium live in `assets/fonts/` and are read with
+`node:fs` at module scope. The variable font `next/font/google` loads for the page cannot be used
 here. Two satori quirks are worth knowing before editing the file: children of
 a flex container each become their own text run, so a trailing space is
 trimmed — the statement carries an explicit spacer element rather than relying
@@ -475,8 +479,9 @@ Three things are known-incomplete. None of them are structural.
 - **LeetCode URL is a guess.** `profile.json` carries
   `leetcode.com/u/sailab-banik/`, which was never confirmed — it is not in the
   resume. Verify or remove the link.
-- **No repo or live links on the projects.** `Project.repo` and `Project.live`
-  are typed and rendered; the URLs were never supplied, so nothing renders.
+- **Repo and live links are mostly missing.** `Project.repo` and `Project.live`
+  are typed and rendered, but only QueueLens supplies one (its GitHub repo).
+  PrimeAI is internal; the RAG pipeline's URL was never supplied.
 - **`metadataBase` has no real domain.** It falls back to
   `VERCEL_PROJECT_PRODUCTION_URL`, correct on Vercel, wrong once there is a
   custom domain.
