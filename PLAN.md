@@ -367,8 +367,8 @@ by name; components never hold the copy.
 
 The leads are written in first person and say something about the work or the
 person. They are not captions describing the page — "Explainers on the parts of
-the stack people skip" is meta-commentary; "I write things down to understand
-them properly" is the same section doing branding. Keep them in the second
+the stack people skip" is meta-commentary; "Writing is how I finish thinking
+about a problem" is the same section doing branding. Keep them in the second
 register.
 
 `contact` is the exception in how it is used, not how it is written. The footer

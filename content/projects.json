@@ -30,7 +30,7 @@
     "slug": "contextdesk-lab",
     "title": "ContextDesk Lab",
     "context": "Personal project",
-    "summary": "A support chat built to take Redis Iris apart: every request returns an answer and, beside it, the record of how that answer was made \u2014 which memories and records reached the model, what was left out and why, and what each step cost. It exists to put a number on what a semantic cache is worth, so a question asked again in other words comes back from LangCache with the model never called.",
+    "summary": "A support chat built to take Redis Iris apart: every request returns an answer and, beside it, the record of how that answer was made — which memories and records reached the model, what was left out and why, and what each step cost. It exists to put a number on what a semantic cache is worth, so a question asked again in other words comes back from LangCache with the model never called.",
     "stack": [
       "Python",
       "FastAPI",

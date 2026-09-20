@@ -1,11 +1,11 @@
 {
   "name": "Sailab Banik",
-  "role": "Software Engineer",
-  "statement": "Software engineer with 3+ years building production full-stack and AI systems, from retrieval pipelines to the interfaces on top of them.",
+  "role": "Software Engineer, AI Systems",
+  "statement": "Software engineer with 3+ years building production AI systems — retrieval pipelines, document intelligence, and the full-stack products that put them in front of people.",
   "emphasis": "3+ years",
   "email": "sailabbanik24@gmail.com",
   "location": "Chennai, India",
-  "about": "I am a software engineer at ZF Group in Chennai, three years in. I lead the frontend of PrimeAI, an internal document processing platform used by five business teams, and own features end to end — interface, API, schema, and the pipeline that ships them. Away from work I build local-first AI systems: retrieval and vision-language extraction that run entirely on infrastructure you control, so sensitive documents never leave the building.",
+  "about": "I am a software engineer at ZF Group in Chennai, three years in, working on the AI side of PrimeAI — an internal document processing platform five business teams run on. I own features end to end, from the retrieval and extraction behind an answer to the interface, API, and schema around it. Away from work I build local-first AI systems: retrieval and vision-language extraction that run entirely on infrastructure you control, so sensitive documents never leave the building. Lately I have been taking those systems apart to measure what each piece actually costs.",
   "links": {
     "linkedin": "https://www.linkedin.com/in/sailabbanik-24/",
     "github": "https://github.com/sailab-banik",
