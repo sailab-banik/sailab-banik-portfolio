@@ -380,7 +380,8 @@ renders `contact.lead` as its visible heading, in the serif, because a small
 somewhere else on the page or in the resume. It is a scan aid for engineers,
 not a keyword list — anything added to it should be true of real work.
 
-Three projects. Four is already too many for this page.
+Four projects. Three was the original limit and four is the ceiling: a
+fifth replaces an entry rather than extending the list.
 
 Four articles, chosen for distinct subjects rather than recency. They render as
 rows, not cards: `surface` is used for exactly two things, the credential cards
@@ -449,7 +450,7 @@ Built in this order; kept as a record of why the pieces depend on each other.
 2. `content/*.json` and `src/lib/content.ts` with the types above.
 3. `Header` — monogram, social row, resume link. Sticky, backdrop blur.
 4. `Hero` — name, statement, portrait.
-5. `Work` — three entries from `projects.json`.
+5. `Work` — four entries from `projects.json`.
 6. `Experience` grouped by company, `Writing` and `Credentials` cards, then
    `About` and `Footer`.
 7. Accessibility and responsive pass at 320, 768, 1280, 1920.
@@ -480,8 +481,9 @@ Three things are known-incomplete. None of them are structural.
   `leetcode.com/u/sailab-banik/`, which was never confirmed — it is not in the
   resume. Verify or remove the link.
 - **Repo and live links are mostly missing.** `Project.repo` and `Project.live`
-  are typed and rendered, but only QueueLens supplies one (its GitHub repo).
-  PrimeAI is internal; the RAG pipeline's URL was never supplied.
+  are typed and rendered, but only QueueLens and ContextDesk Lab supply one
+  (their GitHub repos). PrimeAI is internal; the RAG pipeline's URL was never
+  supplied.
 - **`metadataBase` has no real domain.** It falls back to
   `VERCEL_PROJECT_PRODUCTION_URL`, correct on Vercel, wrong once there is a
   custom domain.
