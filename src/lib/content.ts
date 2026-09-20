@@ -1,5 +1,6 @@
 import profile from "../../content/profile.json";
 import projects from "../../content/projects.json";
+import principles from "../../content/principles.json";
 import experience from "../../content/experience.json";
 import articles from "../../content/articles.json";
 import certificates from "../../content/certificates.json";
@@ -13,7 +14,6 @@ export type Profile = {
   emphasis: string;
   email: string;
   location: string;
-  about: string;
   links: {
     linkedin: string;
     github: string;
@@ -38,6 +38,11 @@ export type Project = {
   outcomes: Outcome[];
   repo?: string;
   live?: string;
+};
+
+export type Principle = {
+  title: string;
+  body: string;
 };
 
 export type Role = {
@@ -88,6 +93,10 @@ export function getProfile(): Profile {
 
 export function getProjects(): Project[] {
   return projects;
+}
+
+export function getPrinciples(): Principle[] {
+  return principles;
 }
 
 export function getExperience(): Experience[] {

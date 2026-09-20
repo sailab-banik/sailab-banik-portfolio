@@ -29,6 +29,7 @@ content/projects.json                project entries
 content/experience.json              roles grouped by company
 content/articles.json                selected Medium articles
 content/certificates.json            certificates and awards
+content/principles.json              how I work, the Approach section
 content/sections.json                section titles and their one-line leads
 content/stack.json                   the toolkit, grouped
 ```
@@ -79,7 +80,8 @@ Two families, used for clearly separate jobs.
 - **Bricolage Grotesque** (variable, `next/font/google`) for headings, labels,
   figures, and all UI. Width and optical-size axes let one family cover every
   size from h2 down to 13px UI.
-- **Newsreader** for running prose — the statement, summaries, and About.
+- **Newsreader** for running prose — the statement, summaries, and the
+  principles in Approach.
 
 No monospace anywhere. Data labels and figures use Bricolage with
 `font-variant-numeric: tabular-nums`, which is what a monospace face was going
@@ -163,7 +165,7 @@ invite a reply. It runs full width with no rail.
 │ Credentials│ ┌───────┐ ┌───────┐ ┌───────┐       │
 │  (sticky)  │ │ scan  │ │ scan  │ │ scan  │       │
 ├──────────────────────────────────────────────────┤
-│ About      │ one paragraph, 58ch                 │
+│ Approach   │ Three principles, heading + prose   │
 │  (sticky)  │ ───────────────────────────────     │
 │            │ Languages   Interface   Services    │
 ├──────────────────────────────────────────────────┤
@@ -298,7 +300,6 @@ type Profile = {
   emphasis: string         // the substring of statement to set in the sans face
   email: string
   location: string
-  about: string            // one paragraph, the About section
   links: {
     linkedin: string
     github: string
@@ -350,6 +351,13 @@ type Article = {
   summary: string        // one line
 }
 
+type Principle = {
+  title: string          // a sentence, not a trait: "I take the work nobody
+                         // volunteers for"
+  body: string           // two or three lines, each claim backed by something
+                         // else on the page
+}
+
 type StackGroup = {
   group: string          // "Languages", "AI systems", ...
   items: string[]
@@ -375,6 +383,16 @@ register.
 renders `contact.lead` as its visible heading, in the serif, because a small
 "Get in touch" label sitting above the email address would be an eyebrow. The
 `title` survives as an `sr-only` heading so the landmark still has a plain name.
+
+Approach is three principles, not a list of adjectives. "Collaborative" and
+"detail-oriented" are unfalsifiable and every portfolio claims them; a sentence
+that commits to something — and a body that points at the CI/CD numbers, the
+first year, or the execution record in ContextDesk Lab — can be checked against
+the rest of the page. Anything added here needs that backing or it does not go
+in.
+
+The toolkit stays in the same section: how someone works and what they work
+with belong together, and the contrast between the two halves is the point.
 
 `content/stack.json` is deliberately short and holds only tools that appear
 somewhere else on the page or in the resume. It is a scan aid for engineers,
@@ -452,7 +470,7 @@ Built in this order; kept as a record of why the pieces depend on each other.
 4. `Hero` — name, statement, portrait.
 5. `Work` — four entries from `projects.json`.
 6. `Experience` grouped by company, `Writing` and `Credentials` cards, then
-   `About` and `Footer`.
+   `Approach` and `Footer`.
 7. Accessibility and responsive pass at 320, 768, 1280, 1920.
 8. CI workflow: lint, build, typecheck on pull requests and pushes to main.
 

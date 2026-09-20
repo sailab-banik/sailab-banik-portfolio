@@ -1,0 +1,14 @@
+[
+  {
+    "title": "I change how the team ships, not just what I ship",
+    "body": "Release cycle time came down 40% and production hotfixes 35% because I went after the pipeline the whole team works through rather than my own throughput. The frontend test suites went in for the same reason. Work counts when it changes how everyone ships, not how fast one person does."
+  },
+  {
+    "title": "I lead by making the reasoning visible",
+    "body": "Leading the frontend of PrimeAI is mostly not writing frontend. It is making a decision legible enough that the next person can pick it up, argue with it, or replace it without asking me first. Access control reached the teams with the strictest data rules because they could see exactly what it would and would not allow, not because I told them it was safe."
+  },
+  {
+    "title": "I build systems that are measurable, not just functional",
+    "body": "ContextDesk Lab exists because I did not want to take a semantic cache's word for it. Every request returns an execution record, a miss reports its score, and no component is ever shown as working when it was not. I build the same way at work: a claim is worth whatever the measurement behind it is worth."
+  }
+]
