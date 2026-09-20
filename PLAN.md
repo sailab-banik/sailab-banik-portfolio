@@ -38,6 +38,16 @@ External links (LinkedIn, GitHub, LeetCode, Medium, email) live in
 `profile.json` under a `links` object and are read through
 `src/lib/content.ts`. No URL is hardcoded in a component, including the header.
 
+The resume is built from `assets/resume/sailab-banik-resume.tex` by
+`assets/resume/build.sh`, which produces two PDFs: `sailab-banik-resume.pdf`
+with the phone number masked, and `sailab-banik-resume-full.pdf` with the real
+one. Only the masked one is committed and linked. The real number lives in
+`assets/resume/phone.local`, and both that file and `*-full.pdf` are
+gitignored, because anything committed under `public/` is served at its own URL
+whether or not the page links to it. The source is under `assets/`, not
+`public/`, for the same reason. Build it with tectonic; `\pdfgentounicode` is
+guarded because that primitive is pdfTeX-only and tectonic runs XeTeX.
+
 The resume PDF stays in `public/` rather than an external host so the link never
 rots. Name the file with your name in it — it keeps its identity in someone's
 downloads folder.
