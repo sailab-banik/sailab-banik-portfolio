@@ -40,7 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# resume: the full PDF carries the real phone number, and anything under
-# public/ is served at its own URL the moment it is committed
-/public/resume/*-full.pdf
+# resume: the full PDF carries the real phone number
+/assets/resume/*.pdf
 /assets/resume/phone.local

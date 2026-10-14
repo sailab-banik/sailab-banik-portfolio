@@ -19,14 +19,27 @@
 \usepackage[normalem]{ulem}
 \usepackage[english]{babel}
 % pdfTeX-only primitives: they make the PDF's text layer Unicode-mappable for
-% ATS parsers. XeTeX (what tectonic runs) emits proper ToUnicode CMaps anyway.
+% ATS parsers. XeTeX (what tectonic runs) writes its own, from the font cmap.
 \ifdefined\pdfgentounicode
   \input glyphtounicode
   \pdfgentounicode=1
+  \pdfinterwordspaceon
 \fi
-\usepackage[default]{sourcesanspro}
+% Source Sans Pro with the hyphen's non-ASCII aliases removed, so the text
+% layer carries U+002D instead of U+2011. See fonts/make_fonts.py.
+\usepackage{fontspec}
+\setmainfont{ResumeSans}[
+  Path = fonts/, Extension = .otf, Ligatures = TeX,
+  UprightFont = *-Regular, ItalicFont = *-RegularIt,
+  BoldFont = *-Bold, BoldItalicFont = *-BoldIt]
 \urlstyle{same}
 \usepackage[document]{ragged2e}
+
+% Hyphenation splits keywords in the text layer that ATS parsers read.
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+% With hyphenation off, ragged2e's finite right stretch overflows long lines.
+\setlength{\RaggedRightRightskip}{0pt plus 1fil}
 
 \titlespacing{\section}{0pt}{7pt}{4pt}
 
@@ -108,7 +121,7 @@
   {\Huge \textbf{Sailab Banik}}\\[4pt]
   \small
   Chennai, Tamil Nadu, India \; $|$ \; \phone \; $|$ \;
-  \href{mailto:sailabbanik24@gmail.com}{sailabbanik24@gmail.com} \; $|$ \; \href{https://sailab-banik-portfolio.vercel.app/}{\uline{sailab-banik-portfolio.vercel.app}} \\[2pt]
+  \href{mailto:sailabbanik24@gmail.com}{sailabbanik24@gmail.com} \; $|$ \; \href{https://portfolio.sailab.dev/}{\uline{portfolio.sailab.dev}} \\[2pt]
   \small
   \href{https://www.linkedin.com/in/sailabbanik-24/}
   {\uline{linkedin.com/in/sailabbanik-24}}
@@ -120,57 +133,19 @@
   {\uline{medium.com/@sailabbanik24}}
 \end{center}
 
-\vspace{-8pt}
+\vspace{-10pt}
 
 %-----------SUMMARY--------------------------
 \section{SUMMARY}
 
-\small{
-Software Engineer with 3+ years building production AI systems and the
-full-stack products around them, specializing in
-\textbf{Python, FastAPI, React, and LLM systems}. Experienced in
-\textbf{RAG pipelines, semantic caching, and document intelligence}, with
-end-to-end ownership across architecture, CI/CD, and production delivery.
-}
+% \small is left unscoped on purpose: the rest of the page is set at this size.
+\small
+Software Engineer with 3 years of production experience, the last 2 building
+LLM-powered document intelligence systems: a platform used by \textbf{20+
+business teams}, and vision-model extraction from scanned engineering drawings.
+Specializes in \textbf{Python, FastAPI, React, RAG pipelines, and LLM
+validation}, with end-to-end ownership from architecture to deployment.
 
-\justifying
-
-%--------------SKILLS------------------------
-\section{TECHNICAL SKILLS}
-
-\resumeHeadingListStart{}
-
-  \resumeItem{
-    \textbf{Languages:}
-    Python, TypeScript, JavaScript (ES6+), SQL, HTML, CSS
-  }
-
-  \resumeItem{
-    \textbf{AI/ML:}
-    Generative AI, RAG Pipelines, Large Language Models (LLMs),
-    Vision-Language Models (VLMs), Semantic Caching, Context Engineering,
-    LangChain, Ollama, OpenAI API, Redis Iris (LangCache, Agent Memory),
-    Vector Databases (Chroma)
-  }
-
-  \resumeItem{
-    \textbf{Backend:}
-    FastAPI, REST APIs, PostgreSQL, Redis, SQLAlchemy, Pydantic,
-    OAuth2 / SSO (Microsoft Entra ID, MSAL), JWT Authentication
-  }
-
-  \resumeItem{
-    \textbf{Frontend:}
-    React.js, Next.js, Redux Toolkit, Material UI, Vite,
-    React Testing Library, Vitest, MSW
-  }
-
-  \resumeItem{
-    \textbf{DevOps \& Tools:}
-    Docker, Docker Compose, CI/CD Pipelines, Azure DevOps, Git, GitLab
-  }
-
-\resumeHeadingListEnd{}
 
 %-----------EXPERIENCE-----------------------
 \section{WORK EXPERIENCE}
@@ -184,12 +159,10 @@ end-to-end ownership across architecture, CI/CD, and production delivery.
 \resumeItemListStart{}
 
   \resumeItem{
-    Built the AI layer of \textbf{PrimeAI}, an internal document
-    processing platform adopted by \textbf{5+ business teams}:
-    annotation-driven extraction, user-defined model creation, and the
-    retrieval that assembles context before each model call --- cutting
-    manual review effort by \textbf{60\%} and saving
-    \textbf{2,000+ operational hours per quarter}.
+    Developed the AI layer of \textbf{PrimeAI}, an internal document
+    processing platform adopted by \textbf{20+ business teams}, covering
+    extraction, user-defined models, and retrieval; reduced manual review by
+    \textbf{60\%}, saving \textbf{2,000+ hours per quarter}.
   }
 
   \resumeItem{
@@ -200,44 +173,48 @@ end-to-end ownership across architecture, CI/CD, and production delivery.
   }
 
   \resumeItem{
-    Led frontend development and owned end-to-end product flows across
-    UI, API, and database layers; designed \textbf{role- and group-based
-    access control} from the ground up, enabling rollout to departments
-    with strict data-access requirements.
+    Architected a drawing extraction pipeline on \textbf{Azure OpenAI} for
+    \textbf{3,000+ scanned engineering drawings}, with multi-model validation
+    and an \textbf{evaluation harness} tracking cost and coverage per prompt
+    version.
   }
 
   \resumeItem{
-    Drove CI/CD improvements across the team, reducing release cycle
-    time by \textbf{40\%} and production hotfix incidents by
-    \textbf{35\%}; introduced frontend test suites using
-    \textbf{React Testing Library and Vitest}, reducing manual testing
-    effort by \textbf{60\%}.
+    Owned product flows end to end as frontend lead, from UI to API and
+    database; designed \textbf{role- and group-based access control},
+    enabling rollout to departments with strict data-access requirements.
+  }
+
+  \resumeItem{
+    Drove CI/CD improvements for the team, shortening release cycles by
+    \textbf{40\%} and lowering production hotfixes by \textbf{35\%};
+    introduced frontend test suites with \textbf{React Testing Library and
+    Vitest}, trimming manual testing by \textbf{60\%}.
   }
 
 \resumeItemListEnd{}
 
 %-----------ZF GROUP - GRADUATE ENGINEER TRAINEE----------------
-\resumeQuadHeading{Graduate Engineer Trainee}{Aug 2023 -- Sep 2024}
+\resumeQuadHeading{Software Engineer (Graduate Trainee)}{Aug 2023 -- Sep 2024}
 {ZF Group}{Chennai, India}
 
 \resumeItemListStart{}
 
   \resumeItem{
-    Stabilized a business-critical legacy platform by resolving
-    \textbf{10+ high-priority production bugs}, reducing user-reported
-    issues by \textbf{45\%}.
+    Resolved \textbf{10+ high-priority production bugs} on a
+    business-critical legacy platform, cutting user-reported issues by
+    \textbf{45\%}.
   }
 
   \resumeItem{
-    Led the \textbf{security hardening pass} across internal applications
+    Led the \textbf{security hardening pass} for internal applications
     ahead of audit, remediating injection and input-validation findings
     and carrying every application through review.
   }
 
   \resumeItem{
     Optimized operations scheduling workflows, improving throughput
-    by \textbf{30\%} and earning the \textbf{Budding Star Award} for
-    measurable business contribution within the first year.
+    by \textbf{30\%}.
   }
 
 \resumeItemListEnd{}
@@ -257,24 +234,43 @@ end-to-end ownership across architecture, CI/CD, and production delivery.
 \resumeItemListStart{}
 
   \resumeItem{
-    Built an AI support console where every request returns a response
-    \textit{and} an execution record: its path through cache, memory, and
-    retrieval, the tokens each source contributed, and what was dropped
-    and why --- orchestrating \textbf{Redis Iris LangCache, Agent Memory,
-    and Context Retriever}.
+    Cut repeat-question latency from \textbf{4.65s to 917ms with 0 tokens
+    billed} by answering semantically equivalent prompts from
+    \textbf{LangCache}; cache misses still report their similarity score.
   }
 
   \resumeItem{
-    Cut repeat-question latency from \textbf{4.65s to 917ms with 0 tokens
-    billed} by answering semantically equivalent prompts from
-    \textbf{LangCache}, scoring every lookup below the decision threshold
-    so a miss still reports its similarity; every component ships a stub,
-    under \textbf{50 offline tests}.
+    Designed an AI support console that returns an execution record with
+    every response, orchestrating \textbf{Redis Iris LangCache, Agent Memory,
+    and Context Retriever}, with \textbf{50 offline tests} over stubbed
+    components.
   }
 
 \resumeItemListEnd{}
 
 %-----------PROJECT 2----------------
+\resumeProjectHeading
+{\href{https://github.com/sailab-banik/FocusTrack}{\uline{FocusTrack}}: Work Tracker with AI Reviews $|$ \href{https://focustrack.sailab.dev/}{\uline{focustrack.sailab.dev}}}
+{Next.js, TypeScript, Supabase, PostgreSQL, Vercel}
+
+\resumeItemListStart{}
+
+  \resumeItem{
+    Shipped a tracker that splits work sessions into execution and
+    preparation, with daily, weekly, and monthly \textbf{AI reports} citing
+    those numbers; a database claim caps provider calls at one per user per
+    period.
+  }
+
+  \resumeItem{
+    Configured \textbf{Supabase} Postgres and Auth with \textbf{row-level
+    security} on every user table, verified by \textbf{60 pgTAP tests}; set
+    up DNS and a GitHub Actions pipeline gating each \textbf{Vercel} deploy.
+  }
+
+\resumeItemListEnd{}
+
+%-----------PROJECT 3----------------
 \resumeProjectHeading
 {\href{https://github.com/sailab-banik/QueueLens}{\uline{QueueLens}}: Distributed Job Queue with Live Dashboard}
 {Python, FastAPI, Redis, PostgreSQL, Next.js, Docker}
@@ -290,42 +286,50 @@ end-to-end ownership across architecture, CI/CD, and production delivery.
 
   \resumeItem{
     Implemented \textbf{retries with exponential backoff}, Redis-backed
-    \textbf{per-client rate limiting} that holds across API processes,
+    \textbf{per-client rate limiting} shared by all API processes,
     and a queue cap returning 429/503 with Retry-After; ordered state
     commits before enqueueing to prevent API--worker race conditions.
   }
 
 \resumeItemListEnd{}
 
-%-----------PROJECT 3----------------
-\resumeProjectHeading
-{Advanced RAG Pipeline for 100+ Page Documents}
-{Python, FastAPI, LangChain, Ollama, Qwen3, Chroma}
+\resumeHeadingListEnd{}
 
-\resumeItemListStart{}
+%--------------SKILLS------------------------
+\section{TECHNICAL SKILLS}
+
+\resumeHeadingListStart{}
 
   \resumeItem{
-    Built a pipeline converting unstructured \textbf{100+ page PDFs}
-    into structured JSON from user-defined schemas, running fully on
-    local infrastructure with \textbf{Ollama-hosted Qwen3} and keeping
-    sensitive data within the environment.
+    \textbf{Programming Languages:}
+    Python, TypeScript, JavaScript (ES6+), SQL, HTML, CSS
   }
 
   \resumeItem{
-    Designed a \textbf{dual-path RAG architecture} with separate text
-    and table vector stores, structure-aware chunking, and
-    cross-encoder reranking, improving retrieval precision by
-    \textbf{$\sim$40\%} over a single-store baseline.
+    \textbf{AI/ML:}
+    Generative AI, RAG Pipelines, Large Language Models (LLMs),
+    Vision-Language Models (VLMs), Structured Outputs, LLM Evaluation,
+    Semantic Caching, Context Engineering, Azure OpenAI, Ollama, LangChain,
+    Redis Iris (LangCache, Agent Memory)
   }
 
   \resumeItem{
-    Implemented runtime validation using \textbf{dynamically generated
-    Pydantic models} and an \textbf{LLM-driven repair loop}, improving
-    valid-JSON responses from \textbf{$\sim$75\% to 100\%}; exposed it
-    through a modular REST API with idempotent ingestion.
+    \textbf{Backend:}
+    FastAPI, REST APIs, Pydantic, SQLAlchemy, PostgreSQL, Supabase (Auth,
+    RLS), Redis, OAuth2 / SSO (Microsoft Entra ID, MSAL)
   }
 
-\resumeItemListEnd{}
+  \resumeItem{
+    \textbf{Frontend:}
+    React.js, Next.js, TypeScript, Redux Toolkit, Tailwind CSS, Material UI,
+    React Testing Library, Vitest, MSW
+  }
+
+  \resumeItem{
+    \textbf{DevOps \& Tools:}
+    Docker, Docker Compose, CI/CD Pipelines, GitHub Actions, Azure DevOps,
+    Vercel, DNS, Git
+  }
 
 \resumeHeadingListEnd{}
 
@@ -342,14 +346,14 @@ end-to-end ownership across architecture, CI/CD, and production delivery.
 
 \resumeHeadingListEnd{}
 
-%-----------CERTIFICATIONS & AWARDS-----------
-\section{CERTIFICATIONS \& AWARDS}
+%-----------AWARDS & CERTIFICATIONS-----------
+\section{AWARDS \& CERTIFICATIONS}
 
 \resumeHeadingListStart{}
 
   \resumeItem{
     \textbf{Budding Star Award} --- ZF Group, Recognition for
-    Business Impact \hfill \textit{2024}
+    Business Impact in the first year \hfill \textit{2024}
   }
 
   \resumeItem{
@@ -360,16 +364,6 @@ end-to-end ownership across architecture, CI/CD, and production delivery.
       https://storage.googleapis.com/learnyst-user-assets/certificates/schools/171024/certificates/255574/users/13343360/pdf/13343360_255574.pdf
     }{\uline{Credential}}
     $|$ \textit{Jun 2026}
-  }
-
-  \resumeItem{
-    \textbf{AI Engineer Core Track (LLM Engineer)} --- Udemy:
-    production LLM apps, RAG, agentic workflows, fine-tuning
-    \hfill
-    \href{
-      https://udemy-certificate.s3.amazonaws.com/image/UC-a657c0f3-0127-4663-8c8a-6d1598d4ff2b.jpg
-    }{\uline{Credential}}
-    $|$ \textit{May 2026}
   }
 
 \resumeHeadingListEnd{}
