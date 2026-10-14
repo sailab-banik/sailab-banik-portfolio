@@ -8,7 +8,7 @@
       {
         "title": "Software Engineer II",
         "period": "Oct 2024 — Present",
-        "summary": "Build the AI side of PrimeAI, the internal document processing platform five business teams run on — annotation-driven extraction, the model-creation flow business users drive themselves, and the retrieval and prompting that decide what a model sees before it answers. Documents that cannot leave our infrastructure go to locally served models on Ollama; the problems that need a frontier model get one, and retrieval closes most of the gap between the two. I lead the frontend and own these flows end to end — interface, API, schema — alongside the role- and group-based access control the multi-team rollout needed and the CI/CD work that cut release cycle time by 40% and production hotfixes by 35%."
+        "summary": "Build the AI side of PrimeAI, the internal document processing platform 20+ business teams run on — annotation-driven extraction, the model-creation flow business users drive themselves, and the retrieval and prompting that decide what a model sees before it answers. Documents that cannot leave our infrastructure go to locally served models on Ollama; the problems that need a frontier model get one, and retrieval closes most of the gap between the two. On my own I built the pipeline that reads packaging dimensions off 3,000+ scanned engineering drawings, where no value counts until two different models agree on it. I lead the frontend and own these flows end to end — interface, API, schema — alongside the role- and group-based access control the multi-team rollout needed and the CI/CD work that cut release cycle time by 40% and production hotfixes by 35%."
       },
       {
         "title": "Graduate Engineer Trainee",

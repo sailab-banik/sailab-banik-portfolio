@@ -9,6 +9,6 @@
   },
   {
     "title": "I build systems that are measurable, not just functional",
-    "body": "ContextDesk Lab exists because I did not want to take a semantic cache's word for it. Every request returns an execution record, a miss reports its score, and no component is ever shown as working when it was not. I build the same way at work: a claim is worth whatever the measurement behind it is worth."
+    "body": "ContextDesk Lab exists because I did not want to take a semantic cache's word for it. Every request returns an execution record, a miss reports its score, and no component is ever shown as working when it was not. The drawing pipeline at work logs cost, time, and coverage against every prompt version for the same reason: a claim is worth whatever the measurement behind it is worth."
   }
 ]

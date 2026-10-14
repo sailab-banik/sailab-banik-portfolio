@@ -14,7 +14,7 @@
     "outcomes": [
       {
         "label": "Business teams onboarded",
-        "value": "5+"
+        "value": "20+"
       },
       {
         "label": "Less manual document review",
@@ -23,6 +23,34 @@
       {
         "label": "Operational hours saved each quarter",
         "value": "2,000+"
+      }
+    ]
+  },
+  {
+    "slug": "plm-drawing-extraction",
+    "title": "PLM drawing extraction",
+    "context": "ZF Group, internal tool",
+    "summary": "Finds the smallest box every part in PLM ships in, read from scanned DIN and ISO drawings that are often decades old and in German. Models only locate and read dimensions, returning each side as a formula over them; Python applies the tolerances in exact arithmetic, a value counts only when two different models agree on it, and anything still in doubt is flagged with its reason instead of guessed.",
+    "stack": [
+      "Python",
+      "FastAPI",
+      "Azure OpenAI",
+      "Pydantic",
+      "Pillow",
+      "SQLite"
+    ],
+    "outcomes": [
+      {
+        "label": "Scanned drawings in scope, each one a manual read before",
+        "value": "3,000+"
+      },
+      {
+        "label": "Independent model readings before a dimension is confirmed",
+        "value": "2"
+      },
+      {
+        "label": "Drawings rejected, with every doubt flagged and explained instead",
+        "value": "0"
       }
     ]
   },
@@ -56,55 +84,33 @@
     "repo": "https://github.com/sailab-banik/ContextDesk-Lab"
   },
   {
-    "slug": "queuelens",
-    "title": "QueueLens",
-    "context": "Personal project",
-    "summary": "A job queue where FastAPI accepts work, Redis hands it to a background worker, and PostgreSQL records every job's state so nothing is lost across restarts. A Next.js dashboard shows each job moving through the queue, including failed attempts that retry with exponential backoff.",
+    "slug": "focustrack",
+    "title": "FocusTrack",
+    "context": "Personal project, in daily use",
+    "summary": "A work tracker that marks every session as building or getting ready to build, and writes daily, weekly, and monthly reports that cite those numbers and end with one next action. I run all of it myself: Supabase Postgres and Auth with row-level security on every table, the pipeline that tests and deploys it to Vercel, and the DNS for the domain it is served from.",
     "stack": [
-      "Python",
-      "FastAPI",
-      "Redis",
-      "PostgreSQL",
       "Next.js",
-      "Docker"
+      "TypeScript",
+      "Supabase",
+      "PostgreSQL",
+      "Tailwind CSS",
+      "Vercel"
     ],
     "outcomes": [
       {
-        "label": "Attempts per job, backing off 2s then 4s",
-        "value": "3"
+        "label": "Database tests that one user can never reach another's rows",
+        "value": "60"
       },
       {
-        "label": "Jobs per client every 10 seconds before a 429",
-        "value": "10"
+        "label": "AI calls per user per report period, capped by a database claim",
+        "value": "1"
       },
       {
-        "label": "Waiting jobs before the API sheds load",
-        "value": "100"
+        "label": "Unit tests run before every production deploy",
+        "value": "150+"
       }
     ],
-    "repo": "https://github.com/sailab-banik/QueueLens"
-  },
-  {
-    "slug": "rag-pipeline",
-    "title": "Retrieval pipeline for 100+ page documents",
-    "context": "Personal project",
-    "summary": "A pipeline that turns unstructured PDFs into JSON matching a schema the user defines, running entirely on local infrastructure so nothing sensitive leaves the environment. Text and tables live in separate vector stores, chunked along the document structure and reranked by a cross-encoder.",
-    "stack": [
-      "Python",
-      "LangChain",
-      "Qwen3",
-      "Chroma",
-      "FastAPI"
-    ],
-    "outcomes": [
-      {
-        "label": "Better retrieval precision than a single-store baseline",
-        "value": "+40%"
-      },
-      {
-        "label": "Valid JSON responses, up from 75%",
-        "value": "100%"
-      }
-    ]
+    "repo": "https://github.com/sailab-banik/FocusTrack",
+    "live": "https://focustrack.sailab.dev/"
   }
 ]

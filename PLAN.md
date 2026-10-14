@@ -17,7 +17,7 @@ here. Primary job: make them download the resume or open LinkedIn.
 
 ```
 public/
-  resume/sailab-banik-resume.pdf     linked from header and footer
+  resume/sailab_banik_resume_<mmddyy>_masked.pdf  linked from header and footer
   images/profile_picture.png         original headshot, kept as the source crop
   images/portrait-cutout.png         hero portrait, background removed, alpha fade
   certificates/*.jpeg                certificate scans, cropped to ~4:3
@@ -39,14 +39,19 @@ External links (LinkedIn, GitHub, LeetCode, Medium, email) live in
 `src/lib/content.ts`. No URL is hardcoded in a component, including the header.
 
 The resume is built from `assets/resume/sailab-banik-resume.tex` by
-`assets/resume/build.sh`, which produces two PDFs: `sailab-banik-resume.pdf`
-with the phone number masked, and `sailab-banik-resume-full.pdf` with the real
-one. Only the masked one is committed and linked. The real number lives in
-`assets/resume/phone.local`, and both that file and `*-full.pdf` are
-gitignored, because anything committed under `public/` is served at its own URL
-whether or not the page links to it. The source is under `assets/`, not
+`assets/resume/build.sh`, which produces two PDFs dated with the build day's
+mmddyy: `public/resume/sailab_banik_resume_<mmddyy>_masked.pdf` with the phone
+number masked, and `assets/resume/sailab_banik_resume_<mmddyy>.pdf` with the
+real one. Only the masked one is committed and linked; the build deletes the
+previous one and repoints `profile.resume` at the new file. The real number
+lives in `assets/resume/phone.local`, and both that file and the full PDF are
+gitignored. The full PDF is kept out of `public/` entirely, because anything
+there is served at its own URL whether or not the page links to it. The source is under `assets/`, not
 `public/`, for the same reason. Build it with tectonic; `\pdfgentounicode` is
-guarded because that primitive is pdfTeX-only and tectonic runs XeTeX.
+guarded because that primitive is pdfTeX-only and tectonic runs XeTeX. The
+face is ResumeSans from `assets/resume/fonts/`, a renamed Source Sans Pro whose
+hyphen glyph maps only to U+002D, so ATS parsers read hyphens as hyphens rather
+than U+2011; `make_fonts.py` there regenerates it.
 
 The resume PDF stays in `public/` rather than an external host so the link never
 rots. Name the file with your name in it — it keeps its identity in someone's
@@ -165,7 +170,7 @@ invite a reply. It runs full width with no rail.
 │ Work       │ PrimeAI       ZF Group, internal    │
 │  (sticky)  │ two sentences of prose              │
 │            │ React  Redux  FastAPI  Postgres     │
-│            │ Teams onboarded ············ 5+     │
+│            │ Teams onboarded ············ 20+    │
 │            │ Less manual review ········· 60%    │
 ├──────────────────────────────────────────────────┤
 │ Writing    │ Article title ↗         Publication │
@@ -316,7 +321,7 @@ type Profile = {
     leetcode: string
     medium: string
   }
-  resume: string           // "/resume/sailab-banik-resume.pdf"
+  resume: string           // "/resume/sailab_banik_resume_<mmddyy>_masked.pdf"
   portrait: string
 }
 
@@ -409,7 +414,10 @@ somewhere else on the page or in the resume. It is a scan aid for engineers,
 not a keyword list — anything added to it should be true of real work.
 
 Four projects. Three was the original limit and four is the ceiling: a
-fifth replaces an entry rather than extending the list.
+fifth replaces an entry rather than extending the list. Adding the PLM drawing
+extraction and FocusTrack retired QueueLens and the RAG pipeline from the page;
+QueueLens is still on the resume, where the distributed-systems angle has no
+other evidence.
 
 Four articles, chosen for distinct subjects rather than recency. They render as
 rows, not cards: `surface` is used for exactly two things, the credential cards
@@ -503,18 +511,18 @@ on whitespace — and every `div` with more than one child needs an explicit
 
 ## Still open
 
-Three things are known-incomplete. None of them are structural.
+Two things are known-incomplete. Neither is structural.
 
 - **LeetCode URL is a guess.** `profile.json` carries
   `leetcode.com/u/sailab-banik/`, which was never confirmed — it is not in the
   resume. Verify or remove the link.
-- **Repo and live links are mostly missing.** `Project.repo` and `Project.live`
-  are typed and rendered, but only QueueLens and ContextDesk Lab supply one
-  (their GitHub repos). PrimeAI is internal; the RAG pipeline's URL was never
-  supplied.
-- **`metadataBase` has no real domain.** It falls back to
-  `VERCEL_PROJECT_PRODUCTION_URL`, correct on Vercel, wrong once there is a
-  custom domain.
+- **Two projects have no link.** PrimeAI and the PLM drawing extraction are
+  internal to ZF. ContextDesk Lab links its repo; FocusTrack links its repo and
+  the live app.
+
+`metadataBase` reads `VERCEL_PROJECT_PRODUCTION_URL`, which Vercel sets to the
+shortest production custom domain, so it resolves to `portfolio.sailab.dev`
+without a hardcoded URL as long as that domain stays attached to the project.
 
 `content/stack.json` lists only tools evidenced elsewhere on the page, so it is
 narrower than the real toolkit. Extend it with what is actually true.
