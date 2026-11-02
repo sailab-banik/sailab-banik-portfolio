@@ -1,116 +1,229 @@
 [
   {
-    "slug": "primeai",
-    "title": "PrimeAI",
-    "context": "ZF Group, internal platform",
-    "summary": "An AI document processing platform where business teams create their own extraction models, annotate the fields they need, and push the results straight into their workflows. I led the frontend and built role- and group-based access control from the ground up so teams with strict data rules could adopt it.",
-    "stack": [
-      "React",
-      "Redux Toolkit",
-      "FastAPI",
-      "PostgreSQL",
-      "Azure DevOps"
-    ],
-    "outcomes": [
-      {
-        "label": "Business teams onboarded",
-        "value": "20+"
-      },
-      {
-        "label": "Less manual document review",
-        "value": "60%"
-      },
-      {
-        "label": "Operational hours saved each quarter",
-        "value": "2,000+"
-      }
-    ]
-  },
-  {
-    "slug": "plm-drawing-extraction",
-    "title": "PLM drawing extraction",
-    "context": "ZF Group, internal tool",
-    "summary": "Finds the smallest box every part in PLM ships in, read from scanned DIN and ISO drawings that are often decades old and in German. Models only locate and read dimensions, returning each side as a formula over them; Python applies the tolerances in exact arithmetic, a value counts only when two different models agree on it, and anything still in doubt is flagged with its reason instead of guessed.",
-    "stack": [
-      "Python",
-      "FastAPI",
-      "Azure OpenAI",
-      "Pydantic",
-      "Pillow",
-      "SQLite"
-    ],
-    "outcomes": [
-      {
-        "label": "Scanned drawings in scope, each one a manual read before",
-        "value": "3,000+"
-      },
-      {
-        "label": "Independent model readings before a dimension is confirmed",
-        "value": "2"
-      },
-      {
-        "label": "Drawings rejected, with every doubt flagged and explained instead",
-        "value": "0"
-      }
-    ]
-  },
-  {
     "slug": "contextdesk-lab",
     "title": "ContextDesk Lab",
-    "context": "Personal project",
-    "summary": "A support chat built to take Redis Iris apart: every request returns an answer and, beside it, the record of how that answer was made — which memories and records reached the model, what was left out and why, and what each step cost. It exists to put a number on what a semantic cache is worth, so a question asked again in other words comes back from LangCache with the model never called.",
+    "path": "~/projects/contextdesk-lab",
+    "summary": "Built an AI support console on Redis Iris that returns an execution record with every answer: what reached the model, what came from cache, and what it cost. Semantic caching cut a repeated question from 4.65 s to 917 ms with 0 tokens billed, covered by 50 offline tests.",
     "stack": [
       "Python",
       "FastAPI",
       "Redis Iris",
       "Next.js",
-      "TypeScript",
       "Docker"
     ],
-    "outcomes": [
+    "links": [
       {
-        "label": "A rephrased question answered from cache, against 4.65s through the model",
-        "value": "917ms"
-      },
-      {
-        "label": "Tokens billed on that answer, down from 576",
-        "value": "0"
-      },
-      {
-        "label": "Similarity the rephrasing matched at, against a 0.92 threshold",
-        "value": "1.00"
+        "label": "Source",
+        "href": "https://github.com/sailab-banik/ContextDesk-Lab"
       }
     ],
-    "repo": "https://github.com/sailab-banik/ContextDesk-Lab"
+    "panel": {
+      "kind": "cache",
+      "caption": "execution record · rephrased question",
+      "status": "cache hit",
+      "bars": [
+        {
+          "label": "model call",
+          "value": "4.65 s",
+          "share": 1
+        },
+        {
+          "label": "LangCache",
+          "value": "0.917 s",
+          "share": 0.197,
+          "highlight": true
+        }
+      ],
+      "facts": [
+        {
+          "label": "tokens billed",
+          "value": "0",
+          "note": "vs 576"
+        },
+        {
+          "label": "similarity",
+          "value": "1.00"
+        },
+        {
+          "label": "threshold",
+          "value": "0.92"
+        }
+      ]
+    }
   },
   {
     "slug": "focustrack",
     "title": "FocusTrack",
-    "context": "Personal project, in daily use",
-    "summary": "A work tracker that marks every session as building or getting ready to build, and writes daily, weekly, and monthly reports that cite those numbers and end with one next action. I run all of it myself: Supabase Postgres and Auth with row-level security on every table, the pipeline that tests and deploys it to Vercel, and the DNS for the domain it is served from.",
+    "path": "~/projects/focustrack",
+    "summary": "Built and shipped a work tracker that classifies every session as execution or preparation, then writes daily, weekly and monthly AI reports from those numbers, each ending with one next action. Row-level security is verified by 60 pgTAP tests and 150+ unit tests gate every deploy. In daily use.",
     "stack": [
       "Next.js",
       "TypeScript",
       "Supabase",
       "PostgreSQL",
-      "Tailwind CSS",
       "Vercel"
     ],
-    "outcomes": [
+    "links": [
       {
-        "label": "Database tests that one user can never reach another's rows",
-        "value": "60"
+        "label": "Open live app",
+        "href": "https://focustrack.sailab.dev/",
+        "primary": true
       },
       {
-        "label": "AI calls per user per report period, capped by a database claim",
-        "value": "1"
-      },
-      {
-        "label": "Unit tests run before every production deploy",
-        "value": "150+"
+        "label": "Source",
+        "href": "https://github.com/sailab-banik/FocusTrack"
       }
     ],
-    "repo": "https://github.com/sailab-banik/FocusTrack",
-    "live": "https://focustrack.sailab.dev/"
+    "panel": {
+      "kind": "week",
+      "caption": "this week · hours",
+      "tag": "illustrative data",
+      "max": 10,
+      "days": [
+        {
+          "day": "Mon",
+          "execution": 4.8,
+          "preparation": 2.2
+        },
+        {
+          "day": "Tue",
+          "execution": 3.6,
+          "preparation": 3.0
+        },
+        {
+          "day": "Wed",
+          "execution": 6.2,
+          "preparation": 1.4
+        },
+        {
+          "day": "Thu",
+          "execution": 2.4,
+          "preparation": 4.0
+        },
+        {
+          "day": "Fri",
+          "execution": 5.6,
+          "preparation": 1.8
+        },
+        {
+          "day": "Sat",
+          "execution": 3.0,
+          "preparation": 1.0
+        },
+        {
+          "day": "Sun",
+          "execution": 1.2,
+          "preparation": 0.6
+        }
+      ],
+      "legend": {
+        "execution": "Execution",
+        "preparation": "Preparation"
+      },
+      "report": {
+        "title": "Weekly report.",
+        "body": "Execution was 66% of tracked time, up from last week. Thursday leaned on preparation, 4.0 h of Learn and Review against 2.4 h of Build. Next: give Thursday morning back to building."
+      },
+      "facts": [
+        {
+          "label": "pgTAP RLS tests",
+          "value": "60"
+        },
+        {
+          "label": "AI calls / period",
+          "value": "1"
+        },
+        {
+          "label": "unit tests per deploy",
+          "value": "150+"
+        }
+      ]
+    }
+  },
+  {
+    "slug": "queuelens",
+    "title": "QueueLens",
+    "path": "~/projects/queuelens",
+    "summary": "Built a distributed job queue: FastAPI persists jobs in PostgreSQL and hands IDs to workers over Redis, with retries, exponential backoff and per-client rate limiting. Committing state before enqueueing eliminated API–worker race conditions, and a Next.js dashboard traces every job live.",
+    "stack": [
+      "Python",
+      "FastAPI",
+      "Redis",
+      "PostgreSQL",
+      "Next.js"
+    ],
+    "links": [
+      {
+        "label": "Source",
+        "href": "https://github.com/sailab-banik/QueueLens"
+      }
+    ],
+    "panel": {
+      "kind": "queue",
+      "caption": "job lifecycle · live",
+      "tag": "illustrative data",
+      "lanes": [
+        {
+          "title": "producer · POST /jobs",
+          "jobs": [
+            {
+              "id": "job_8f21",
+              "state": "queued",
+              "tone": "queued"
+            },
+            {
+              "id": "job_8f22",
+              "state": "queued",
+              "tone": "queued"
+            },
+            {
+              "id": "client_7",
+              "state": "429",
+              "tone": "rejected"
+            }
+          ]
+        },
+        {
+          "title": "redis · LPUSH / BRPOP",
+          "jobs": [
+            {
+              "id": "job_8f1e",
+              "state": "running",
+              "tone": "running"
+            },
+            {
+              "id": "job_8f1c",
+              "state": "retry 2 · 4s",
+              "tone": "running"
+            },
+            {
+              "id": "depth 2 / 1k",
+              "state": "ok",
+              "tone": "idle"
+            }
+          ]
+        },
+        {
+          "title": "workers · 3",
+          "jobs": [
+            {
+              "id": "job_8f1a",
+              "state": "done",
+              "tone": "done"
+            },
+            {
+              "id": "job_8f19",
+              "state": "done",
+              "tone": "done"
+            },
+            {
+              "id": "job_8f17",
+              "state": "done",
+              "tone": "done"
+            }
+          ]
+        }
+      ]
+    }
   }
 ]

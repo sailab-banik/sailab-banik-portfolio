@@ -1,72 +1,72 @@
 import Image from "next/image";
 import { getProfile } from "@/lib/content";
-
-const PORTRAIT_SIZE = 1000;
+import { Button } from "@/components/button";
+import { CodeIcon, DownloadIcon, GitHubIcon, LinkedInIcon, MailIcon, MediumIcon } from "@/components/icons";
+import { Terminal } from "@/components/terminal";
 
 export function Hero() {
-  const { name, role, statement, emphasis, location, portrait, resume, links } = getProfile();
-  const [before, after] = statement.split(emphasis);
+  const { name, headline, emphasis, statement, status, location, timezone, portrait, resume, email, links } =
+    getProfile();
+  const [before, after] = headline.split(emphasis);
 
   return (
-    <section id="top" className="mx-auto w-full max-w-page px-6 pt-12 pb-[clamp(3.5rem,8vh,6rem)] md:px-10 md:pt-20">
-      <h1 className="type-display text-display text-ink">
-        <span className="block overflow-hidden pt-[0.08em]">
-          <span className="reveal-line block whitespace-nowrap">{name}</span>
-        </span>
-      </h1>
-
-      {/* Both columns hang from the rule, and the text block is centred against
-          the portrait rather than pinned to either of its edges — the text is
-          always the shorter of the two, so matching one edge only moves the
-          mismatch to the other. The two trims keep the centring optical: the
-          cut-out carries ~6% transparent headroom above the hair, and the first
-          line of serif carries 0.285em of leading above its cap, so the block
-          being centred is the one you can see rather than the boxes. */}
-      <div className="reveal mt-8 flex flex-col border-t border-edge pt-10 [animation-delay:260ms] md:mt-10 md:grid md:grid-cols-12 md:items-center md:gap-x-8 md:pt-12 lg:gap-x-12">
-        <div className="order-1 mb-10 w-full max-w-[420px] md:order-2 md:col-span-5 md:col-start-8 md:mb-0 md:max-w-none">
+    <section className="mx-auto grid max-w-page items-center gap-12 px-4 pt-14 pb-16 sm:px-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16 lg:pt-[88px] lg:pb-24">
+      <div>
+        <div className="mb-7 flex items-center gap-4">
           <Image
             src={portrait}
-            alt={`${name}, ${role}`}
-            width={PORTRAIT_SIZE}
-            height={PORTRAIT_SIZE}
-            sizes="(min-width: 768px) 36vw, (min-width: 468px) 420px, 100vw"
+            alt={`Portrait of ${name}`}
+            width={112}
+            height={112}
             priority
-            className="portrait -mt-[6%] block w-full"
+            className="h-28 w-28 rounded-[20px] border border-line object-cover"
           />
-        </div>
-
-        <div className="order-2 md:order-1 md:col-span-6">
-          <p className="font-serif text-lead text-ink md:-mt-[0.285em] md:max-w-[34ch]">
-            {before}
-            <strong className="font-sans font-semibold tracking-tight">{emphasis}</strong>
-            {after}
-          </p>
-
-          <div className="mt-9">
-            <div className="flex flex-wrap items-center gap-3">
-              <a
-                href={resume}
-                download
-                className="flex h-11 items-center rounded-full bg-signal px-6 text-ui font-semibold text-paper transition-opacity hover:opacity-85"
-              >
-                Download resume
-              </a>
-              <a
-                href={links.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                className="flex h-11 items-center rounded-full border border-edge px-6 text-ui font-medium text-ink transition-colors hover:border-ink"
-              >
-                Connect on LinkedIn
-              </a>
-            </div>
-
-            <p className="mt-8 text-ui text-slate">
-              {role} in {location}
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full border border-line bg-raised px-3 py-1.5 text-[13px] text-fg">
+              <span className="h-2 w-2 rounded-full bg-green" />
+              {status}
+            </span>
+            <p className="mt-2.5 font-mono text-xs leading-[1.6] text-faint">
+              {location} · {timezone}
             </p>
           </div>
         </div>
+
+        <h1 className="mb-[18px] text-[44px] leading-[1.02] font-semibold tracking-[-0.035em] sm:text-[72px]">
+          {name}
+        </h1>
+        <p className="mb-[18px] text-lg leading-[1.4] font-medium tracking-[-0.01em] sm:text-[22px]">
+          {before}
+          <b className="font-medium text-amber">{emphasis}</b>
+          {after}
+        </p>
+        <p className="mb-8 max-w-[58ch] text-[17px] text-muted">{statement}</p>
+
+        <div className="flex flex-wrap items-center gap-2.5">
+          <Button href={resume} newTab primary>
+            <DownloadIcon />
+            View resume
+          </Button>
+          <Button href={`mailto:${email}`}>
+            <MailIcon />
+            Email me
+          </Button>
+          <Button href={links.linkedin} square label="LinkedIn">
+            <LinkedInIcon />
+          </Button>
+          <Button href={links.github} square label="GitHub">
+            <GitHubIcon />
+          </Button>
+          <Button href={links.medium} square label="Medium">
+            <MediumIcon />
+          </Button>
+          <Button href={links.leetcode} square label="LeetCode">
+            <CodeIcon />
+          </Button>
+        </div>
       </div>
+
+      <Terminal />
     </section>
   );
 }

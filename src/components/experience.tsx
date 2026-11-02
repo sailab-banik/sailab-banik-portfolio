@@ -1,58 +1,97 @@
-import { Section } from "@/components/section";
-import { getExperience, type Experience as Entry } from "@/lib/content";
-import { Logo, type LogoName } from "@/components/logos";
+import { getExperience, type Change, type Commit } from "@/lib/content";
+import { SectionHead } from "@/components/section-head";
 
+/* Experience as a commit graph: roles are commits on main, and the drawing
+   pipeline is a branch merged into it, because that is how it was built. */
 export function Experience() {
-  const history = getExperience();
+  const commits = getExperience();
 
   return (
-    <Section name="experience">
-      <ul>
-        {history.map((entry) => (
-          <Company key={entry.company} entry={entry} />
-        ))}
-      </ul>
-    </Section>
+    <section id="experience" className="scroll-mt-14 border-t border-line py-[72px] sm:py-[104px]">
+      <div className="mx-auto max-w-page px-4 sm:px-10">
+        <SectionHead name="experience" />
+        <ol>
+          {commits.map((commit, index) => (
+            <Entry key={commit.hash} commit={commit} first={index === 0} last={index === commits.length - 1} />
+          ))}
+        </ol>
+      </div>
+    </section>
   );
 }
 
-function Company({ entry }: { entry: Entry }) {
-  const { company, logo, url, location, roles } = entry;
+function Entry({ commit, first, last }: { commit: Commit; first: boolean; last: boolean }) {
+  const { hash, ref, branch, award, period, title, org, summary, diff, changes } = commit;
+  const rail = `before:absolute before:left-[11px] before:w-0.5 before:bg-line sm:before:left-[23px] ${
+    first ? "before:top-3.5" : "before:top-0"
+  } ${last ? "before:h-3.5" : "before:bottom-0"}`;
 
   return (
-    <li className="mt-16 first:mt-0">
-      <div className="flex items-center gap-4">
-        <span className="grid h-14 w-14 shrink-0 place-items-center rounded-lg border border-edge bg-surface text-ink">
-          <Logo name={logo as LogoName} title={company} />
-        </span>
-        <div>
-          <a
-            href={url}
-            target="_blank"
-            rel="noreferrer"
-            className="text-h3 font-semibold text-ink underline decoration-edge decoration-1 underline-offset-4 transition-colors hover:decoration-signal"
-          >
-            {company}
-          </a>
-          <p className="mt-1 text-meta text-slate">{location}</p>
-        </div>
+    <li className="grid grid-cols-[44px_minmax(0,1fr)] sm:grid-cols-[72px_minmax(0,1fr)]">
+      <div className={`relative ${rail}`}>
+        {branch ? (
+          <>
+            <span className="absolute -top-[30px] left-3 h-11 w-7 rounded-bl-[18px] border-b-2 border-l-2 border-l-transparent border-b-blue opacity-70 sm:left-6" />
+            <span className="absolute top-2 left-[26px] h-3 w-3 rounded-full border-2 border-blue bg-canvas sm:left-[46px]" />
+          </>
+        ) : (
+          <span
+            className={`absolute top-1.5 left-1 h-4 w-4 rounded-full border-2 border-amber sm:left-4 ${
+              first ? "bg-amber shadow-[0_0_0_5px_rgba(245,185,66,0.14)]" : "bg-canvas"
+            }`}
+          />
+        )}
       </div>
 
-      {/* Roles at one employer are a genuine sequence, so they get a timeline. */}
-      <ol className="mt-9 ml-7 border-l border-edge pl-9">
-        {roles.map((role) => (
-          <li
-            key={role.title}
-            className="relative pb-12 last:pb-0 before:absolute before:top-[0.5em] before:-left-[2.4rem] before:h-[9px] before:w-[9px] before:rounded-full before:border before:border-slate before:bg-paper"
-          >
-            <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-              <h3 className="text-h3 font-semibold text-ink">{role.title}</h3>
-              <p className="text-meta text-slate">{role.period}</p>
+      <div className={`${last ? "" : "pb-14"} ${branch ? "pl-6" : ""}`}>
+        <div className="mb-2 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[13px] text-faint">
+          <span className="text-blue">{hash}</span>
+          {ref && <Pill>{ref}</Pill>}
+          {branch && <Pill branch>{branch}</Pill>}
+          <span>{period}</span>
+          {award && <Pill>{award}</Pill>}
+        </div>
+        <h3 className={`mb-1 font-semibold tracking-[-0.02em] ${branch ? "text-xl" : "text-2xl"}`}>{title}</h3>
+        <p className="mb-5 text-muted">{summary ?? org}</p>
+
+        <div className="overflow-hidden rounded-xl border border-line bg-raised">
+          {diff && (
+            <div className="flex justify-between gap-3 border-b border-line px-4 py-2.5 font-mono text-xs text-faint">
+              <span>{diff}</span>
+              <span className="text-green">+{changes.length} changes</span>
             </div>
-            <p className="mt-3 max-w-[68ch] font-serif text-body text-ink">{role.summary}</p>
-          </li>
-        ))}
-      </ol>
+          )}
+          <div>
+            {changes.map((change) => (
+              <Line key={change.text} change={change} />
+            ))}
+          </div>
+        </div>
+      </div>
     </li>
+  );
+}
+
+function Pill({ branch, children }: { branch?: boolean; children: string }) {
+  return (
+    <span
+      className={`rounded-full border px-2 py-0.5 text-xs ${
+        branch ? "border-blue/35 text-blue" : "border-amber/40 text-amber"
+      }`}
+    >
+      {children}
+    </span>
+  );
+}
+
+function Line({ change }: { change: Change }) {
+  return (
+    <div className="grid grid-cols-[20px_minmax(0,1fr)] items-baseline gap-3 border-t border-line/60 px-4 py-2.5 first:border-t-0 odd:bg-green/[0.045] sm:grid-cols-[28px_minmax(0,1fr)_auto]">
+      <span className="font-mono text-sm text-green">+</span>
+      <span className="max-w-[72ch] text-[15px]">{change.text}</span>
+      <span className="col-start-2 font-mono text-[13px] whitespace-nowrap text-green tabular-nums sm:col-start-3">
+        {change.metric}
+      </span>
+    </div>
   );
 }

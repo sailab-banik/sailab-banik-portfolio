@@ -140,11 +140,12 @@
 
 % \small is left unscoped on purpose: the rest of the page is set at this size.
 \small
-Software Engineer with 3 years of production experience, the last 2 building
-LLM-powered document intelligence systems: a platform used by \textbf{20+
-business teams}, and vision-model extraction from scanned engineering drawings.
-Specializes in \textbf{Python, FastAPI, React, RAG pipelines, and LLM
-validation}, with end-to-end ownership from architecture to deployment.
+Software Engineer with 3 years of production experience at ZF Group, the last 2
+delivering LLM-powered document intelligence: a platform adopted by \textbf{20+
+business teams} that cut manual review by \textbf{60\%}, and automated extraction
+across \textbf{3,000+ scanned engineering drawings}. Specializes in
+\textbf{Python, FastAPI, React, RAG pipelines, and LLM validation}, owning
+delivery from requirements to deployment.
 
 
 %-----------EXPERIENCE-----------------------
@@ -159,37 +160,37 @@ validation}, with end-to-end ownership from architecture to deployment.
 \resumeItemListStart{}
 
   \resumeItem{
-    Developed the AI layer of \textbf{PrimeAI}, an internal document
-    processing platform adopted by \textbf{20+ business teams}, covering
-    extraction, user-defined models, and retrieval; reduced manual review by
+    Built the AI layer of \textbf{PrimeAI}, an internal document processing
+    platform covering extraction, user-defined models, and retrieval; adopted
+    by \textbf{20+ business teams}, it reduced manual review by
     \textbf{60\%}, saving \textbf{2,000+ hours per quarter}.
   }
 
   \resumeItem{
-    Routed extraction between \textbf{locally served models on Ollama},
-    for documents that cannot leave internal infrastructure, and frontier
-    APIs where accuracy required them, closing most of the gap with
-    retrieval rather than a larger model.
+    Designed hybrid model routing between \textbf{locally served Ollama
+    models} and frontier APIs, keeping restricted documents inside internal
+    infrastructure while meeting accuracy targets through retrieval rather
+    than larger models.
   }
 
   \resumeItem{
-    Architected a drawing extraction pipeline on \textbf{Azure OpenAI} for
-    \textbf{3,000+ scanned engineering drawings}, with multi-model validation
-    and an \textbf{evaluation harness} tracking cost and coverage per prompt
-    version.
+    Delivered a \textbf{PLM drawing extraction} solution end to end: gathered
+    requirements directly with the client, independently researched DIN and
+    ISO drawing standards, and built the pipeline on \textbf{Azure OpenAI},
+    automating dimension capture across \textbf{3,000+ scanned drawings}.
   }
 
   \resumeItem{
-    Owned product flows end to end as frontend lead, from UI to API and
-    database; designed \textbf{role- and group-based access control},
-    enabling rollout to departments with strict data-access requirements.
+    Led the frontend and owned product flows from UI to API and database;
+    designed \textbf{role- and group-based access control} from the ground
+    up, enabling rollout to departments with strict data-access requirements.
   }
 
   \resumeItem{
-    Drove CI/CD improvements for the team, shortening release cycles by
-    \textbf{40\%} and lowering production hotfixes by \textbf{35\%};
-    introduced frontend test suites with \textbf{React Testing Library and
-    Vitest}, trimming manual testing by \textbf{60\%}.
+    Rebuilt the team's CI/CD process and introduced \textbf{React Testing
+    Library and Vitest} suites, shortening release cycles by \textbf{40\%},
+    lowering production hotfixes by \textbf{35\%}, and reducing manual
+    testing by \textbf{60\%}.
   }
 
 \resumeItemListEnd{}
@@ -207,13 +208,13 @@ validation}, with end-to-end ownership from architecture to deployment.
   }
 
   \resumeItem{
-    Led the \textbf{security hardening pass} for internal applications
-    ahead of audit, remediating injection and input-validation findings
-    and carrying every application through review.
+    Led the pre-audit \textbf{security hardening} of internal applications,
+    remediating injection and input-validation findings; \textbf{every
+    application passed review}.
   }
 
   \resumeItem{
-    Optimized operations scheduling workflows, improving throughput
+    Reworked operations scheduling workflows, improving throughput
     by \textbf{30\%}.
   }
 
@@ -234,16 +235,15 @@ validation}, with end-to-end ownership from architecture to deployment.
 \resumeItemListStart{}
 
   \resumeItem{
-    Cut repeat-question latency from \textbf{4.65s to 917ms with 0 tokens
-    billed} by answering semantically equivalent prompts from
+    Reduced repeat-question latency from \textbf{4.65s to 917ms with 0
+    tokens billed} by serving semantically equivalent prompts from
     \textbf{LangCache}; cache misses still report their similarity score.
   }
 
   \resumeItem{
-    Designed an AI support console that returns an execution record with
-    every response, orchestrating \textbf{Redis Iris LangCache, Agent Memory,
-    and Context Retriever}, with \textbf{50 offline tests} over stubbed
-    components.
+    Built an AI support console that returns an execution record with every
+    response, orchestrating \textbf{Redis Iris LangCache, Agent Memory, and
+    Context Retriever}, covered by \textbf{50 offline tests}.
   }
 
 \resumeItemListEnd{}
@@ -256,16 +256,17 @@ validation}, with end-to-end ownership from architecture to deployment.
 \resumeItemListStart{}
 
   \resumeItem{
-    Shipped a tracker that splits work sessions into execution and
-    preparation, with daily, weekly, and monthly \textbf{AI reports} citing
-    those numbers; a database claim caps provider calls at one per user per
-    period.
+    Built and shipped a tracker that classifies work sessions as execution
+    or preparation and writes daily, weekly, and monthly \textbf{AI reports}
+    from those numbers; a database claim caps AI calls at \textbf{1 per user
+    per period}.
   }
 
   \resumeItem{
-    Configured \textbf{Supabase} Postgres and Auth with \textbf{row-level
+    Secured \textbf{Supabase} Postgres and Auth with \textbf{row-level
     security} on every user table, verified by \textbf{60 pgTAP tests}; set
-    up DNS and a GitHub Actions pipeline gating each \textbf{Vercel} deploy.
+    up DNS and a GitHub Actions pipeline running \textbf{150+ unit tests}
+    before each \textbf{Vercel} deploy.
   }
 
 \resumeItemListEnd{}
@@ -285,10 +286,10 @@ validation}, with end-to-end ownership from architecture to deployment.
   }
 
   \resumeItem{
-    Implemented \textbf{retries with exponential backoff}, Redis-backed
-    \textbf{per-client rate limiting} shared by all API processes,
-    and a queue cap returning 429/503 with Retry-After; ordered state
-    commits before enqueueing to prevent API--worker race conditions.
+    Hardened it with \textbf{retries and exponential backoff}, Redis-backed
+    \textbf{per-client rate limiting}, and a queue cap returning 429/503
+    with Retry-After; committing state before enqueueing eliminated
+    API--worker race conditions.
   }
 
 \resumeItemListEnd{}

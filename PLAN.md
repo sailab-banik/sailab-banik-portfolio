@@ -5,38 +5,41 @@ repo conventions. This file holds product and design decisions.
 
 ## Brief
 
-A single-page, responsive portfolio for a software developer. Not an online
-resume: the resume is a download, not the page. The page should read as a small,
-confident product — minimal in content, deliberate in styling. Header carries
-social links only, with LinkedIn emphasised; no section nav.
+A single-page, responsive portfolio for a software developer, aimed at hiring
+managers and engineers who will spend under ninety seconds here. Primary job:
+make them open the resume, email, or open LinkedIn. The resume is the PDF,
+not a section of the page: everything on it is already said by Experience,
+Projects, Toolbox, and Credentials.
 
-Audience: hiring managers and engineers who will spend under ninety seconds
-here. Primary job: make them download the resume or open LinkedIn.
+The page is dressed as the developer's own working environment: a terminal in
+the hero, experience as a commit log, projects as running systems. The conceit
+holds only
+where it carries real information; every number in it comes from the resume.
 
 ## Where assets live
 
 ```
+assets/design/                       exported design mockup (gitignored), the reference
 public/
-  resume/sailab_banik_resume_<mmddyy>_masked.pdf  linked from header and footer
-  images/profile_picture.png         original headshot, kept as the source crop
-  images/portrait-cutout.png         hero portrait, background removed, alpha fade
-  certificates/*.jpeg                certificate scans, cropped to ~4:3
+  resume/sailab_banik_resume_<mmddyy>_masked.pdf  linked from header, hero, resume, footer
+  images/profile_picture.png         original headshot, shown in the hero
 src/app/icon.png                     favicon, Next.js file convention
 src/app/opengraph-image.tsx          1200x630 share card, generated at build
-assets/fonts/*.ttf                   static font cuts, for next/og only
-content/profile.json                 name, role, one-line statement, all external links
-content/projects.json                project entries
-content/experience.json              roles grouped by company
+assets/fonts/*.ttf                   static Geist cuts, for next/og only
+content/profile.json                 name, headline, statement, status, all external links
+content/nav.json                     header tabs, one per section id
+content/terminal.json                the hero terminal session
+content/experience.json              roles and branches as commits
+content/projects.json                projects, each with the panel that shows it running
 content/articles.json                selected Medium articles
 content/certificates.json            certificates and awards
-content/principles.json              how I work, the Approach section
-content/sections.json                section titles and their one-line leads
-content/stack.json                   the toolkit, grouped
+content/sections.json                section headings, leads, shell paths, actions
+content/stack.json                   the toolbox, grouped
 ```
 
 External links (LinkedIn, GitHub, LeetCode, Medium, email) live in
-`profile.json` under a `links` object and are read through
-`src/lib/content.ts`. No URL is hardcoded in a component, including the header.
+`profile.json` under `links` and are read through `src/lib/content.ts`. No URL
+is hardcoded in a component.
 
 The resume is built from `assets/resume/sailab-banik-resume.tex` by
 `assets/resume/build.sh`, which produces two PDFs dated with the build day's
@@ -57,482 +60,200 @@ The resume PDF stays in `public/` rather than an external host so the link never
 rots. Name the file with your name in it — it keeps its identity in someone's
 downloads folder.
 
+
 ## Design direction
 
-The page is a document about someone who builds document systems, so the ground
-is a paper stock rather than a neutral grey. Beyond that the design is
-near-monochrome and lets scale, not colour, carry hierarchy.
+The reference is `assets/design/Main.dc.html`. Values in this section are
+taken from it; when they disagree with the code, the mockup wins unless a
+decision below says otherwise.
 
 ### Colour
 
-Six tokens, one accent, no gradients as decoration.
+Dark only. One ground, two raised steps, and one accent.
 
-| Token     | Light     | Dark      | Role                                  |
-|-----------|-----------|-----------|---------------------------------------|
-| `paper`   | `#eeefe8` | `#0f100b` | page ground, a paper stock            |
-| `surface` | `#f7f8f2` | `#191a13` | the only raised panel                 |
-| `ink`     | `#15160f` | `#eceee1` | primary text                          |
-| `slate`   | `#6a6c60` | `#8d8f81` | secondary text                        |
-| `edge`    | `#dadbd0` | `#272920` | 1px borders and hairlines             |
-| `signal`  | `#3b2fe0` | `#9a90ff` | anything interactive, and focus rings |
+| Token        | Value     | Role                                          |
+|--------------|-----------|-----------------------------------------------|
+| `canvas`     | `#0e110f` | page ground                                   |
+| `raised`     | `#141815` | panels, cards, secondary buttons              |
+| `raised-2`   | `#1a1f1c` | chips, bar tracks, hover                      |
+| `line`       | `#252b27` | 1px borders and hairlines                     |
+| `fg`         | `#e8eae3` | primary text                                  |
+| `muted`      | `#a2aaa3` | secondary text                                |
+| `faint`      | `#7e877f` | meta, mono labels                             |
+| `amber`      | `#f5b942` | primary action, active tab, focus, emphasis   |
+| `green`      | `#86d39a` | added lines, measured results, "ok" states    |
+| `blue`       | `#9dbdff` | hashes, branches, queued jobs                 |
+| `red`        | `#f08c7a` | rejected jobs only                            |
+| `dusk`       | `#4a5a7a` | the "other" series in a chart                 |
 
-`signal` means one thing: this is interactive. Links, the primary button, focus
-rings. Never a background wash, never over the photography.
-
-There is no second accent. An earlier pass carried an amber highlighter under
-every measured figure; it read as decoration rather than emphasis and made the
-page look less considered, not more. Project outcomes now separate themselves by
-scale alone, which is enough. Do not reintroduce a colour whose only job is to
-draw the eye.
+Amber is the only accent. Green, blue, and red are status colours from the
+diff and terminal vernacular and only ever mark state, never decoration. The
+full token list, including the `sunken` terminal ground, is in
+`globals.css`.
 
 ### Type
 
-Two families, used for clearly separate jobs.
-
-- **Archivo** (variable, `next/font/google`) for the hero name only, at wght
-  600 and normal width. A grotesque with squared, engineered details, set like a
-  masthead on a technical document: scale carries the weight, not stroke.
-- **Bricolage Grotesque** (variable, `next/font/google`) for headings, labels,
-  figures, and all UI. Width and optical-size axes let one family cover every
-  size from h2 down to 13px UI.
-- **Newsreader** for running prose — the statement, summaries, and the
-  principles in Approach.
-
-No monospace anywhere. Data labels and figures use Bricolage with
-`font-variant-numeric: tabular-nums`, which is what a monospace face was going
-to be borrowed for.
+Geist for everything, Geist Mono for anything that would appear in a terminal:
+paths, hashes, dates, metrics, chips, labels, the tabs. Mono carries the
+slashed zero. Hierarchy is weight 600 at large sizes with tight negative
+tracking, never a second family.
 
 ```
-display   var(--display-size)                          Archivo wght 600, -0.045em
-h2        clamp(1.5rem, 3vw, 2rem)                     wght 650, wdth 92
-figure    clamp(1.5rem, 3vw, 2.125rem)                 wght 700, tabular
-h3        1.375rem                                     wght 600
-lead      clamp(1.125rem, 1.9vw, 1.5rem)               Newsreader
-body      1.0625rem / 1.7                              Newsreader, max 68ch
-ui        0.875rem / 1.45                              Bricolage
-meta      0.8125rem                                    Bricolage, slate
+h1        72px / 1.02, -0.035em, 600      44px below 640
+contact   64px / 1.05, -0.035em, 600      40px below 640
+h2        40px / 1.1,  -0.03em,  600      30px below 640
+project   30px, -0.025em, 600
+role      22px / 1.4, 500                 18px below 640
+body      16px / 1.55; lede 17px
+mono      12-13.5px
 ```
-
-The display size is not a taste call: `Sailab Banik` advances 5.176em in
-Archivo, and the content column is `100vw - 80px` until it caps at 1160px, so
-`19.13vw - 0.956rem` (capped at `13.87rem`) is the size at which the name spans
-the column. Below `md` the gutter drops to 24px and a media query re-solves it
-as `19.13vw - 0.574rem`.
-Both carry ~1% slack against font-rendering variance, and both live on the raw
-`--display-size` property rather than on `--text-display` — see the Tailwind
-note below, because writing the clamp into `@theme inline` makes the mobile
-override dead code and the name silently keeps the desktop size, stopping 39px
-short of the gutter at 390px.
-
-Verify by measuring the *text*, not the block. The line is a block element that
-fills the column whether or not the type does, so its bounding rect always
-reports a perfect fit; use a `Range` over its contents instead. Changing the
-name, the width axis, or the tracking invalidates both coefficients.
-
-No all-caps labels, no eyebrow text above headings, no arrow glyphs appended to
-link text, no `01 / 02 / 03` markers on things that are not sequences.
 
 ### Layout
 
-Content max-width 1240px; prose max-width 68ch regardless of container.
-Section spacing `clamp(5.5rem, 11vh, 9rem)`.
-
-Every section between the hero and the footer is a `Section`: a 12-column grid
-whose left three columns hold a **sticky rail** with the section title and a
-one-line lead, and whose right nine columns hold the content. The title stays in
-the margin while its content scrolls, so it is still there to read against at
-the bottom of a long section. Below `md` the rail stacks above the content.
-
-The footer is deliberately not a `Section`. Contact is not another topic to be
-indexed in a margin; it is the end of the page and the one thing it should do is
-invite a reply. It runs full width with no rail.
+Content max-width 1240px with 40px gutters, 16px below 640. Sections are
+104px top and bottom (72px below 640), separated by a full-bleed 1px rule.
+One column below 980px.
 
 ```
-┌──────────────────────────────────────────────────┐
-│ SB                     in gh lc md   [ Resume ]  │  sticky, 64px, blurred
-├──────────────────────────────────────────────────┤
-│                                                  │
-│  SAILAB BANIK ═══════════════════════════        │  fills the column
-│  ─────────────────────────────────────────────   │  shared top edge
-│  Statement, Newsreader, 34ch       ╭──────────╮  │
-│                                    │ portrait │  │
-│  [ Download resume ] [ LinkedIn ]  │          │  │
-│  Software Engineer in Chennai, India ╰────────╯  │
-│  (below md the portrait spans the gutters, so it │
-│   shares both edges with the name and the rule)  │
-├──────────────────────────────────────────────────┤
-│ Experience │ [logo] ZF Group                     │
-│  (sticky)  │        Chennai, India               │
-│            │  ├── Software Engineer II  2024 —   │
-│            │  │   one paragraph                  │
-│            │  └── Graduate Engineer Trainee      │
-├──────────────────────────────────────────────────┤
-│ Work       │ PrimeAI       ZF Group, internal    │
-│  (sticky)  │ two sentences of prose              │
-│            │ React  Redux  FastAPI  Postgres     │
-│            │ Teams onboarded ············ 20+    │
-│            │ Less manual review ········· 60%    │
-├──────────────────────────────────────────────────┤
-│ Writing    │ Article title ↗         Publication │
-│  (sticky)  │ one line                      date  │
-│            │ (four rows, whole row links)        │
-├──────────────────────────────────────────────────┤
-│ Credentials│ ┌───────┐ ┌───────┐ ┌───────┐       │
-│  (sticky)  │ │ scan  │ │ scan  │ │ scan  │       │
-├──────────────────────────────────────────────────┤
-│ Approach   │ Three principles, heading + prose   │
-│  (sticky)  │ ───────────────────────────────     │
-│            │ Languages   Interface   Services    │
-├──────────────────────────────────────────────────┤
-├──────────────────────────────────────────────────┤
-│  Happy to talk about engineering work, AI        │
-│  systems, or anything else on this page.         │
-│                                                  │
-│  sailabbanik24@gmail.com                         │
-│  ──────────────────────────────────────────────  │
-│  in gh lc md  Resume        Sailab Banik, Chennai│
-└──────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────┐
+│ [sb] sailab.dev   about.md experience.log ...  [Resume]│ sticky, 56px
+├────────────────────────────────────────────────────────┤
+│ [photo] (o Open to ...)          ┌ ~/sailab — zsh ───┐ │
+│         Chennai · IST            │ ➜ ~ whoami        │ │
+│ Sailab Banik                     │ ...               │ │
+│ headline, emphasis in amber      │ ✓ ... 20+ teams   │ │
+│ statement                        └───────────────────┘ │
+│ [View resume] [Email me] [in][gh][md][lc]              │
+├────────────────────────────────────────────────────────┤
+│ Experience                         git log --graph main│
+│ ● a3f9c21 (HEAD → main) Oct 2024 — present             │
+│ │ Software Engineer II   ┌ diff: + text ... metric ┐   │
+│ ╰○ 7be04d2 (feat/drawing-extraction) merged 2025       │
+│ ○ 19c6e0f Aug 2023 — Sep 2024 (Budding Star Award)     │
+├────────────────────────────────────────────────────────┤
+│ Projects                                 ls ~/projects │
+│ path / name / summary / chips / links │ live panel     │
+├────────────────────────────────────────────────────────┤
+│ Toolbox (grouped chips)  │ Writing (dated rows)        │
+│ [credential] [credential] [credential] [education]     │
+├────────────────────────────────────────────────────────┤
+│ ./contact.sh --role "your opening"                     │
+│ Hiring for an AI or full-stack role? Let's talk.       │
+│ email, buttons, colophon                               │
+└────────────────────────────────────────────────────────┘
 ```
 
-**Extraction rows** carry the project outcomes: label left, a leader, and the
-measured value right in tabular figures. This is the vernacular of the product
-itself, and it replaces the stat-card treatment that every portfolio reaches
-for.
+Below 640 the header shows only the current tab and the resume button keeps
+its icon alone; experience metrics drop under their line; the queue lanes
+stack and lose their arrows.
 
-A flow strip once sat between the stack list and the outcomes, naming the stages
-each system runs. It was removed: unlabelled, it did not communicate what it
-was, and the prose summary above it already says how the system works. Do not
-add it back without a reason it can be read without a caption.
+### Components worth knowing
 
-Article titles carry an **outbound mark**: a solid disc with the arrow knocked
-out of it, in `src/components/outbound-mark.tsx`. It is there because these rows
-are whole-row links to another site, and nothing else in the row says so. The
-arrow points out rather than along — a `→` would say "continue", which is both
-the wrong claim and the commonest tell of a generated page. Nothing internal
-gets one.
-
-At rest the disc is `edge` with an `ink` arrow. On hover it takes `signal` with
-the arrow in `paper`, and the arrow swaps: the one in place leaves through the
-top-right corner as its replacement arrives from the bottom-left, both clipped
-by the disc so neither is ever seen outside it. That swap is the whole reason
-the mark is a disc and not a glyph — it gives the hover somewhere to happen.
-Under reduced motion the replacement is not rendered and the arrow in place
-stays put; the colour change still answers the hover.
-
-Three things about it are load-bearing:
-
-- It is sized in `em` and dropped 0.28em below the baseline, so it centres on
-  the cap height (0.66em in Bricolage) rather than sitting on the line.
-- The last word of the title and the mark are held in a `whitespace-nowrap`
-  span. Chrome breaks between text and an atomic inline even across a
-  non-breaking space, which strands the mark alone on a line — the NBSP was
-  tried first and does not hold.
-- It sits outside the underlined spans, so the hover rule stops at the word
-  instead of striking through the disc.
-
-Cards survive in exactly one place — Credentials — because there the card holds
-a scan. Writing is rows, not cards, and `surface` is now used only by those
-cards and the company mark in Experience.
-
-Mobile: the header keeps the name plus LinkedIn, GitHub, and Resume; the other
-two move to the footer. The name still spans the column, the portrait sits
-right under the rule, and everything else is single column.
-
-### The one bold element
-
-The hero lockup. `Sailab Banik` set on one line in Archivo SemiBold at up to
-222px, spanning the full content column. Nothing else on the page is allowed
-to compete with it.
-
-A hairline rule runs the full width beneath the name, and both the statement and
-the portrait hang from it. The photograph is set *with* the type, on the same
-line, rather than layered over it. An earlier pass had the cut-out rising into
-the name so the letters passed behind the silhouette — it was the more clever
-composition and the worse one, because nothing in it aligned to anything.
-
-Both columns hang from the rule, and the text block is **centred** against the
-portrait. The text is always the shorter of the two, so matching one edge only
-moves the mismatch to the other: an earlier pass aligned their tops, which left
-the photograph hanging 150px below the meta line, and the pass after that pinned
-the buttons to the bottom with `mt-auto`, which closed that but opened 90px
-between the statement and the buttons. Centring puts roughly 75px above and
-below instead, where it reads as air rather than as a gap.
-
-The statement is capped at 34ch from `md` up and uncapped below it, where the
-column is already narrower than the cap and the measure would otherwise stop
-short of the gutter.
-
-The centring is optical, not box-to-box. The cut-out carries about 6%
-transparent headroom above the hair and the first line of Newsreader carries
-0.285em of leading above its cap; both are trimmed, so what gets centred is the
-block you can see rather than the boxes. Those numbers are tied to this asset
-and this face — re-crop the cut-out or change the statement's family or
-line-height and both trims need re-measuring.
-
-The spacing between the statement and the buttons stays at 36px at every width.
-The portrait is sized around the text, not the reverse: five columns from `md`
-up, which at 1280 and above puts it at 455px.
-
-The one dark-mode adjustment: a black polo against `paper` at `#0f100b` loses
-the shoulders, so `.portrait` carries a soft `drop-shadow` rim, reading as a rim
-light rather than an effect. The rim is white, not `ink` — `ink` is a warm
-off-white and mixing it into a glow casts the whole thing yellow. It is the one
-place on the page a raw colour beats a token, because this is light, not
-palette. Light mode needs nothing and gets nothing.
+- **Header tabs** are the only scroll-driven state. A section is current once
+  its top passes 120px from the viewport top; at the very bottom of the page
+  the last tab wins, because the footer is too short to reach that line.
+- **Terminal** types itself out once on load: each line is clipped open with a
+  stepped `clip-path` animation, a command or output every 0.7s, check lines
+  every 0.4s, then an idle prompt with a blinking caret. The delays are
+  computed from line order. It is `role="img"` with a plain-text label; the
+  same facts are in Experience for anyone who cannot see it.
+- **Experience** is a commit graph. Roles are commits on main; the
+  PLM drawing extraction is drawn as a branch with a curved connector because
+  it was a separate, client-facing delivery. The first commit's node is filled
+  (`HEAD`). Change rows alternate a faint green wash.
+- **Project panels** show each system doing its job rather than a screenshot:
+  ContextDesk Lab's cache hit against the model call (measured numbers),
+  FocusTrack's week split into execution and preparation with the weekly
+  report it writes, QueueLens's jobs moving producer to Redis to workers.
+  The FocusTrack and QueueLens panels are drawn from made-up data and say so
+  with an "illustrative data" tag. The FocusTrack report text must agree with
+  the bars it sits under (66% execution, Thursday the preparation-heavy day).
+- **Credentials** are text cards, four across: three certificates and the
+  degree, which is the one resume fact not covered elsewhere on the page. The
+  scans are no longer shown.
+- **No resume section.** The mockup's preview/source viewer was built and then
+  removed: it repeated the sections above it. Resume buttons open the PDF in a
+  new tab rather than forcing a download, so it can be read without saving.
 
 ### Motion
 
-One orchestrated moment: on load the name rises out of a clipped line box and
-the portrait, statement, buttons, and meta line fade up behind it on a stagger.
-Nothing else moves on its own — no scroll-triggered section fades, no hover
-lift on cards. Interaction gets a border or underline change and nothing more.
-The whole sequence sits inside `prefers-reduced-motion: no-preference`, and the
-page still ships no client JavaScript.
+Terminal typing, the cache bars growing in, the queue's flow dots, and the
+caret blink. All of it sits inside `prefers-reduced-motion: no-preference`;
+under reduced motion every line, bar, and dot is shown at rest. Hover is a
+colour or border change and nothing more.
 
 ### Principles
 
-1. The resume is the destination for detail. Experience on the page is grouped
-   by company — one logo, one location, a short paragraph per role — never a
-   dated bullet dump duplicating the PDF.
-2. One accent, and it means "interactive". Hierarchy comes from scale and
-   space, not from a second colour.
-3. Structure earns its keep: a border, a rail, or a timeline must separate
-   genuinely different content, never decorate. The Experience timeline exists
-   because roles at one employer are a real sequence; projects are not, so they
-   get no numbering.
-4. Quality floor, unannounced: visible focus rings that follow the element's
-   own radius, keyboard-reachable links, 4.5:1 contrast minimum, respects
-   reduced motion, works at 320px.
+1. Copy is written action, method, result: what I did, how, and the measured
+   outcome, in that order, with the number in the sentence. No narration of
+   internal mechanics (how models agree, prompt versions) unless it is the
+   result. The PDF resume and the page say the same things.
+2. Every figure on the page is one the resume backs. Illustrative data is
+   labelled as such where it appears.
+3. One accent, amber, for "act here" and "this is the number". Status colours
+   mark state only.
+4. The developer-environment dressing (paths, hashes, shell commands) is
+   allowed where it labels something real, and nowhere it would need
+   explaining.
+5. Quality floor, unannounced: visible focus rings, keyboard-reachable links
+   and tabs, 4.5:1 contrast on text, reduced motion respected, works at 320px.
 
 ## Content model
 
-```ts
-// src/lib/content.ts
-type Profile = {
-  name: string
-  role: string
-  statement: string        // one sentence, under 140 chars
-  emphasis: string         // the substring of statement to set in the sans face
-  email: string
-  location: string
-  links: {
-    linkedin: string
-    github: string
-    leetcode: string
-    medium: string
-  }
-  resume: string           // "/resume/sailab_banik_resume_<mmddyy>_masked.pdf"
-  portrait: string
-}
+See the types in `src/lib/content.ts`; they are the schema. Notes on the ones
+that are not obvious:
 
-type Project = {
-  slug: string
-  title: string
-  context: string          // "ZF Group, internal platform" / "Personal project"
-  summary: string          // two sentences max
-  stack: string[]
-  outcomes: { label: string; value: string }[]   // label left, value right
-  repo?: string
-  live?: string
-}
-```
+- `Profile.emphasis` is a substring of `headline`, set in amber.
+- `Commit` covers both kinds of entry in Experience: a role has `org` (and may
+  have `ref`, `diff`, `award`); a branch has `branch` and `summary`.
+- `Project.panel` is a union on `kind`. Add a kind by adding a type, a
+  component under `components/panels/`, and a case in `ProjectPanel`.
+- `SectionCopy` has `title`, optional `lead`, and either a `path` (a shell
+  command shown at the right of the heading) or an `action` (a link label).
 
-```ts
-type Experience = {
-  company: string
-  logo: string             // key into the marks in src/components/logos.tsx
-  url: string
-  location: string
-  roles: { title: string; period: string; summary: string }[]
-}
-```
-
-```ts
-type Certificate = {
-  title: string
-  detail: string           // one line on what it covered
-  issuer: string
-  date: string
-  image: string            // the scan, shown whole and linked full size
-}
-```
-
-```ts
-type Article = {
-  title: string
-  publication: string
-  date: string
-  url: string
-  summary: string        // one line
-}
-
-type Principle = {
-  title: string          // a sentence, not a trait: "I take the work nobody
-                         // volunteers for"
-  body: string           // two or three lines, each claim backed by something
-                         // else on the page
-}
-
-type StackGroup = {
-  group: string          // "Languages", "AI systems", ...
-  items: string[]
-}
-
-type SectionCopy = {
-  title: string          // the rail heading
-  lead: string           // one or two lines under it, first person
-}
-```
-
-Section headings and their leads live in `content/sections.json`, keyed by the
-section id, so a rail title is content like everything else. `Section` reads it
-by name; components never hold the copy.
-
-The leads are written in first person and say something about the work or the
-person. They are not captions describing the page — "Explainers on the parts of
-the stack people skip" is meta-commentary; "Writing is how I finish thinking
-about a problem" is the same section doing branding. Keep them in the second
-register.
-
-`contact` is the exception in how it is used, not how it is written. The footer
-renders `contact.lead` as its visible heading, in the serif, because a small
-"Get in touch" label sitting above the email address would be an eyebrow. The
-`title` survives as an `sr-only` heading so the landmark still has a plain name.
-
-Approach is three principles, not a list of adjectives. "Collaborative" and
-"detail-oriented" are unfalsifiable and every portfolio claims them; a sentence
-that commits to something — and a body that points at the CI/CD numbers, the
-first year, or the execution record in ContextDesk Lab — can be checked against
-the rest of the page. Anything added here needs that backing or it does not go
-in.
-
-The toolkit stays in the same section: how someone works and what they work
-with belong together, and the contrast between the two halves is the point.
-
-`content/stack.json` is deliberately short and holds only tools that appear
-somewhere else on the page or in the resume. It is a scan aid for engineers,
-not a keyword list — anything added to it should be true of real work.
-
-Four projects. Three was the original limit and four is the ceiling: a
-fifth replaces an entry rather than extending the list. Adding the PLM drawing
-extraction and FocusTrack retired QueueLens and the RAG pipeline from the page;
-QueueLens is still on the resume, where the distributed-systems angle has no
-other evidence.
-
-Four articles, chosen for distinct subjects rather than recency. They render as
-rows, not cards: `surface` is used for exactly two things, the credential cards
-and the company mark in Experience.
-
-Certificate scans are cropped to a common landscape ratio near 4:3 before they
-go in, so all three fill the card frame at the same size instead of one
-letterboxing against the others. The cards are not links — the scan on the card
-is the whole of what there is to see. Anything committed under `public/` is
-publicly reachable, so confirm a document is shareable before adding it.
-
-There are no project screenshots and none are planned. A project shows what it
-is (prose), what it is built from (`stack`), and what it moved (`outcomes`); a
-screenshot of an internal tool would add none of those.
-
-## Tokens in Tailwind v4
-
-No JS config. Tokens go in `src/app/globals.css`, and the indirection matters:
-the palette is declared as raw custom properties on `:root`, and `@theme inline`
-references those properties rather than restating the hex.
-
-```css
-@import "tailwindcss";
-
-:root {
-  --paper: #eeefe8;
-  --ink: #15160f;
-  /* surface, slate, edge, signal */
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #0f100b;
-    --ink: #eceee1;
-  }
-}
-
-@theme inline {
-  --color-paper: var(--paper);
-  --color-ink: var(--ink);
-  --font-sans: var(--font-bricolage);
-  --font-serif: var(--font-newsreader);
-}
-```
-
-Writing a literal into `@theme inline` looks equivalent and is not: `inline`
-means the value is inlined into every utility it generates, so a later media
-query overrides a property nothing reads and the override silently does nothing.
-This applies to every token, not just colour — `--text-display` is
-`var(--display-size)` for exactly this reason, and the mobile display size was
-dead code until it was. The same block also carries the type scale (`--text-display` and
-friends), `--spacing-section`, and `--container-page`.
-
-Four hand-written rules live below the tokens because they do not express as
-utilities: `.type-display`, `.type-h2`, and `.type-figure` set
-`font-variation-settings` for the width and optical-size axes (and tabular
-figures), and `.portrait` carries the dark-mode rim. The hero reveal keyframes
-and the mobile `--text-display` override sit with them.
-
-## Build order
-
-Built in this order; kept as a record of why the pieces depend on each other.
-
-1. Tokens and fonts in `globals.css` and `layout.tsx`; real `title`,
-   `description`, and OpenGraph metadata.
-2. `content/*.json` and `src/lib/content.ts` with the types above.
-3. `Header` — monogram, social row, resume link. Sticky, backdrop blur.
-4. `Hero` — name, statement, portrait.
-5. `Work` — four entries from `projects.json`.
-6. `Experience` grouped by company, `Writing` and `Credentials` cards, then
-   `Approach` and `Footer`.
-7. Accessibility and responsive pass at 320, 768, 1280, 1920.
-8. CI workflow: lint, build, typecheck on pull requests and pushes to main.
+FocusTrack's copy is grounded in its repository (`sailab-banik/FocusTrack`,
+README and PLAN): sessions are categorised as execution (Build, Create, Work,
+Practice) or preparation (Learn, Brainstorm, Review); reports are written
+automatically once per finished day, week, or month, cite the user's own
+numbers, and end with one next action; one report per period per user is
+claimed in the database before the provider is called; RLS is verified by
+pgTAP tests. Keep new copy about it to things the repo says.
 
 ## The share card
 
 `src/app/opengraph-image.tsx` generates the 1200x630 card at build time with
-`next/og`, so there is no `og.png` to keep in sync with the page. It is the
-hero lockup again: paper ground, the name in Archivo SemiBold at the width of
-the card, the statement with the years set in ink rather than slate, and a rule
-over the role and location.
+`next/og`. It is the hero in miniature: the brand mark, the name in Geist
+SemiBold, the headline with its emphasis in amber, and a mono rule line with
+location and domain.
 
-`next/og` rasterises with satori, which needs static font instances, so
-Archivo SemiBold and Bricolage Medium live in `assets/fonts/` and are read with
-`node:fs` at module scope. The variable font `next/font/google` loads for the page cannot be used
-here. Two satori quirks are worth knowing before editing the file: children of
-a flex container each become their own text run, so a trailing space is
-trimmed — the statement carries an explicit spacer element rather than relying
-on whitespace — and every `div` with more than one child needs an explicit
-`display: flex`.
+Satori needs static font instances, so Geist Regular, Geist SemiBold, and
+Geist Mono Regular live in `assets/fonts/` and are read with `node:fs` at
+module scope. Every `div` with more than one child needs an explicit
+`display: flex`, and each flex child becomes its own text run, which is why
+the headline is three spans in a wrapping flex row.
 
 ## Still open
-
-Two things are known-incomplete. Neither is structural.
 
 - **LeetCode URL is a guess.** `profile.json` carries
   `leetcode.com/u/sailab-banik/`, which was never confirmed — it is not in the
   resume. Verify or remove the link.
-- **Two projects have no link.** PrimeAI and the PLM drawing extraction are
-  internal to ZF. ContextDesk Lab links its repo; FocusTrack links its repo and
-  the live app.
+- **"The story at sailab.dev" was not built.** The mockup's contact row links
+  `https://www.sailab.dev`, which did not resolve when this was built. Add the
+  button back if that site goes up.
+- **The "I reply within a day" promise** in the contact lead came from the
+  mockup. Keep it only if it is true.
+- **Unused public files.** `public/images/portrait-cutout.png` and
+  `public/certificates/*.jpeg` are no longer on the page but are still served.
+- Lighthouse has not been run against this design.
 
 `metadataBase` reads `VERCEL_PROJECT_PRODUCTION_URL`, which Vercel sets to the
 shortest production custom domain, so it resolves to `portfolio.sailab.dev`
 without a hardcoded URL as long as that domain stays attached to the project.
 
-`content/stack.json` lists only tools evidenced elsewhere on the page, so it is
-narrower than the real toolkit. Extend it with what is actually true.
-
-Also unverified: Lighthouse has not been run.
-
 ## Done when
 
 - Loads under 1.5s on a cold Vercel edge hit; Lighthouse 95+ on all four.
-- Resume downloads from header and footer.
+- The resume PDF opens from header, hero, and footer.
 - Every external link opens in a new tab with `rel="noreferrer"`.
-- Tab order reaches every link with a visible ring.
+- Tab order reaches every link and tab with a visible ring.
 - Nothing on the page is a placeholder.

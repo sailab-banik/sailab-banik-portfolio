@@ -1,23 +1,26 @@
 [
   {
     "title": "Budding Star Award",
-    "detail": "Recognition from ZF IT Global Center India for business impact in the first year.",
+    "detail": "Recognition for business impact in the first year.",
     "issuer": "ZF Group",
-    "date": "2024",
-    "image": "/certificates/Budding_star.jpeg"
+    "date": "2024"
   },
   {
     "title": "System Design Cohort",
-    "detail": "Distributed systems, load balancing, caching, sharding, and queues, taught hands-on.",
+    "detail": "Distributed systems, load balancing, caching, sharding, queues.",
     "issuer": "ChaiCode",
-    "date": "Jun 2026",
-    "image": "/certificates/System_Design.jpeg"
+    "date": "Jun 2026"
   },
   {
     "title": "AI Engineer Core Track",
-    "detail": "LLM engineering, RAG, QLoRA fine-tuning, and agent workflows across 33.5 hours.",
+    "detail": "LLM engineering, RAG, QLoRA fine-tuning, agent workflows.",
     "issuer": "Udemy",
-    "date": "May 2026",
-    "image": "/certificates/AI_Engineer.jpeg"
+    "date": "May 2026"
+  },
+  {
+    "title": "B.Tech, CGPA 9.64",
+    "detail": "Computer Science and Engineering.",
+    "issuer": "ICFAI University Tripura",
+    "date": "2023"
   }
 ]

@@ -43,3 +43,4 @@ next-env.d.ts
 # resume: the full PDF carries the real phone number
 /assets/resume/*.pdf
 /assets/resume/phone.local
+/assets/design

@@ -1,40 +1,39 @@
 import { getProfile, getSection } from "@/lib/content";
-import { SocialLinks } from "@/components/social-links";
+import { Button } from "@/components/button";
 
 export function Footer() {
-  const { name, email, location, links, resume } = getProfile();
-  const { title, lead } = getSection("contact");
+  const { name, email, location, links, resume, colophon } = getProfile();
+  const { title, lead, path } = getSection("contact");
+  const [city] = location.split(",");
 
   return (
-    <footer id="contact" className="mt-auto border-t border-edge">
-      <div className="mx-auto w-full max-w-page px-6 py-section md:px-10">
-        {/* The invitation is the heading. A small "Get in touch" label sitting
-            above the email would be an eyebrow, so the sentence does both jobs
-            and the landmark keeps the plain name for screen readers. */}
-        <h2 className="sr-only">{title}</h2>
-        <p className="max-w-[42ch] font-serif text-lead text-ink">{lead}</p>
-
+    <footer id="contact" className="scroll-mt-14 border-t border-line pt-[120px] pb-[72px]">
+      <div className="mx-auto max-w-page px-4 sm:px-10">
+        <span className="font-mono text-[13px] text-faint">{path}</span>
+        <h2 className="mt-4 mb-6 max-w-[16ch] text-[40px] leading-[1.05] font-semibold tracking-[-0.035em] sm:text-[64px]">
+          {title}
+        </h2>
+        <p className="mb-7 max-w-[56ch] text-muted">{lead}</p>
         <a
           href={`mailto:${email}`}
-          className="type-h2 mt-6 block text-[clamp(1.5rem,4.2vw,3rem)] leading-tight break-words text-signal decoration-edge decoration-1 underline-offset-[0.14em] hover:underline"
+          className="border-b border-amber/40 font-mono text-[22px] break-all text-amber transition-colors hover:border-amber"
         >
           {email}
         </a>
 
-        <div className="mt-16 flex flex-col gap-6 border-t border-edge pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <div className="-ml-2 flex items-center gap-4">
-            <SocialLinks links={links} />
-            <a
-              href={resume}
-              download
-              className="text-ui font-medium text-ink underline decoration-edge decoration-1 underline-offset-4 transition-colors hover:decoration-signal"
-            >
-              Resume
-            </a>
-          </div>
-          <p className="text-meta text-slate">
-            {name}, {location}
-          </p>
+        <div className="mt-8 flex flex-wrap items-center gap-2.5">
+          <Button href={resume} newTab primary>
+            View resume
+          </Button>
+          <Button href={links.linkedin}>LinkedIn</Button>
+          <Button href={links.github}>GitHub</Button>
+        </div>
+
+        <div className="mt-24 flex flex-wrap justify-between gap-6 border-t border-line pt-7 font-mono text-[13px] text-faint">
+          <span>
+            © {new Date().getFullYear()} {name} · {city}
+          </span>
+          <span>{colophon}</span>
         </div>
       </div>
     </footer>

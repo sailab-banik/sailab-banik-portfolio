@@ -10,16 +10,17 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const fonts = join(process.cwd(), "assets/fonts");
-const archivo = await readFile(join(fonts, "Archivo-SemiBold.ttf"));
-const medium = await readFile(join(fonts, "BricolageGrotesque-Medium.ttf"));
+const [regular, semibold, mono] = await Promise.all([
+  readFile(join(fonts, "Geist-Regular.ttf")),
+  readFile(join(fonts, "Geist-SemiBold.ttf")),
+  readFile(join(fonts, "GeistMono-Regular.ttf")),
+]);
 
-/* The share card is the page's own lockup: paper ground, the name in
-   Archivo SemiBold at the width of the card, and the statement below it. Only
-   Bricolage Medium is loaded for the statement, so its emphasis shifts colour
-   rather than weight. */
+/* The share card is the hero in miniature: the name, the headline with its
+   emphasis in amber, and a mono status line, on the page's own ground. */
 export default function Image() {
-  const { name, role, statement, emphasis, location } = profile;
-  const [before, after] = statement.split(emphasis);
+  const { name, headline, emphasis, location, domain } = profile;
+  const [before, after] = headline.split(emphasis);
 
   return new ImageResponse(
     (
@@ -30,41 +31,52 @@ export default function Image() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#eeefe8",
-          color: "#15160f",
-          padding: "64px 72px",
-          fontFamily: "Bricolage",
+          background: "#0e110f",
+          color: "#e8eae3",
+          padding: "72px 80px",
+          fontFamily: "Geist",
         }}
       >
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 28, fontWeight: 600 }}>
           <div
             style={{
-              fontFamily: "Archivo",
-              fontSize: 202,
-              fontWeight: 600,
-              letterSpacing: "-0.045em",
-              lineHeight: 0.88,
+              width: 48,
+              height: 48,
+              borderRadius: 12,
+              background: "#f5b942",
+              color: "#0e110f",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontFamily: "Geist Mono",
+              fontSize: 22,
             }}
           >
-            {name}
+            sb
           </div>
+          <span style={{ display: "flex" }}>
+            {domain.split(".")[0]}
+            <span style={{ color: "#7e877f" }}>.{domain.split(".")[1]}</span>
+          </span>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ fontSize: 120, fontWeight: 600, letterSpacing: "-0.035em", lineHeight: 1 }}>{name}</div>
           <div
             style={{
               display: "flex",
               flexWrap: "wrap",
-              marginTop: 40,
-              maxWidth: 900,
-              fontSize: 33,
+              marginTop: 32,
+              maxWidth: 960,
+              fontSize: 38,
+              fontWeight: 400,
+              lineHeight: 1.35,
               whiteSpace: "pre-wrap",
-              fontWeight: 500,
-              lineHeight: 1.45,
-              color: "#3d3f34",
             }}
           >
             <span>{before}</span>
-            <span style={{ color: "#15160f" }}>{emphasis}</span>
-            <span style={{ width: 10 }} />
-            <span>{after.trimStart()}</span>
+            <span style={{ color: "#f5b942" }}>{emphasis}</span>
+            <span>{after}</span>
           </div>
         </div>
 
@@ -72,23 +84,24 @@ export default function Image() {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            borderTop: "2px solid #dadbd0",
+            borderTop: "2px solid #252b27",
             paddingTop: 24,
-            fontSize: 26,
-            fontWeight: 500,
-            color: "#6a6c60",
+            fontFamily: "Geist Mono",
+            fontSize: 24,
+            color: "#7e877f",
           }}
         >
-          <span>{role}</span>
           <span>{location}</span>
+          <span>{domain}</span>
         </div>
       </div>
     ),
     {
       ...size,
       fonts: [
-        { name: "Archivo", data: archivo, weight: 600, style: "normal" },
-        { name: "Bricolage", data: medium, weight: 500, style: "normal" },
+        { name: "Geist", data: regular, weight: 400, style: "normal" },
+        { name: "Geist", data: semibold, weight: 600, style: "normal" },
+        { name: "Geist Mono", data: mono, weight: 400, style: "normal" },
       ],
     },
   );

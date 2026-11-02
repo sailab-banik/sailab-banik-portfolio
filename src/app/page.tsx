@@ -1,23 +1,19 @@
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
 import { Experience } from "@/components/experience";
-import { Work } from "@/components/work";
+import { Projects } from "@/components/projects";
 import { Writing } from "@/components/writing";
-import { Credentials } from "@/components/credentials";
-import { Approach } from "@/components/approach";
 import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
     <>
       <Header />
-      <main className="flex flex-1 flex-col">
+      <main id="top" className="flex-1 scroll-mt-14">
         <Hero />
         <Experience />
-        <Work />
+        <Projects />
         <Writing />
-        <Credentials />
-        <Approach />
       </main>
       <Footer />
     </>

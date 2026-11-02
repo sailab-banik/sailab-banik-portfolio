@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "border-accent-on-rounded",
+        "value": "*",
+        "files": [
+          "src/components/experience.tsx"
+        ],
+        "createdAt": "2026-11-02T12:26:57.824Z",
+        "reason": "Claude triage: L34 is the git-graph branch connector (a curved line drawn with a bottom border and corner radius), copied from .branch-line in assets/design/Main.dc.html, not a card"
+      }
+    ]
+  }
+}

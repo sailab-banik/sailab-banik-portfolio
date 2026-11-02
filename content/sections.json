@@ -1,26 +1,24 @@
 {
   "experience": {
     "title": "Experience",
-    "lead": "Three years at ZF Group, designing the extraction and retrieval behind an AI document platform and owning the product around it."
+    "lead": "Read as a commit history: each role, the branches it shipped, and the measured result of every change.",
+    "path": "git log --graph main"
   },
-  "work": {
-    "title": "Work",
-    "lead": "Document AI in production, drawing extraction that says when it is unsure, semantic caching, and a tracker I use every day — and the numbers each one moved."
+  "projects": {
+    "title": "Projects",
+    "lead": "Personal builds, each shown doing the thing it was built for.",
+    "path": "ls ~/projects"
+  },
+  "toolbox": {
+    "title": "Toolbox"
   },
   "writing": {
     "title": "Writing",
-    "lead": "Writing is how I finish thinking about a problem."
-  },
-  "credentials": {
-    "title": "Credentials",
-    "lead": "Recognition for the work, and the places I went to go deeper."
-  },
-  "approach": {
-    "title": "Approach",
-    "lead": "The parts of the job that aren't code, and the tools I reach for when it is."
+    "action": "all on Medium"
   },
   "contact": {
-    "title": "Get in touch",
-    "lead": "Always glad to talk about AI systems, engineering work, or anything else on this page."
+    "title": "Hiring for an AI or full-stack role? Let's talk.",
+    "lead": "I reply within a day. Happy to walk through any project here in an interview, including the parts that did not work the first time.",
+    "path": "./contact.sh --role \"your opening\""
   }
 }

@@ -1,19 +1,65 @@
 [
   {
-    "company": "ZF Group",
-    "logo": "zf",
-    "url": "https://www.zf.com",
-    "location": "Chennai, India",
-    "roles": [
+    "hash": "a3f9c21",
+    "ref": "HEAD → main",
+    "period": "Oct 2024 — present",
+    "title": "Software Engineer II",
+    "org": "ZF Group · Chennai",
+    "diff": "PrimeAI · AI layer, frontend lead",
+    "changes": [
       {
-        "title": "Software Engineer II",
-        "period": "Oct 2024 — Present",
-        "summary": "Build the AI side of PrimeAI, the internal document processing platform 20+ business teams run on — annotation-driven extraction, the model-creation flow business users drive themselves, and the retrieval and prompting that decide what a model sees before it answers. Documents that cannot leave our infrastructure go to locally served models on Ollama; the problems that need a frontier model get one, and retrieval closes most of the gap between the two. On my own I built the pipeline that reads packaging dimensions off 3,000+ scanned engineering drawings, where no value counts until two different models agree on it. I lead the frontend and own these flows end to end — interface, API, schema — alongside the role- and group-based access control the multi-team rollout needed and the CI/CD work that cut release cycle time by 40% and production hotfixes by 35%."
+        "text": "Built the AI layer of PrimeAI, ZF's internal document processing platform, covering extraction, user-defined models and retrieval; reduced manual document review by 60%, saving 2,000+ hours every quarter.",
+        "metric": "−60% manual review"
       },
       {
-        "title": "Graduate Engineer Trainee",
-        "period": "Aug 2023 — Sep 2024",
-        "summary": "The same ownership under an earlier title: interface, API, and database on a business-critical legacy platform, stabilised by clearing high-priority production bugs and cutting user-reported issues by 45%, and by reworking the operations scheduling workflows for 30% more throughput. Also ran the security hardening pass that carried the internal applications through their audits. Earned the Budding Star Award for measurable business impact in the first year."
+        "text": "Led the frontend and designed role- and group-based access control from the ground up, enabling rollout to departments with strict data-access rules; the platform is adopted by 20+ business teams.",
+        "metric": "20+ teams"
+      },
+      {
+        "text": "Designed hybrid model routing between locally hosted Ollama models and frontier APIs, keeping restricted documents inside internal infrastructure while meeting accuracy targets.",
+        "metric": "restricted docs in-house"
+      },
+      {
+        "text": "Rebuilt the team's CI/CD process and introduced React Testing Library and Vitest suites, shortening release cycles by 40%, cutting production hotfixes by 35% and manual testing by 60%.",
+        "metric": "−40% release cycle"
+      }
+    ]
+  },
+  {
+    "hash": "7be04d2",
+    "branch": "feat/plm-drawing-extraction",
+    "period": "delivered 2025",
+    "title": "PLM drawing extraction on Azure OpenAI",
+    "summary": "Client-facing delivery, owned end to end: requirements, research, build and hand-over.",
+    "changes": [
+      {
+        "text": "Worked directly with the client to define requirements, and independently researched DIN and ISO drawing standards to handle decades-old, often German-language scans.",
+        "metric": "DIN + ISO"
+      },
+      {
+        "text": "Designed, built and delivered the extraction pipeline with Python, FastAPI and Azure OpenAI, automating packaging-dimension capture across 3,000+ scanned engineering drawings that were previously read by hand.",
+        "metric": "3,000+ drawings"
+      }
+    ]
+  },
+  {
+    "hash": "19c6e0f",
+    "period": "Aug 2023 — Sep 2024",
+    "award": "Budding Star Award",
+    "title": "Software Engineer, Graduate Trainee",
+    "org": "ZF Group · Chennai",
+    "changes": [
+      {
+        "text": "Resolved 10+ high-priority production bugs on a business-critical legacy platform, cutting user-reported issues by 45%.",
+        "metric": "−45% user issues"
+      },
+      {
+        "text": "Led the pre-audit security hardening of internal applications, remediating injection and input-validation findings; every application passed review.",
+        "metric": "all apps passed"
+      },
+      {
+        "text": "Reworked operations scheduling workflows, improving throughput by 30%.",
+        "metric": "+30% throughput"
       }
     ]
   }

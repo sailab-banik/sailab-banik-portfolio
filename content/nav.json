@@ -1,0 +1,7 @@
+[
+  { "id": "top", "label": "about.md" },
+  { "id": "experience", "label": "experience.log" },
+  { "id": "projects", "label": "projects/" },
+  { "id": "writing", "label": "writing/" },
+  { "id": "contact", "label": "contact.sh" }
+]

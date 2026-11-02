@@ -1,0 +1,24 @@
+{
+  "title": "~/sailab — zsh",
+  "size": "80×24",
+  "label": "Terminal summary: Sailab Banik, Software Engineer II at ZF Group, focused on LLM document intelligence",
+  "commands": [
+    {
+      "input": "whoami",
+      "output": "sailab banik · software engineer II @ zf group"
+    },
+    {
+      "input": "cat focus.txt",
+      "output": "rag pipelines · vision-model extraction · llm eval"
+    },
+    {
+      "input": "./impact --since 2023",
+      "checks": [
+        { "label": "PrimeAI adopted by", "value": "20+ teams" },
+        { "label": "manual review cut by", "value": "60%" },
+        { "label": "hours saved / quarter", "value": "2,000+" },
+        { "label": "drawings automated", "value": "3,000+" }
+      ]
+    }
+  ]
+}
