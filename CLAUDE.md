@@ -24,6 +24,8 @@ The design reference is the exported mockup in `assets/design/` (`Main.dc.html`;
 
 Exactly one client component exists, because it holds state: `section-tabs.tsx` (which header tab is current, from scroll position). Everything else is a server component; keep it that way unless a feature genuinely needs state.
 
+Vercel Web Analytics is wired in the root layout with `<Analytics />` from `@vercel/analytics/next`, a client component from the package. It sends nothing in development; page views show up only from Vercel deployments, and only while Web Analytics is enabled for the project in the Vercel dashboard.
+
 There is deliberately no resume section. The mockup had one (a preview/source viewer); it was removed because it repeated Experience, Projects, and Toolbox. The resume is the PDF, opened in a new tab from the header, hero, and footer.
 
 `PLAN.md` holds the design direction, content model, and the open gaps — read it before adding UI, and update it in the same commit when a design decision changes. It has contradicted the code more than once.
