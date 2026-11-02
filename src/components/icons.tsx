@@ -62,9 +62,12 @@ export function GitHubIcon(props: IconProps) {
 export function MediumIcon(props: IconProps) {
   return (
     <Stroke {...props}>
-      <path d="M4 6h16v12H4z" />
-      <path d="M8 9v6" />
-      <path d="M12 9l2 6 2-6" />
+      <rect x="3" y="3" width="18" height="18" rx="3" />
+      <path d="M8 9h1l3 3 3-3h1" />
+      <path d="M9 9v6" />
+      <path d="M15 9v6" />
+      <path d="M8 15h2" />
+      <path d="M14 15h2" />
     </Stroke>
   );
 }
