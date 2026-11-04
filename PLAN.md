@@ -118,7 +118,7 @@ One column below 980px.
 ┌────────────────────────────────────────────────────────┐
 │ [sb] sailab.dev   about.md experience.log ...  [Resume]│ sticky, 56px
 ├────────────────────────────────────────────────────────┤
-│ [photo] (o Open to ...)          ┌ ~/sailab — zsh ───┐ │
+│ [photo] (o Full-stack and AI)    ┌ ~/sailab — zsh ───┐ │
 │         Chennai · IST            │ ➜ ~ whoami        │ │
 │ Sailab Banik                     │ ...               │ │
 │ headline, emphasis in amber      │ ✓ ... 20+ teams   │ │
@@ -128,7 +128,7 @@ One column below 980px.
 │ Experience                         git log --graph main│
 │ ● a3f9c21 (HEAD → main) Oct 2024 — present             │
 │ │ Software Engineer II   ┌ diff: + text ... metric ┐   │
-│ ╰○ 7be04d2 (feat/drawing-extraction) merged 2025       │
+│ ╰○ 7be04d2 (poc/drawing-extraction) 2026 — present     │
 │ ○ 19c6e0f Aug 2023 — Sep 2024 (Budding Star Award)     │
 ├────────────────────────────────────────────────────────┤
 │ Projects                                 ls ~/projects │
@@ -137,8 +137,8 @@ One column below 980px.
 │ Toolbox (grouped chips)  │ Writing (dated rows)        │
 │ [credential] [credential] [credential] [education]     │
 ├────────────────────────────────────────────────────────┤
-│ ./contact.sh --role "your opening"                     │
-│ Hiring for an AI or full-stack role? Let's talk.       │
+│ ./contact.sh --subject "hello"                         │
+│ Working on something with LLMs? Let's talk.            │
 │ email, buttons, colophon                               │
 └────────────────────────────────────────────────────────┘
 ```
@@ -158,8 +158,9 @@ stack and lose their arrows.
   computed from line order. It is `role="img"` with a plain-text label; the
   same facts are in Experience for anyone who cannot see it.
 - **Experience** is a commit graph. Roles are commits on main; the
-  PLM drawing extraction is drawn as a branch with a curved connector because
-  it was a separate, client-facing delivery. The first commit's node is filled
+  drawing extraction proof of concept is drawn as a branch with a curved
+  connector because it is separate, ongoing work not yet merged into
+  production. The first commit's node is filled
   (`HEAD`). Change rows alternate a faint green wash.
 - **Project panels** show each system doing its job rather than a screenshot:
   ContextDesk Lab's cache hit against the model call (measured numbers),

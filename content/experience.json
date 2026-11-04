@@ -5,40 +5,40 @@
     "period": "Oct 2024 — present",
     "title": "Software Engineer II",
     "org": "ZF Group · Chennai",
-    "diff": "PrimeAI · AI layer, frontend lead",
+    "diff": "document intelligence · AI layer, frontend lead",
     "changes": [
       {
-        "text": "Built the AI layer of PrimeAI, ZF's internal document processing platform, covering extraction, user-defined models and retrieval; reduced manual document review by 60%, saving 2,000+ hours every quarter.",
+        "text": "Built the AI layer of an internal document intelligence platform, covering LLM extraction, user-defined models and retrieval workflows; cut manual document review by 60%.",
         "metric": "−60% manual review"
       },
       {
-        "text": "Led the frontend and designed role- and group-based access control from the ground up, enabling rollout to departments with strict data-access rules; the platform is adopted by 20+ business teams.",
+        "text": "Led the frontend and designed role- and group-based access control from scratch, so departments with different data-access rules could work on one platform; adopted by 20+ business teams.",
         "metric": "20+ teams"
       },
       {
-        "text": "Designed hybrid model routing between locally hosted Ollama models and frontier APIs, keeping restricted documents inside internal infrastructure while meeting accuracy targets.",
+        "text": "Designed model routing that sends each document to a self-hosted model or a hosted LLM API based on its sensitivity, keeping restricted content on internal infrastructure while meeting accuracy targets.",
         "metric": "restricted docs in-house"
       },
       {
-        "text": "Rebuilt the team's CI/CD process and introduced React Testing Library and Vitest suites, shortening release cycles by 40%, cutting production hotfixes by 35% and manual testing by 60%.",
+        "text": "Rebuilt the team's CI/CD pipeline and introduced React Testing Library and Vitest suites: 40% shorter release cycles, 35% fewer production hotfixes and 60% less manual testing.",
         "metric": "−40% release cycle"
       }
     ]
   },
   {
     "hash": "7be04d2",
-    "branch": "feat/plm-drawing-extraction",
-    "period": "delivered 2025",
-    "title": "PLM drawing extraction on Azure OpenAI",
-    "summary": "Client-facing delivery, owned end to end: requirements, research, build and hand-over.",
+    "branch": "poc/drawing-extraction",
+    "period": "2026 — present",
+    "title": "Engineering drawing extraction, proof of concept",
+    "summary": "Forward-deployed with the business owners, owned end to end from requirements to a working proof of concept.",
     "changes": [
       {
-        "text": "Worked directly with the client to define requirements, and independently researched DIN and ISO drawing standards to handle decades-old, often German-language scans.",
+        "text": "Gathered requirements directly with the business owners and independently researched DIN and ISO drawing standards, so the pipeline could read decades-old, often German-language scans.",
         "metric": "DIN + ISO"
       },
       {
-        "text": "Designed, built and delivered the extraction pipeline with Python, FastAPI and Azure OpenAI, automating packaging-dimension capture across 3,000+ scanned engineering drawings that were previously read by hand.",
-        "metric": "3,000+ drawings"
+        "text": "Designed and built an extraction harness with Python, FastAPI and Azure OpenAI that captures drawing attributes, until now read by hand, at 99% accuracy.",
+        "metric": "99% accuracy"
       }
     ]
   },
@@ -50,11 +50,11 @@
     "org": "ZF Group · Chennai",
     "changes": [
       {
-        "text": "Resolved 10+ high-priority production bugs on a business-critical legacy platform, cutting user-reported issues by 45%.",
+        "text": "Resolved 10+ high-priority production bugs on a business-critical enterprise application, cutting user-reported issues by 45%.",
         "metric": "−45% user issues"
       },
       {
-        "text": "Led the pre-audit security hardening of internal applications, remediating injection and input-validation findings; every application passed review.",
+        "text": "Led pre-audit security hardening across internal applications; every application passed the security review.",
         "metric": "all apps passed"
       },
       {

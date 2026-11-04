@@ -4,8 +4,8 @@
   "role": "Software Engineer II",
   "headline": "Software Engineer II at ZF Group, building LLM document intelligence in production.",
   "emphasis": "LLM document intelligence",
-  "statement": "Three years building production software at ZF Group, the last two on LLM document systems: a platform adopted by 20+ business teams that cut manual review by 60%, and automated extraction across 3,000+ scanned engineering drawings. Python, FastAPI and React, owned from requirements to deployment.",
-  "status": "Open to SDE II and AI engineer roles",
+  "statement": "Three years building production software at ZF Group, the last two on LLM document systems: an internal platform adopted by 20+ business teams that cut manual review by 60%, and a proof of concept that extracts data from scanned engineering drawings at 99% accuracy. Python, FastAPI and React, owned from requirements to deployment.",
+  "status": "Full-stack and AI engineer",
   "timezone": "IST (UTC+5:30)",
   "email": "sailabbanik24@gmail.com",
   "location": "Chennai, India",
@@ -15,7 +15,7 @@
     "leetcode": "https://leetcode.com/u/sailab-banik/",
     "medium": "https://medium.com/@sailabbanik24"
   },
-  "resume": "/resume/sailab_banik_resume_110226_masked.pdf",
+  "resume": "/resume/sailab_banik_resume_110426_masked.pdf",
   "portrait": "/images/profile_picture.png",
   "colophon": "built with Next.js · deployed on Vercel"
 }

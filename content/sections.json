@@ -17,8 +17,8 @@
     "action": "all on Medium"
   },
   "contact": {
-    "title": "Hiring for an AI or full-stack role? Let's talk.",
-    "lead": "I reply within a day. Happy to walk through any project here in an interview, including the parts that did not work the first time.",
-    "path": "./contact.sh --role \"your opening\""
+    "title": "Working on something with LLMs? Let's talk.",
+    "lead": "I reply within a day. Happy to walk through any project here, including the parts that did not work the first time.",
+    "path": "./contact.sh --subject \"hello\""
   }
 }

@@ -14,10 +14,10 @@
     {
       "input": "./impact --since 2023",
       "checks": [
-        { "label": "PrimeAI adopted by", "value": "20+ teams" },
+        { "label": "platform adopted by", "value": "20+ teams" },
         { "label": "manual review cut by", "value": "60%" },
-        { "label": "hours saved / quarter", "value": "2,000+" },
-        { "label": "drawings automated", "value": "3,000+" }
+        { "label": "release cycle cut by", "value": "40%" },
+        { "label": "production hotfixes cut by", "value": "35%" }
       ]
     }
   ]

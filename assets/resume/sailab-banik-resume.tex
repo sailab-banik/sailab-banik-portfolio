@@ -41,7 +41,7 @@
 % With hyphenation off, ragged2e's finite right stretch overflows long lines.
 \setlength{\RaggedRightRightskip}{0pt plus 1fil}
 
-\titlespacing{\section}{0pt}{7pt}{4pt}
+\titlespacing{\section}{0pt}{10pt}{5pt}
 
 %----------MARGIN OPTIONS------------
 \pagestyle{fancy}
@@ -68,20 +68,20 @@
 \newcommand{\resumeItemListStart}{
     \begin{itemize}[
         rightmargin=0.15in,
-        itemsep=0pt,
-        topsep=1pt,
+        itemsep=2pt,
+        topsep=2pt,
         parsep=0pt
     ]
 }
 \newcommand{\resumeItemListEnd}{
-    \end{itemize}\vspace{-2pt}
+    \end{itemize}\vspace{0pt}
 }
 
 \newcommand{\resumeHeadingListStart}{
     \begin{itemize}[
         leftmargin=0.15in,
         label={},
-        itemsep=1pt,
+        itemsep=3pt,
         topsep=1pt,
         parsep=0pt
     ]
@@ -142,8 +142,8 @@
 \small
 Software Engineer with 3 years of production experience at ZF Group, the last 2
 delivering LLM-powered document intelligence: a platform adopted by \textbf{20+
-business teams} that cut manual review by \textbf{60\%}, and automated extraction
-across \textbf{3,000+ scanned engineering drawings}. Specializes in
+business teams} that cut manual review by \textbf{60\%}, and a drawing extraction
+proof of concept at \textbf{99\% accuracy}. Specializes in
 \textbf{Python, FastAPI, React, RAG pipelines, and LLM validation}, owning
 delivery from requirements to deployment.
 
@@ -160,24 +160,21 @@ delivery from requirements to deployment.
 \resumeItemListStart{}
 
   \resumeItem{
-    Built the AI layer of \textbf{PrimeAI}, an internal document processing
-    platform covering extraction, user-defined models, and retrieval; adopted
-    by \textbf{20+ business teams}, it reduced manual review by
-    \textbf{60\%}, saving \textbf{2,000+ hours per quarter}.
+    Built the AI layer of an internal \textbf{document intelligence platform}
+    covering LLM extraction, user-defined models, and retrieval; adopted by
+    \textbf{20+ business teams}, it reduced manual review by \textbf{60\%}.
   }
 
   \resumeItem{
-    Designed hybrid model routing between \textbf{locally served Ollama
-    models} and frontier APIs, keeping restricted documents inside internal
-    infrastructure while meeting accuracy targets through retrieval rather
-    than larger models.
+    Designed model routing by document sensitivity between \textbf{locally
+    served Ollama models} and hosted LLM APIs, keeping restricted documents
+    on internal infrastructure while meeting accuracy targets.
   }
 
   \resumeItem{
-    Delivered a \textbf{PLM drawing extraction} solution end to end: gathered
-    requirements directly with the client, independently researched DIN and
-    ISO drawing standards, and built the pipeline on \textbf{Azure OpenAI},
-    automating dimension capture across \textbf{3,000+ scanned drawings}.
+    Leading an \textbf{engineering drawing extraction} proof of concept,
+    forward-deployed with business owners: researched DIN and ISO standards
+    and built an \textbf{Azure OpenAI} harness at \textbf{99\% accuracy}.
   }
 
   \resumeItem{
@@ -203,14 +200,13 @@ delivery from requirements to deployment.
 
   \resumeItem{
     Resolved \textbf{10+ high-priority production bugs} on a
-    business-critical legacy platform, cutting user-reported issues by
-    \textbf{45\%}.
+    business-critical enterprise application, cutting user-reported issues
+    by \textbf{45\%}.
   }
 
   \resumeItem{
-    Led the pre-audit \textbf{security hardening} of internal applications,
-    remediating injection and input-validation findings; \textbf{every
-    application passed review}.
+    Led the pre-audit \textbf{security hardening} of internal applications;
+    \textbf{every application passed the security review}.
   }
 
   \resumeItem{

@@ -2,7 +2,7 @@ import { getExperience, type Change, type Commit } from "@/lib/content";
 import { SectionHead } from "@/components/section-head";
 
 /* Experience as a commit graph: roles are commits on main, and the drawing
-   pipeline is a branch merged into it, because that is how it was built. */
+   extraction proof of concept is a branch off it, not yet merged. */
 export function Experience() {
   const commits = getExperience();
 
