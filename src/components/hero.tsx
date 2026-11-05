@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { getProfile } from "@/lib/content";
 import { Button } from "@/components/button";
@@ -12,7 +13,7 @@ export function Hero() {
   return (
     <section className="mx-auto grid max-w-page items-center gap-12 px-4 pt-14 pb-16 sm:px-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16 lg:pt-[88px] lg:pb-24">
       <div>
-        <div className="mb-7 flex items-center gap-4">
+        <div className="rise mb-7 flex items-center gap-4">
           <Image
             src={portrait}
             alt={`Portrait of ${name}`}
@@ -32,17 +33,17 @@ export function Hero() {
           </div>
         </div>
 
-        <h1 className="mb-[18px] text-[44px] leading-[1.02] font-semibold tracking-[-0.035em] sm:text-[72px]">
+        <h1 style={rise(0.08)} className="rise mb-[18px] text-[44px] leading-[1.02] font-semibold tracking-[-0.035em] sm:text-[72px]">
           {name}
         </h1>
-        <p className="mb-[18px] text-lg leading-[1.4] font-medium tracking-[-0.01em] sm:text-[22px]">
+        <p style={rise(0.16)} className="rise mb-[18px] text-lg leading-[1.4] font-medium tracking-[-0.01em] sm:text-[22px]">
           {before}
           <b className="font-medium text-amber">{emphasis}</b>
           {after}
         </p>
-        <p className="mb-8 max-w-[58ch] text-[17px] text-muted">{statement}</p>
+        <p style={rise(0.24)} className="rise mb-8 max-w-[58ch] text-[17px] text-muted">{statement}</p>
 
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div style={rise(0.32)} className="rise flex flex-wrap items-center gap-2.5">
           <Button href={resume} newTab primary>
             <DownloadIcon />
             View resume
@@ -66,7 +67,13 @@ export function Hero() {
         </div>
       </div>
 
-      <Terminal />
+      <div style={rise(0.2)} className="rise">
+        <Terminal />
+      </div>
     </section>
   );
+}
+
+function rise(seconds: number) {
+  return { "--rise": `${seconds}s` } as CSSProperties;
 }

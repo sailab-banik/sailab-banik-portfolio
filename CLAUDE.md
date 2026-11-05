@@ -22,7 +22,7 @@ Single-page portfolio for Sailab Banik, built and live. `src/app/page.tsx` compo
 
 The design reference is the exported mockup in `assets/design/` (`Main.dc.html`; gitignored). Its inline styles are the source of truth for values; it is not code to copy.
 
-Exactly one client component exists, because it holds state: `section-tabs.tsx` (which header tab is current, from scroll position). Everything else is a server component; keep it that way unless a feature genuinely needs state.
+Two client components exist: `section-tabs.tsx` (which header tab is current, from scroll position) and `reveal-observer.tsx` (renders nothing; marks `[data-reveal]` blocks `data-in` once they enter the viewport, which starts their entrance animations in `globals.css`). Everything else is a server component; keep it that way unless a feature genuinely needs the browser.
 
 Vercel Web Analytics is wired in the root layout with `<Analytics />` from `@vercel/analytics/next`, a client component from the package. It sends nothing in development; page views show up only from Vercel deployments, and only while Web Analytics is enabled for the project in the Vercel dashboard.
 

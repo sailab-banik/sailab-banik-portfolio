@@ -3,8 +3,6 @@ import type { CachePanel as Data } from "@/lib/content";
 import { FactGrid } from "@/components/panels/fact-grid";
 import { PanelFrame } from "@/components/panels/panel-frame";
 
-const STAGGER = 0.3;
-
 export function CachePanel({ panel }: { panel: Data }) {
   const { caption, status, bars, facts } = panel;
 
@@ -18,7 +16,7 @@ export function CachePanel({ panel }: { panel: Data }) {
           <span className="text-faint">{label}</span>
           <div className="relative h-7 overflow-hidden rounded-md bg-raised-2">
             <i
-              style={{ width: `${share * 100}%`, animationDelay: `${index * STAGGER}s` } as CSSProperties}
+              style={{ width: `${share * 100}%`, "--i": index } as CSSProperties}
               className={`bar-grow absolute inset-y-0 left-0 rounded-md ${highlight ? "bg-amber" : "bg-dusk"}`}
             />
           </div>

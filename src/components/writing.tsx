@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { getArticles, getProfile, getSection } from "@/lib/content";
 import { Credentials } from "@/components/credentials";
 import { ArrowUpRightIcon } from "@/components/icons";
@@ -5,7 +6,8 @@ import { Toolbox } from "@/components/toolbox";
 
 export function Writing() {
   return (
-    <section id="writing" className="scroll-mt-14 border-t border-line py-[72px] sm:py-[104px]">
+    <section id="writing" className="relative scroll-mt-14 border-t border-line py-[72px] sm:py-[104px]">
+      <span aria-hidden data-reveal className="fx-sweep" />
       <div className="mx-auto max-w-page px-4 sm:px-10">
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-16">
           <Toolbox />
@@ -22,21 +24,21 @@ function Articles() {
   const { links } = getProfile();
 
   return (
-    <div>
+    <div data-reveal>
       <div className="mb-5 flex items-baseline justify-between gap-4">
-        <h2 className="text-3xl leading-[1.1] font-semibold tracking-[-0.03em] sm:text-[40px]">{title}</h2>
+        <h2 className="fx-wipe text-3xl leading-[1.1] font-semibold tracking-[-0.03em] sm:text-[40px]">{title}</h2>
         <a
           href={links.medium}
           target="_blank"
           rel="noreferrer"
-          className="font-mono text-[13px] text-muted transition-colors hover:text-amber"
+          className="fx-rise font-mono text-[13px] text-muted transition-colors hover:text-amber"
         >
           {action}
         </a>
       </div>
       <ul>
-        {getArticles().map(({ title, publication, date, url }) => (
-          <li key={url} className="border-t border-line first:border-t-0">
+        {getArticles().map(({ title, publication, date, url }, index) => (
+          <li key={url} style={{ "--i": index } as CSSProperties} className="fx-rise border-t border-line first:border-t-0">
             <a
               href={url}
               target="_blank"

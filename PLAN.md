@@ -179,7 +179,16 @@ stack and lose their arrows.
 ### Motion
 
 Terminal typing, the cache bars growing in, the queue's flow dots, and the
-caret blink. All of it sits inside `prefers-reduced-motion: no-preference`;
+caret blink. On load the hero blocks rise in, staggered (`.rise`, `--rise`).
+Below the hero, every `[data-reveal]` block plays a short entrance once, when
+`RevealObserver` sees it enter the viewport: each section's top rule sweeps
+amber and fades, the shell command beside the heading types out, the heading
+wipes up, and the lead follows. Experience draws its rail down, pops the
+commit dot, and applies the diff lines one by one with a green flash; the
+cache bars grow when their project arrives. Reveal blocks never nest. The
+hidden start state is armed only by the observer, so without JavaScript the
+page renders at rest. All of it sits inside
+`prefers-reduced-motion: no-preference`;
 under reduced motion every line, bar, and dot is shown at rest. Hover is a
 colour or border change and nothing more.
 

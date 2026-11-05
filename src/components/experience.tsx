@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { getExperience, type Change, type Commit } from "@/lib/content";
 import { SectionHead } from "@/components/section-head";
 
@@ -7,7 +8,8 @@ export function Experience() {
   const commits = getExperience();
 
   return (
-    <section id="experience" className="scroll-mt-14 border-t border-line py-[72px] sm:py-[104px]">
+    <section id="experience" className="relative scroll-mt-14 border-t border-line py-[72px] sm:py-[104px]">
+      <span aria-hidden data-reveal className="fx-sweep" />
       <div className="mx-auto max-w-page px-4 sm:px-10">
         <SectionHead name="experience" />
         <ol>
@@ -27,16 +29,16 @@ function Entry({ commit, first, last }: { commit: Commit; first: boolean; last: 
   } ${last ? "before:h-3.5" : "before:bottom-0"}`;
 
   return (
-    <li className="grid grid-cols-[44px_minmax(0,1fr)] sm:grid-cols-[72px_minmax(0,1fr)]">
-      <div className={`relative ${rail}`}>
+    <li data-reveal className="grid grid-cols-[44px_minmax(0,1fr)] sm:grid-cols-[72px_minmax(0,1fr)]">
+      <div className={`fx-rail relative ${rail}`}>
         {branch ? (
           <>
             <span className="absolute -top-[30px] left-3 h-11 w-7 rounded-bl-[18px] border-b-2 border-l-2 border-l-transparent border-b-blue opacity-70 sm:left-6" />
-            <span className="absolute top-2 left-[26px] h-3 w-3 rounded-full border-2 border-blue bg-canvas sm:left-[46px]" />
+            <span className="fx-pop absolute top-2 left-[26px] h-3 w-3 rounded-full border-2 border-blue bg-canvas sm:left-[46px]" />
           </>
         ) : (
           <span
-            className={`absolute top-1.5 left-1 h-4 w-4 rounded-full border-2 border-amber sm:left-4 ${
+            className={`fx-pop absolute top-1.5 left-1 h-4 w-4 rounded-full border-2 border-amber sm:left-4 ${
               first ? "bg-amber shadow-[0_0_0_5px_rgba(245,185,66,0.14)]" : "bg-canvas"
             }`}
           />
@@ -44,17 +46,19 @@ function Entry({ commit, first, last }: { commit: Commit; first: boolean; last: 
       </div>
 
       <div className={`${last ? "" : "pb-14"} ${branch ? "pl-6" : ""}`}>
-        <div className="mb-2 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[13px] text-faint">
+        <div style={{ "--d": "0.15s" } as CSSProperties} className="fx-rise mb-2 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[13px] text-faint">
           <span className="text-blue">{hash}</span>
           {ref && <Pill>{ref}</Pill>}
           {branch && <Pill branch>{branch}</Pill>}
           <span>{period}</span>
           {award && <Pill>{award}</Pill>}
         </div>
-        <h3 className={`mb-1 font-semibold tracking-[-0.02em] ${branch ? "text-xl" : "text-2xl"}`}>{title}</h3>
-        <p className="mb-5 text-muted">{summary ?? org}</p>
+        <h3 style={{ "--d": "0.22s" } as CSSProperties} className={`fx-rise mb-1 font-semibold tracking-[-0.02em] ${branch ? "text-xl" : "text-2xl"}`}>{title}</h3>
+        <p style={{ "--d": "0.29s" } as CSSProperties} className="fx-rise mb-5 text-muted">
+          {summary ?? org}
+        </p>
 
-        <div className="overflow-hidden rounded-xl border border-line bg-raised">
+        <div style={{ "--d": "0.36s" } as CSSProperties} className="fx-rise overflow-hidden rounded-xl border border-line bg-raised">
           {diff && (
             <div className="flex justify-between gap-3 border-b border-line px-4 py-2.5 font-mono text-xs text-faint">
               <span>{diff}</span>
@@ -62,8 +66,8 @@ function Entry({ commit, first, last }: { commit: Commit; first: boolean; last: 
             </div>
           )}
           <div>
-            {changes.map((change) => (
-              <Line key={change.text} change={change} />
+            {changes.map((change, index) => (
+              <Line key={change.text} change={change} index={index} />
             ))}
           </div>
         </div>
@@ -84,9 +88,11 @@ function Pill({ branch, children }: { branch?: boolean; children: string }) {
   );
 }
 
-function Line({ change }: { change: Change }) {
+function Line({ change, index }: { change: Change; index: number }) {
   return (
-    <div className="grid grid-cols-[20px_minmax(0,1fr)] items-baseline gap-3 border-t border-line/60 px-4 py-2.5 first:border-t-0 odd:bg-green/[0.045] sm:grid-cols-[28px_minmax(0,1fr)_auto]">
+    <div
+      style={{ "--i": index } as CSSProperties}
+      className="fx-diff grid grid-cols-[20px_minmax(0,1fr)] items-baseline gap-3 border-t border-line/60 px-4 py-2.5 first:border-t-0 odd:bg-green/[0.045] sm:grid-cols-[28px_minmax(0,1fr)_auto]">
       <span className="font-mono text-sm text-green">+</span>
       <span className="max-w-[72ch] text-[15px]">{change.text}</span>
       <span className="col-start-2 font-mono text-[13px] whitespace-nowrap text-green tabular-nums sm:col-start-3">
